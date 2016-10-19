@@ -1,0 +1,44 @@
+{
+  "name": "stylelint-processor-styled-components",
+  "version": "0.0.1",
+  "description": "A stylelint processor for styled-components",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "tap": "tap test/test.js test/**.test.js",
+    "test": "npm run tap && npm run lint",
+    "build": "babel src --out-dir lib",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mxstbr/stylelint-processor-styled-components.git"
+  },
+  "keywords": [
+    "stylelint",
+    "processor",
+    "stylelint-processor",
+    "styled-components",
+    "lint"
+  ],
+  "author": "Max Stoiber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mxstbr/stylelint-processor-styled-components/issues"
+  },
+  "homepage": "https://github.com/mxstbr/stylelint-processor-styled-components#readme",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "lodash": "^4.15.0",
+    "stylelint": "^7.3.0",
+    "tap": "^7.0.0"
+  },
+  "dependencies": {
+    "babel-traverse": "^6.16.0",
+    "babylon": "^6.12.0"
+  }
+}
