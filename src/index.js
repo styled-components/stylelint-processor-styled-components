@@ -36,7 +36,7 @@ module.exports = (/* options */) => ({
 
           importedName = defaultSpecifier[0].local.name
         }
-        if (!isStyled(path.node, importedName)) return
+        if (!importedName || !isStyled(path.node, importedName)) return
 
         extractedCSS += getCSS(path.node)
       },
