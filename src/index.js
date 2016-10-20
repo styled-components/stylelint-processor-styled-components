@@ -1,24 +1,12 @@
 const babylon = require('babylon')
 const traverse = require('babel-traverse').default
 
-const getTaggedTemplateLiteralContent = require('./utils/tagged-template-literal').getTaggedTemplateLiteralContent
 const isStyled = require('./utils/styled').isStyled
 const isHelper = require('./utils/styled').isHelper
 const isStyledImport = require('./utils/styled').isStyledImport
+const getCSS = require('./utils/general').getCSS
+const getKeyframes = require('./utils/general').getKeyframes
 
-const getCSS = (node) => `
-.selector {
-  ${getTaggedTemplateLiteralContent(node)}
-}
-`
-
-const getKeyframes = (node) => `
-@keyframes {
-  ${getTaggedTemplateLiteralContent(node)}
-}
-`
-
-// TODO add support for injectGlobal, keyframes and css helpers
 // TODO Make it work for the UMD build, i.e. global vars
 // TODO Fix sourcemaps in result
 // TODO ignore any rules related to selectors or braces
