@@ -1,7 +1,9 @@
 const babylon = require('babylon')
 const traverse = require('babel-traverse').default
+
 const getTaggedTemplateLiteralContent = require('./utils/tagged-template-literal').getTaggedTemplateLiteralContent
 const isStyled = require('./utils/styled').isStyled
+const isHelper = require('./utils/styled').isHelper
 const isStyledImport = require('./utils/styled').isStyledImport
 
 const getCSS = (node) => `
@@ -10,7 +12,14 @@ const getCSS = (node) => `
 }
 `
 
+const getKeyframes = (node) => `
+@keyframes {
+  ${getTaggedTemplateLiteralContent(node)}
+}
+`
+
 // TODO add support for injectGlobal, keyframes and css helpers
+// TODO Make it work for the UMD build, i.e. global vars
 // TODO Fix sourcemaps in result
 // TODO ignore any rules related to selectors or braces
 // TODO ENFORCE THESE RULES
@@ -25,20 +34,44 @@ module.exports = (/* options */) => ({
     })
 
     let extractedCSS = ''
-    let importedName = ''
+    const importedNames = {
+      default: false,
+      css: false,
+      keyframes: false,
+      injectGlobal: false,
+    }
     traverse(ast, {
       enter(path) {
-        if (isStyledImport(path.node)) {
-          const defaultSpecifier = path.node.specifiers.filter((specifier) => specifier.type === 'ImportDefaultSpecifier')
+        const node = path.node
+        if (isStyledImport(node)) {
+          const imports = node.specifiers.filter((specifier) => (
+            specifier.type === 'ImportDefaultSpecifier'
+            || specifier.type === 'ImportSpecifier'
+          ))
 
-          // TODO Make this work for keyframes, injectGlobal and css
-          if (!defaultSpecifier) return
+          if (imports.length <= 0) return
 
-          importedName = defaultSpecifier[0].local.name
+          imports.forEach((singleImport) => {
+            if (singleImport.imported) {
+              // Is helper method
+              importedNames[singleImport.imported.name] = singleImport.local.name
+            } else {
+              // Is default import
+              importedNames.default = singleImport.local.name
+            }
+          })
         }
-        if (!importedName || !isStyled(path.node, importedName)) return
 
-        extractedCSS += getCSS(path.node)
+        const helper = isHelper(node, importedNames)
+
+        if (helper === 'keyframes') {
+          extractedCSS += getKeyframes(node)
+          return
+        }
+
+        if (isStyled(node, importedNames.default) || helper === 'injectGlobal' || helper === 'css') {
+          extractedCSS += getCSS(node)
+        }
       },
     })
 

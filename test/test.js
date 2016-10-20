@@ -38,15 +38,15 @@ test('invalid', (t) => {
     const result = data.results[0]
     t.equal(result.source, fixture, 'filename')
     t.equal(result.errored, true)
-    t.equal(result.warnings.length, 2)
+    t.equal(result.warnings.length, 2, 'wrong lines of code')
     t.equal(result.warnings[0].rule, 'block-no-empty')
     t.equal(result.warnings[1].rule, 'indentation')
     t.end()
   }).catch(t.threw)
 })
 
-test('different import name', (t) => {
-  const fixture = path.join(__dirname, './fixtures/imports.js')
+test('helpers', (t) => {
+  const fixture = path.join(__dirname, './fixtures/simple/helpers.js')
   stylelint.lint({
     files: [fixture],
     config: {
@@ -58,9 +58,31 @@ test('different import name', (t) => {
     const result = data.results[0]
     t.equal(result.source, fixture, 'filename')
     t.equal(result.errored, true)
-    t.equal(result.warnings.length, 2)
-    t.equal(result.warnings[0].rule, 'block-no-empty')
-    t.equal(result.warnings[1].rule, 'indentation')
+    t.equal(result.warnings.length, 11, 'wrong lines of code')
+    result.warnings.forEach((warning) => {
+      t.equal(warning.rule, 'indentation')
+    })
+    t.end()
+  }).catch(t.threw)
+})
+
+test('different import name', (t) => {
+  const fixture = path.join(__dirname, './fixtures/simple/imports.js')
+  stylelint.lint({
+    files: [fixture],
+    config: {
+      processors: [processor],
+      rules,
+    },
+  }).then((data) => {
+    t.equal(data.results.length, 1, 'number of results')
+    const result = data.results[0]
+    t.equal(result.source, fixture, 'filename')
+    t.equal(result.errored, true)
+    t.equal(result.warnings.length, 11, 'wrong lines of code')
+    result.warnings.forEach((warning) => {
+      t.equal(warning.rule, 'indentation')
+    })
     t.end()
   }).catch(t.threw)
 })

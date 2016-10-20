@@ -40,7 +40,25 @@ const isStyled = (node, styledVariableName) => (
   (isStyledCall(node, styledVariableName) || isStyledShorthand(node, styledVariableName))
 )
 
+/**
+ * Check if something is a call to one of our helper methods
+ *
+ * Returns either a string (the name of the helper) or false
+ */
+const isHelper = (node, importedNames) => {
+  if (!isTaggedTemplateLiteral(node)) return false
+  let helper
+  Object.keys(importedNames).forEach(name => {
+    if (importedNames[name] === node.tag.name) {
+      helper = name
+      return
+    }
+  })
+  return helper || false
+}
+
 exports.isStyledImport = isStyledImport
 exports.isStyledShorthand = isStyledShorthand
 exports.isStyledCall = isStyledCall
 exports.isStyled = isStyled
+exports.isHelper = isHelper
