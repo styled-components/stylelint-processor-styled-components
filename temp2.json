@@ -1,0 +1,50 @@
+{
+    "errored": false,
+    "output": "[{\"source\":\"/Users/a2517/sites/personal/github/styled-comps/stylelint-processor-styled-components/test/fixtures/simple/import.js\",\"deprecations\":[],\"invalidOptionWarnings\":[],\"warnings\":[]}]",
+    "results": [{
+        "source": "/Users/a2517/sites/personal/github/styled-comps/stylelint-processor-styled-components/test/fixtures/simple/import.js",
+        "deprecations": [],
+        "invalidOptionWarnings": [],
+        "warnings": [],
+        "_postcssResult": {
+            "processor": {
+                "version": "5.2.4",
+                "plugins": []
+            },
+            "messages": [],
+            "root": {
+                "raws": {
+                    "after": ""
+                },
+                "type": "root",
+                "nodes": [],
+                "source": {
+                    "input": {
+                        "css": "",
+                        "file": "/Users/a2517/sites/personal/github/styled-comps/stylelint-processor-styled-components/test/fixtures/simple/import.js"
+                    },
+                    "start": {
+                        "line": 1,
+                        "column": 1
+                    }
+                },
+                "lastEach": 5,
+                "indexes": {}
+            },
+            "opts": {
+                "from": "/Users/a2517/sites/personal/github/styled-comps/stylelint-processor-styled-components/test/fixtures/simple/import.js"
+            },
+            "css": "",
+            "stylelint": {
+                "ruleSeverities": {
+                    "block-no-empty": "error",
+                    "indentation": "error"
+                },
+                "customMessages": {},
+                "disabledRanges": {
+                    "all": []
+                }
+            }
+        }
+    }]
+}

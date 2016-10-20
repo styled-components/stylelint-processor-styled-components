@@ -1,18 +1,21 @@
 const babylon = require('babylon')
 const traverse = require('babel-traverse').default
+const getTaggedTemplateLiteralContent = require('./utils/tagged-template-literal').getTaggedTemplateLiteralContent
+const isStyled = require('./utils/styled').isStyled
+const isStyledImport = require('./utils/styled').isStyledImport
 
+const getCSS = (node) => `
+.selector {
+  ${getTaggedTemplateLiteralContent(node)}
+}
+`
+
+// TODO add support for injectGlobal, keyframes and css helpers
+// TODO Fix sourcemaps in result
 // TODO ignore any rules related to selectors or braces
-
-const isTTL = (node) => node.type === 'TaggedTemplateExpression'
-// TODO Make this dependent on import name
-// TODO Make this be any tagname, not just button
-const isStyledShorthand = (node) => node.tag && node.tag.object && node.tag.object.name === 'styled' && node.tag.property && node.tag.property.name === 'button'
-// TODO Make this dependent on import name
-const isStyledCall = (node) => node.tag && node.tag.callee && node.tag.callee.name === 'styled'
-
-const getTTLContent = (node) => node.quasi.quasis[0].value.raw
-
-const isStyled = (node) => isTTL(node) && (isStyledCall(node) || isStyledShorthand(node))
+// TODO ENFORCE THESE RULES
+// value-no-vendor-prefix – don't allow vendor prefixes
+// property-no-vendor-prefix – don't allow vendor prefixes
 
 module.exports = (/* options */) => ({
   // Get string for stylelint to lint
@@ -20,12 +23,22 @@ module.exports = (/* options */) => ({
     const ast = babylon.parse(input, {
       sourceType: 'module',
     })
+
     let extractedCSS = ''
+    let importedName = ''
     traverse(ast, {
       enter(path) {
-        if (isStyled(path.node)) {
-          extractedCSS += `.selector { ${getTTLContent(path.node)} }\n\n`
+        if (isStyledImport(path.node)) {
+          const defaultSpecifier = path.node.specifiers.filter((specifier) => specifier.type === 'ImportDefaultSpecifier')
+
+          // TODO Make this work for keyframes, injectGlobal and css
+          if (!defaultSpecifier) return
+
+          importedName = defaultSpecifier[0].local.name
         }
+        if (!isStyled(path.node, importedName)) return
+
+        extractedCSS += getCSS(path.node)
       },
     })
 
@@ -33,6 +46,6 @@ module.exports = (/* options */) => ({
   },
   // Fix sourcemaps
   result(stylelintResult) {
-    console.log(stylelintResult)
+    // console.log(stylelintResult)
   },
 })
