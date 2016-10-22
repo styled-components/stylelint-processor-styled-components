@@ -46,7 +46,7 @@ describe('interpolations', () => {
     })
 
     it('should not have any warnings', () => {
-      expect(data.warnings).toEqual(undefined)
+      expect(data.results[0].warnings.length).toEqual(0)
     })
   })
 
@@ -68,7 +68,7 @@ describe('interpolations', () => {
     })
 
     it('should not have any warnings', () => {
-      expect(data.warnings).toEqual(undefined)
+      expect(data.results[0].warnings.length).toEqual(0)
     })
   })
 })
