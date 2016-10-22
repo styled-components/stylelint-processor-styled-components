@@ -14,9 +14,11 @@ const getKeyframes = require('./utils/general').getKeyframes
 // value-no-vendor-prefix – don't allow vendor prefixes
 // property-no-vendor-prefix – don't allow vendor prefixes
 
-// Don't throw if there's no styled-components in a file
 const ignoredRules = [
+  // Don't throw if there's no styled-components in a file
   'no-empty-source',
+  // We don't care about end-of-source newlines, users cannot control them
+  'no-missing-end-of-source-newline',
 ]
 
 module.exports = (/* options */) => ({
