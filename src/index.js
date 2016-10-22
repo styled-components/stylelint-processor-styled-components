@@ -9,7 +9,6 @@ const getKeyframes = require('./utils/general').getKeyframes
 
 // TODO Make it work for the UMD build, i.e. global vars
 // TODO Fix sourcemaps in result
-// TODO ignore any rules related to selectors or braces
 // TODO ENFORCE THESE RULES
 // value-no-vendor-prefix – don't allow vendor prefixes
 // property-no-vendor-prefix – don't allow vendor prefixes
@@ -19,6 +18,18 @@ module.exports = (/* options */) => ({
   code(input) {
     const ast = babylon.parse(input, {
       sourceType: 'module',
+      plugins: [
+        'jsx',
+        'flow',
+        'objectRestSpread',
+        'decorators',
+        'classProperties',
+        'exportExtensions',
+        'asyncGenerators',
+        'functionBind',
+        'functionSent',
+        'dynamicImport',
+      ],
     })
 
     let extractedCSS = ''
