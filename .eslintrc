@@ -1,5 +1,9 @@
 {
   "extends": "airbnb-base",
+  "env": {
+    "mocha": true,
+    "node": true
+  },
   "rules": {
     "semi": [2, "never"],
     "arrow-parens": 0,

@@ -1,4 +1,4 @@
-const test = require('tap').test
+const expect = require('expect')
 const stylelint = require('stylelint')
 const path = require('path')
 
@@ -8,38 +8,75 @@ const rules = {
   indentation: 2,
 }
 
-test('valid', (t) => {
-  const fixture = path.join(__dirname, './fixtures/interpolations/valid.js')
-  stylelint.lint({
-    files: [fixture],
-    config: {
-      processors: [processor],
-      rules,
-    },
-  }).then((data) => {
-    t.equal(data.results.length, 1, 'number of results')
-    t.equal(data.results[0].source, fixture, 'filename')
-    t.equal(data.errored, false)
-    t.equal(data.warnings, undefined)
-    t.end()
-  }).catch(t.threw)
-})
+describe('interpolations', () => {
+  let fixture
+  let data
 
-test('invalid', (t) => {
-  const fixture = path.join(__dirname, './fixtures/interpolations/invalid.js')
-  stylelint.lint({
-    files: [fixture],
-    config: {
-      processors: [processor],
-      rules,
-    },
-  }).then((data) => {
-    t.equal(data.results.length, 1, 'number of results')
-    const result = data.results[0]
-    t.equal(result.source, fixture, 'filename')
-    t.equal(result.errored, true)
-    t.equal(result.warnings.length, 2, 'wrong lines of code')
-    t.equal(result.warnings[0].rule, 'block-no-empty')
-    t.end()
-  }).catch(t.threw)
+  beforeEach((done) => {
+    stylelint.lint({
+      files: [fixture],
+      config: {
+        processors: [processor],
+        rules,
+      },
+    }).then((result) => {
+      data = result
+      done()
+    }).catch((err) => {
+      data = err
+      done()
+    })
+  })
+
+  describe('valid', () => {
+    before(() => {
+      fixture = path.join(__dirname, './fixtures/interpolations/valid.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
+    })
+
+    it('should not have any warnings', () => {
+      expect(data.warnings).toEqual(undefined)
+    })
+  })
+
+  describe('invalid', () => {
+    before(() => {
+      fixture = path.join(__dirname, './fixtures/interpolations/invalid.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should have errored', () => {
+      expect(data.results[0].errored).toEqual(true)
+    })
+
+    it('should have two warnings (i.e. wrong lines of code)', () => {
+      expect(data.results[0].warnings.length).toEqual(2)
+    })
+
+    it('should have a block-no-empty as the first warning', () => {
+      expect(data.results[0].warnings[0].rule).toEqual('block-no-empty')
+    })
+
+    it('should have an indentation as the first warning', () => {
+      expect(data.results[0].warnings[1].rule).toEqual('indentation')
+    })
+  })
 })

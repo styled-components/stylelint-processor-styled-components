@@ -5,9 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "tap": "tap test/test.js test/**.test.js",
-    "test": "npm run tap && npm run lint",
-    "tap:watch": "nodemon -q -x 'npm run tap'",
+    "test": "mocha test/*.test.js",
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build"
   },
@@ -34,10 +32,10 @@
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1",
+    "expect": "^1.20.2",
     "lodash": "^4.15.0",
-    "nodemon": "^1.11.0",
-    "stylelint": "^7.3.0",
-    "tap": "^7.0.0"
+    "mocha": "^3.1.2",
+    "stylelint": "^7.3.0"
   },
   "dependencies": {
     "babel-traverse": "^6.16.0",
