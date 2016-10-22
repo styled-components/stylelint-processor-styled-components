@@ -50,7 +50,7 @@ describe('interpolations', () => {
     })
   })
 
-  describe('invalid', () => {
+  describe('invalid interpolations (should be ignored)', () => {
     before(() => {
       fixture = path.join(__dirname, './fixtures/interpolations/invalid.js')
     })
@@ -63,20 +63,12 @@ describe('interpolations', () => {
       expect(data.results[0].source).toEqual(fixture)
     })
 
-    it('should have errored', () => {
-      expect(data.results[0].errored).toEqual(true)
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
     })
 
-    it('should have two warnings (i.e. wrong lines of code)', () => {
-      expect(data.results[0].warnings.length).toEqual(2)
-    })
-
-    it('should have a block-no-empty as the first warning', () => {
-      expect(data.results[0].warnings[0].rule).toEqual('block-no-empty')
-    })
-
-    it('should have an indentation as the first warning', () => {
-      expect(data.results[0].warnings[1].rule).toEqual('indentation')
+    it('should not have any warnings', () => {
+      expect(data.warnings).toEqual(undefined)
     })
   })
 })

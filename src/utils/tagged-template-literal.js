@@ -11,11 +11,13 @@ const hasInterpolations = (node) => !node.quasi.quasis[0].tail
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
-const interleave = (quasis, expressions) => (
-  expressions.reduce((array, expression, i) => (
-    // TODO Instead of doing ${varname} below, figure out how to convert that to valid CSS
-    array.concat(`$\{${expression.name}}`, quasis[i + 1].value.raw)
-  ), [quasis[0].value.raw]).join('')
+const interleave = (quasis) => (
+  quasis.reduce((prev, quasi, i) => {
+    if (i === 0) {
+      return quasi.value.raw.replace(/(\n.*$)/, '\n')
+    }
+    return prev + quasi.value.raw.replace(/(\n.*$|^.+\n)/, '')
+  }, '')
 )
 
 /**
@@ -33,3 +35,4 @@ const getTaggedTemplateLiteralContent = (node) => {
 
 exports.isTaggedTemplateLiteral = isTaggedTemplateLiteral
 exports.getTaggedTemplateLiteralContent = getTaggedTemplateLiteralContent
+exports.interleave = interleave
