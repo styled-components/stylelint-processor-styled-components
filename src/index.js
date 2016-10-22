@@ -8,6 +8,7 @@ const getCSS = require('./utils/general').getCSS
 const getKeyframes = require('./utils/general').getKeyframes
 
 // TODO Make it work for the UMD build, i.e. global vars
+// TODO Fix previous-indentation-counting-towards-indentation
 // TODO Fix sourcemaps in result
 // TODO ENFORCE THESE RULES
 // value-no-vendor-prefix – don't allow vendor prefixes
@@ -85,7 +86,11 @@ module.exports = (/* options */) => ({
   result(stylelintResult) {
     const newWarnings = stylelintResult.warnings.reduce((prevWarnings, warning) => {
       if (ignoredRules.includes(warning.rule)) return prevWarnings
-      prevWarnings.push(warning)
+      // Replace "brace" with "backtick" in warnings, e.g.
+      // "Unexpected empty line before closing backtick" (instead of "brace")
+      prevWarnings.push(Object.assign(warning, {
+        text: warning.text.replace(/brace/, 'backtick'),
+      }))
       return prevWarnings
     }, [])
 
