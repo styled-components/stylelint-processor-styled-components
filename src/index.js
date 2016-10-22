@@ -13,6 +13,11 @@ const getKeyframes = require('./utils/general').getKeyframes
 // value-no-vendor-prefix – don't allow vendor prefixes
 // property-no-vendor-prefix – don't allow vendor prefixes
 
+// Don't throw if there's no styled-components in a file
+const ignoredRules = [
+  'no-empty-source',
+]
+
 module.exports = (/* options */) => ({
   // Get string for stylelint to lint
   code(input) {
@@ -78,6 +83,12 @@ module.exports = (/* options */) => ({
   },
   // Fix sourcemaps
   result(stylelintResult) {
-    // console.log(stylelintResult)
+    const newWarnings = stylelintResult.warnings.reduce((prevWarnings, warning) => {
+      if (ignoredRules.includes(warning.rule)) return prevWarnings
+      prevWarnings.push(warning)
+      return prevWarnings
+    }, [])
+
+    return Object.assign(stylelintResult, { warnings: newWarnings })
   },
 })
