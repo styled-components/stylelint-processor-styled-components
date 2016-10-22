@@ -8,7 +8,7 @@ const rules = {
   indentation: 2,
 }
 
-describe.skip('hard', () => {
+describe('hard', () => {
   let fixture
   let data
 
@@ -30,9 +30,32 @@ describe.skip('hard', () => {
     })
   })
 
-  describe('valid fixtures', () => {
+  // TODO Fix this
+  // describe.skip('extra indentation', () => {
+  //   before(() => {
+  //     fixture = path.join(__dirname, './fixtures/hard/indentation.js')
+  //   })
+  //
+  //   it('should have one result', () => {
+  //     expect(data.results.length).toEqual(1)
+  //   })
+  //
+  //   it('should use the right file', () => {
+  //     expect(data.results[0].source).toEqual(fixture)
+  //   })
+  //
+  //   it('should not have errored', () => {
+  //     expect(data.errored).toEqual(false)
+  //   })
+  //
+  //   it('should not have any warnings', () => {
+  //     expect(data.results[0].warnings).toEqual(undefined)
+  //   })
+  // })
+
+  describe('source maps', () => {
     before(() => {
-      fixture = path.join(__dirname, './fixtures/hard/indentation.js')
+      fixture = path.join(__dirname, './fixtures/hard/source-maps.js')
     })
 
     it('should have one result', () => {
@@ -43,12 +66,25 @@ describe.skip('hard', () => {
       expect(data.results[0].source).toEqual(fixture)
     })
 
-    it('should not have errored', () => {
-      expect(data.errored).toEqual(false)
+    it('should have errored', () => {
+      expect(data.errored).toEqual(true)
     })
 
-    it('should not have any warnings', () => {
-      expect(data.results[0].warnings).toEqual(undefined)
+    it('should have two warning', () => {
+      expect(data.results[0].warnings.length).toEqual(2)
+    })
+
+    it('should have two warnings about indentation', () => {
+      expect(data.results[0].warnings[0].rule).toEqual('indentation')
+      expect(data.results[0].warnings[1].rule).toEqual('indentation')
+    })
+
+    it('should have a warning in line 5', () => {
+      expect(data.results[0].warnings[0].line).toEqual(5)
+    })
+
+    it('should have a warning in line 15', () => {
+      expect(data.results[0].warnings[1].line).toEqual(15)
     })
   })
 })

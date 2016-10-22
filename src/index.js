@@ -21,9 +21,12 @@ const ignoredRules = [
   'no-missing-end-of-source-newline',
 ]
 
+const sourceMapsCorrections = {}
+
 module.exports = (/* options */) => ({
   // Get string for stylelint to lint
-  code(input) {
+  code(input, filepath) {
+    sourceMapsCorrections[filepath] = {}
     const ast = babylon.parse(input, {
       sourceType: 'module',
       plugins: [
@@ -77,7 +80,15 @@ module.exports = (/* options */) => ({
         }
 
         if (isStyled(node, importedNames.default) || helper === 'injectGlobal' || helper === 'css') {
-          extractedCSS += getCSS(node)
+          const css = getCSS(node)
+          extractedCSS += css
+          // Save which line in the extracted CSS is which line in the source
+          const fullCSSLength = extractedCSS.split(/\n/).length
+          const currentCSSLength = css.split(/\n/).length
+          const currentCSSStart = fullCSSLength - currentCSSLength + 1
+          for (let i = 0; i < currentCSSLength + 1; i++) {
+            sourceMapsCorrections[filepath][currentCSSStart + i] = node.loc.start.line + i
+          }
         }
       },
     })
@@ -85,14 +96,17 @@ module.exports = (/* options */) => ({
     return extractedCSS
   },
   // Fix sourcemaps
-  result(stylelintResult) {
+  result(stylelintResult, filepath) {
+    const lineCorrection = sourceMapsCorrections[filepath]
     const newWarnings = stylelintResult.warnings.reduce((prevWarnings, warning) => {
       if (ignoredRules.includes(warning.rule)) return prevWarnings
-      // Replace "brace" with "backtick" in warnings, e.g.
-      // "Unexpected empty line before closing backtick" (instead of "brace")
-      prevWarnings.push(Object.assign(warning, {
+      const correctedWarning = Object.assign(warning, {
+        // Replace "brace" with "backtick" in warnings, e.g.
+        // "Unexpected empty line before closing backtick" (instead of "brace")
         text: warning.text.replace(/brace/, 'backtick'),
-      }))
+        line: lineCorrection[warning.line],
+      })
+      prevWarnings.push(correctedWarning)
       return prevWarnings
     }, [])
 
