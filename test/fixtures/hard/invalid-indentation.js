@@ -1,18 +1,23 @@
 import styled from 'styled-components'
 
-// None of the below should throw indentation errors
+// ⚠ 2 indentation errors ⚠
 const Comp = () => {
   const Button = styled.button`
     color: blue;
+      background: red;
+  display: block;
   `
 
   return Button
 }
 
+// ⚠ 2 indentation errors ⚠
 const Comp2 = () => {
   const InnerComp = () => {
     const Button = styled.button`
       color: blue;
+        background: red;
+    display: block;
     `
 
     return Button
@@ -20,5 +25,3 @@ const Comp2 = () => {
 
   return InnerComp()
 }
-
-const Button = styled.button`color: blue;`

@@ -31,24 +31,54 @@ describe('hard', () => {
   })
 
   describe('extra indentation', () => {
-    before(() => {
-      fixture = path.join(__dirname, './fixtures/hard/indentation.js')
+    describe('valid', () => {
+      before(() => {
+        fixture = path.join(__dirname, './fixtures/hard/indentation.js')
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(1)
+      })
+
+      it('should use the right file', () => {
+        expect(data.results[0].source).toEqual(fixture)
+      })
+
+      it('should not have errored', () => {
+        expect(data.errored).toEqual(false)
+      })
+
+      it('should not have any warnings', () => {
+        expect(data.results[0].warnings).toEqual([])
+      })
     })
 
-    it('should have one result', () => {
-      expect(data.results.length).toEqual(1)
-    })
+    describe('invalid', () => {
+      before(() => {
+        fixture = path.join(__dirname, './fixtures/hard/invalid-indentation.js')
+      })
 
-    it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
-    })
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(1)
+      })
 
-    it('should not have errored', () => {
-      expect(data.errored).toEqual(false)
-    })
+      it('should use the right file', () => {
+        expect(data.results[0].source).toEqual(fixture)
+      })
 
-    it('should not have any warnings', () => {
-      expect(data.results[0].warnings).toEqual([])
+      it('should have errored', () => {
+        expect(data.errored).toEqual(true)
+      })
+
+      it('should have 4 warnings', () => {
+        expect(data.results[0].warnings.length).toEqual(4)
+      })
+
+      it('should all be indentation warnings', () => {
+        data.results[0].warnings.forEach((warning) => {
+          expect(warning.rule).toEqual('indentation')
+        })
+      })
     })
   })
 
