@@ -1,4 +1,3 @@
-const expect = require('expect')
 const interleave = require('../src/utils/tagged-template-literal').interleave
 
 describe('utils', () => {

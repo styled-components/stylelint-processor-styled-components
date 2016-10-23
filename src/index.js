@@ -8,8 +8,6 @@ const getCSS = require('./utils/general').getCSS
 const getKeyframes = require('./utils/general').getKeyframes
 
 // TODO Make it work for the UMD build, i.e. global vars
-// TODO Fix previous-indentation-counting-towards-indentation
-// TODO Fix sourcemaps in result
 // TODO ENFORCE THESE RULES
 // value-no-vendor-prefix – don't allow vendor prefixes
 // property-no-vendor-prefix – don't allow vendor prefixes

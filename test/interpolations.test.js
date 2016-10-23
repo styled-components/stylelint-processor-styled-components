@@ -1,4 +1,3 @@
-const expect = require('expect')
 const stylelint = require('stylelint')
 const path = require('path')
 
@@ -29,7 +28,7 @@ describe('interpolations', () => {
   })
 
   describe('valid', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/interpolations/valid.js')
     })
 
@@ -51,7 +50,7 @@ describe('interpolations', () => {
   })
 
   describe('invalid interpolations (should be ignored)', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/interpolations/invalid.js')
     })
 

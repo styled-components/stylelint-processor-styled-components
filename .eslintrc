@@ -1,7 +1,7 @@
 {
   "extends": "airbnb-base",
   "env": {
-    "mocha": true,
+    "jest": true,
     "node": true
   },
   "rules": {

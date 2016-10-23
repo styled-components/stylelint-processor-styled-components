@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha test/*.test.js",
+    "test": "jest test/*.test.js",
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build"
   },
@@ -32,9 +32,8 @@
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1",
-    "expect": "^1.20.2",
+    "jest": "^16.0.2",
     "lodash": "^4.15.0",
-    "mocha": "^3.1.2",
     "stylelint": "^7.3.0"
   },
   "dependencies": {

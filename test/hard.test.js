@@ -1,4 +1,3 @@
-const expect = require('expect')
 const stylelint = require('stylelint')
 const path = require('path')
 
@@ -12,7 +11,7 @@ describe('hard', () => {
   let fixture
   let data
 
-  // NOTE beforeEach() runs _after_ the before() hooks of the describe() blocks, so `fixture` will
+  // NOTE beforeEach() runs _after_ the beforeAll() hooks of the describe() blocks, so `fixture` will
   // have the right path
   beforeEach((done) => {
     stylelint.lint({
@@ -32,7 +31,7 @@ describe('hard', () => {
 
   describe('extra indentation', () => {
     describe('valid', () => {
-      before(() => {
+      beforeAll(() => {
         fixture = path.join(__dirname, './fixtures/hard/indentation.js')
       })
 
@@ -54,7 +53,7 @@ describe('hard', () => {
     })
 
     describe('invalid', () => {
-      before(() => {
+      beforeAll(() => {
         fixture = path.join(__dirname, './fixtures/hard/invalid-indentation.js')
       })
 
@@ -83,7 +82,7 @@ describe('hard', () => {
   })
 
   describe('source maps', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/hard/source-maps.js')
     })
 

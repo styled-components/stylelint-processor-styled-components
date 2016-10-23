@@ -1,4 +1,3 @@
-const expect = require('expect')
 const stylelint = require('stylelint')
 const path = require('path')
 
@@ -12,8 +11,8 @@ describe('simple', () => {
   let fixture
   let data
 
-  // NOTE beforeEach() runs _after_ the before() hooks of the describe() blocks, so `fixture` will
-  // have the right path
+  // NOTE beforeEach() runs _after_ the beforeAll() hooks of the describe() blocks, so `fixture`
+  // will have the right path
   beforeEach((done) => {
     stylelint.lint({
       files: [fixture],
@@ -31,7 +30,7 @@ describe('simple', () => {
   })
 
   describe('valid fixtures', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/simple/valid.js')
     })
 
@@ -53,7 +52,7 @@ describe('simple', () => {
   })
 
   describe('invalid fixtures', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/simple/invalid.js')
     })
 
@@ -83,7 +82,7 @@ describe('simple', () => {
   })
 
   describe('helpers', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/simple/helpers.js')
     })
 
@@ -111,7 +110,7 @@ describe('simple', () => {
   })
 
   describe('import names', () => {
-    before(() => {
+    beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/simple/imports.js')
     })
 
