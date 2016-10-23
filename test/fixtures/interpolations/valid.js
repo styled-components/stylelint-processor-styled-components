@@ -40,3 +40,12 @@ const Box3 = styled(Box2)`
   color: ${color};
   background: blue;
 `
+
+// Multiline
+const Button4 = styled.button`
+  display: block;
+  ${`
+    color: blue;
+  `}
+  background: blue;
+`
