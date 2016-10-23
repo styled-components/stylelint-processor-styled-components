@@ -25,9 +25,10 @@ const fixIndentation = (str) => {
   }
 }
 
-const getCSS = (node) => `.selector {${fixIndentation(getTaggedTemplateLiteralContent(node)).text}}\n`
+const getContent = (node) => fixIndentation(getTaggedTemplateLiteralContent(node)).text
 
-const getKeyframes = (node) => `@keyframes {${fixIndentation(getTaggedTemplateLiteralContent(node)).text}}\n`
+const getCSS = (node) => `.selector {${getContent(node)}}\n`
+const getKeyframes = (node) => `@keyframes {${getContent(node)}}\n`
 
 exports.getKeyframes = getKeyframes
 exports.getCSS = getCSS

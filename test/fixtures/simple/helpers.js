@@ -1,12 +1,35 @@
 import { css, keyframes, injectGlobal } from 'styled-components'
 
-// ⚠ Indentation
+/**
+ * Valid
+ */
 const styles = css`
+  color: blue;
+`
+
+const animation = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`
+
+injectGlobal`
+  html {
+    margin: 0;
+    padding: 0;
+  }
+`
+
+// ⚠ Indentation
+const styles2 = css`
 color: blue;
 `
 
 // ⚠ Indentation
-const animation = keyframes`
+const animation2 = keyframes`
 0% {
   opacity: 1;
 }

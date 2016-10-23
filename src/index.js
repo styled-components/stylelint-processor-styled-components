@@ -73,13 +73,8 @@ module.exports = (/* options */) => ({
 
         const helper = isHelper(node, importedNames)
 
-        if (helper === 'keyframes') {
-          extractedCSS += getKeyframes(node)
-          return
-        }
-
-        if (isStyled(node, importedNames.default) || helper === 'injectGlobal' || helper === 'css') {
-          const css = getCSS(node)
+        const addCSSFromNode = (contentGetter) => {
+          const css = contentGetter(node)
           extractedCSS += css
           // Save which line in the extracted CSS is which line in the source
           const fullCSSLength = extractedCSS.split(/\n/).length
@@ -89,6 +84,16 @@ module.exports = (/* options */) => ({
           for (let i = 0; i < currentCSSLength + 1; i++) {
             sourceMapsCorrections[absolutePath][currentCSSStart + i] = node.loc.start.line + i
           }
+        }
+
+        if (helper === 'keyframes') {
+          addCSSFromNode(getKeyframes)
+          return
+        }
+
+        if (isStyled(node, importedNames.default) || helper === 'css' || helper === 'injectGlobal') {
+          addCSSFromNode(getCSS)
+          return
         }
       },
     })
