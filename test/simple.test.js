@@ -136,4 +136,26 @@ describe('simple', () => {
       })
     })
   })
+
+  describe('nesting', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/simple/nesting.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
+    })
+
+    it('should not have any warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(0)
+    })
+  })
 })
