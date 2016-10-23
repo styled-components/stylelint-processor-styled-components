@@ -1,3 +1,4 @@
+const path = require('path')
 const babylon = require('babylon')
 const traverse = require('babel-traverse').default
 
@@ -24,7 +25,8 @@ const sourceMapsCorrections = {}
 module.exports = (/* options */) => ({
   // Get string for stylelint to lint
   code(input, filepath) {
-    sourceMapsCorrections[filepath] = {}
+    const absolutePath = path.resolve(process.cwd(), filepath)
+    sourceMapsCorrections[absolutePath] = {}
     const ast = babylon.parse(input, {
       sourceType: 'module',
       plugins: [
@@ -49,8 +51,7 @@ module.exports = (/* options */) => ({
       injectGlobal: false,
     }
     traverse(ast, {
-      enter(path) {
-        const node = path.node
+      enter({ node }) {
         if (isStyledImport(node)) {
           const imports = node.specifiers.filter((specifier) => (
             specifier.type === 'ImportDefaultSpecifier'
@@ -86,7 +87,7 @@ module.exports = (/* options */) => ({
           const currentCSSStart = (fullCSSLength - currentCSSLength) + 1
           // eslint-disable-next-line no-plusplus
           for (let i = 0; i < currentCSSLength + 1; i++) {
-            sourceMapsCorrections[filepath][currentCSSStart + i] = node.loc.start.line + i
+            sourceMapsCorrections[absolutePath][currentCSSStart + i] = node.loc.start.line + i
           }
         }
       },
