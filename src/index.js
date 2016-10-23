@@ -8,7 +8,6 @@ const isStyledImport = require('./utils/styled').isStyledImport
 const getCSS = require('./utils/general').getCSS
 const getKeyframes = require('./utils/general').getKeyframes
 
-// TODO Make it work for the UMD build, i.e. global vars
 // TODO Fix ampersand in selectors
 // TODO ENFORCE THESE RULES
 // value-no-vendor-prefix – don't allow vendor prefixes
@@ -46,10 +45,10 @@ module.exports = (/* options */) => ({
 
     let extractedCSS = ''
     const importedNames = {
-      default: false,
-      css: false,
-      keyframes: false,
-      injectGlobal: false,
+      default: 'styled',
+      css: 'css',
+      keyframes: 'keyframes',
+      injectGlobal: 'injectGlobal',
     }
     traverse(ast, {
       enter({ node }) {

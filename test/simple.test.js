@@ -158,4 +158,26 @@ describe('simple', () => {
       expect(data.results[0].warnings.length).toEqual(0)
     })
   })
+
+  describe('global variables', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/simple/global.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should have errored', () => {
+      expect(data.errored).toEqual(true)
+    })
+
+    it('should have 8 warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(8)
+    })
+  })
 })
