@@ -1,3 +1,15 @@
 language: node_js
+sudo: true
+dist: trusty
 node_js:
-  - "4"
+  - "4.0"
+  - "6.0"
+install:
+  - npm i -g npm
+  - npm install
+  - npm install coveralls
+script:
+  - npm run lint && npm run test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+notifications:
+  email:
+    on_failure: change
