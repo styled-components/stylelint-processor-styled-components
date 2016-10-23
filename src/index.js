@@ -84,6 +84,7 @@ module.exports = (/* options */) => ({
           const fullCSSLength = extractedCSS.split(/\n/).length
           const currentCSSLength = css.split(/\n/).length
           const currentCSSStart = (fullCSSLength - currentCSSLength) + 1
+          // eslint-disable-next-line no-plusplus
           for (let i = 0; i < currentCSSLength + 1; i++) {
             sourceMapsCorrections[filepath][currentCSSStart + i] = node.loc.start.line + i
           }

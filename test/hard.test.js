@@ -11,8 +11,8 @@ describe('hard', () => {
   let fixture
   let data
 
-  // NOTE beforeEach() runs _after_ the beforeAll() hooks of the describe() blocks, so `fixture` will
-  // have the right path
+  // NOTE beforeEach() runs _after_ the beforeAll() hooks of the describe() blocks, so `fixture`
+  // will have the right path
   beforeEach((done) => {
     stylelint.lint({
       files: [fixture],
