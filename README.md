@@ -1,8 +1,10 @@
 # `stylelint-processor-styled-components`
 
-Lint the CSS in your [`styled-components`](https://github.com/styled-components/styled-components) with `stylelint`!
+Lint the CSS in your [styled components](https://github.com/styled-components/styled-components) with `stylelint`!
 
 [![Build Status](https://travis-ci.org/styled-components/stylelint-processor-styled-components.svg?branch=master)](https://travis-ci.org/styled-components/stylelint-processor-styled-components) [![Coverage Status](https://coveralls.io/repos/github/styled-components/stylelint-processor-styled-components/badge.svg?branch=ci)](https://coveralls.io/github/styled-components/stylelint-processor-styled-components?branch=ci)
+
+![Video of project in use](http://imgur.com/br9zdHb.gif)
 
 **NOTE**: This is currently in alpha. While unit-tested, it doesn't yet have a lot of real world project exposure, so there'll be some edge cases we haven't covered. Please try it out and submit bug reports!
 
@@ -55,4 +57,4 @@ npm run lint:css
 
 Licensed under the MIT License, Copyright © 2016 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
 
-Based on Mapbox' excellent `stylelint-processor-markdown`
+Based on Mapbox' excellent [`stylelint-processor-markdown`](https://github.com/mapbox/stylelint-processor-markdown), thanks to @davidtheclark!
