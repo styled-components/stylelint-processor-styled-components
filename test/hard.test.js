@@ -30,28 +30,27 @@ describe('hard', () => {
     })
   })
 
-  // TODO Fix this
-  // describe.skip('extra indentation', () => {
-  //   before(() => {
-  //     fixture = path.join(__dirname, './fixtures/hard/indentation.js')
-  //   })
-  //
-  //   it('should have one result', () => {
-  //     expect(data.results.length).toEqual(1)
-  //   })
-  //
-  //   it('should use the right file', () => {
-  //     expect(data.results[0].source).toEqual(fixture)
-  //   })
-  //
-  //   it('should not have errored', () => {
-  //     expect(data.errored).toEqual(false)
-  //   })
-  //
-  //   it('should not have any warnings', () => {
-  //     expect(data.results[0].warnings).toEqual(undefined)
-  //   })
-  // })
+  describe('extra indentation', () => {
+    before(() => {
+      fixture = path.join(__dirname, './fixtures/hard/indentation.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
+    })
+
+    it('should not have any warnings', () => {
+      expect(data.results[0].warnings).toEqual([])
+    })
+  })
 
   describe('source maps', () => {
     before(() => {

@@ -85,7 +85,7 @@ module.exports = (/* options */) => ({
           // Save which line in the extracted CSS is which line in the source
           const fullCSSLength = extractedCSS.split(/\n/).length
           const currentCSSLength = css.split(/\n/).length
-          const currentCSSStart = fullCSSLength - currentCSSLength + 1
+          const currentCSSStart = (fullCSSLength - currentCSSLength) + 1
           for (let i = 0; i < currentCSSLength + 1; i++) {
             sourceMapsCorrections[filepath][currentCSSStart + i] = node.loc.start.line + i
           }
