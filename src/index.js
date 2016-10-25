@@ -1,12 +1,12 @@
 const path = require('path')
 const babylon = require('babylon')
 const traverse = require('babel-traverse').default
-
 const isStyled = require('./utils/styled').isStyled
 const isHelper = require('./utils/styled').isHelper
 const isStyledImport = require('./utils/styled').isStyledImport
 const getCSS = require('./utils/general').getCSS
 const getKeyframes = require('./utils/general').getKeyframes
+const parseImports = require('./utils/parse').parseImports
 
 // TODO Fix ampersand in selectors
 // TODO ENFORCE THESE RULES
@@ -44,7 +44,7 @@ module.exports = (/* options */) => ({
     })
 
     let extractedCSS = ''
-    const importedNames = {
+    let importedNames = {
       default: 'styled',
       css: 'css',
       keyframes: 'keyframes',
@@ -53,22 +53,7 @@ module.exports = (/* options */) => ({
     traverse(ast, {
       enter({ node }) {
         if (isStyledImport(node)) {
-          const imports = node.specifiers.filter((specifier) => (
-            specifier.type === 'ImportDefaultSpecifier'
-            || specifier.type === 'ImportSpecifier'
-          ))
-
-          if (imports.length <= 0) return
-
-          imports.forEach((singleImport) => {
-            if (singleImport.imported) {
-              // Is helper method
-              importedNames[singleImport.imported.name] = singleImport.local.name
-            } else {
-              // Is default import
-              importedNames.default = singleImport.local.name
-            }
-          })
+          importedNames = parseImports(node)
         }
 
         const helper = isHelper(node, importedNames)
