@@ -1,5 +1,3 @@
-const getTaggedTemplateLiteralContent = require('./tagged-template-literal').getTaggedTemplateLiteralContent
-
 /**
  * Based on https://github.com/mapbox/stylelint-processor-markdown
  * @author @davidtheclark
@@ -25,10 +23,9 @@ const fixIndentation = (str) => {
   }
 }
 
-const getContent = (node) => fixIndentation(getTaggedTemplateLiteralContent(node)).text
+const wrapSelector = (content) => `.selector {${content}}\n`
+const wrapKeyframes = (content) => `@keyframes {${content}}\n`
 
-const getCSS = (node) => `.selector {${getContent(node)}}\n`
-const getKeyframes = (node) => `@keyframes {${getContent(node)}}\n`
-
-exports.getKeyframes = getKeyframes
-exports.getCSS = getCSS
+exports.wrapKeyframes = wrapKeyframes
+exports.wrapSelector = wrapSelector
+exports.fixIndentation = fixIndentation
