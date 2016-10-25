@@ -24,6 +24,7 @@ describe('simple', () => {
       data = result
       done()
     }).catch((err) => {
+      console.log(err)
       data = err
       done()
     })

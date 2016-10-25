@@ -11,13 +11,10 @@ const hasInterpolations = (node) => !node.quasi.quasis[0].tail
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
-const interleave = (quasis) => (
-  quasis.reduce((prev, quasi, i) => {
-    if (i === 0) {
-      return quasi.value.raw.replace(/(\n.*$)/, '\n')
-    }
-    return prev + quasi.value.raw.replace(/(\n.*$|^.+\n)/, '')
-  }, '')
+const interleave = (quasis, expressions) => (
+  expressions.reduce((prev, expression, index) => (
+    prev.concat(`$\{${expression.name}}`, quasis[index + 1].value.raw)
+  ), [quasis[0].value.raw]).join('')
 )
 
 /**

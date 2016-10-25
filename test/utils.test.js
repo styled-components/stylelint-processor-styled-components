@@ -15,7 +15,7 @@ describe('utils', () => {
     it('should remove an interpolation', () => {
       const quasis = [{
         value: {
-          raw: '\n  display: block;\ncolor: ',
+          raw: '\n  display: block;\n  color: ',
         },
       }, {
         value: {

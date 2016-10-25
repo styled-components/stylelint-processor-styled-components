@@ -34,6 +34,7 @@ describe('interpolations', () => {
 
     it('should have one result', () => {
       expect(data.results.length).toEqual(1)
+      console.log(data.results[0].warnings)
     })
 
     it('should use the right file', () => {
