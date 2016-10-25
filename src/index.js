@@ -4,9 +4,14 @@ const traverse = require('babel-traverse').default
 const isStyled = require('./utils/styled').isStyled
 const isHelper = require('./utils/styled').isHelper
 const isStyledImport = require('./utils/styled').isStyledImport
-const getCSS = require('./utils/general').getCSS
-const getKeyframes = require('./utils/general').getKeyframes
+
+const wrapSelector = require('./utils/general').wrapSelector
+const wrapKeyframes = require('./utils/general').wrapKeyframes
+const fixIndentation = require('./utils/general').fixIndentation
+
+const getTTLContent = require('./utils/tagged-template-literal.js').getTaggedTemplateLiteralContent
 const parseImports = require('./utils/parse').parseImports
+const getSourceMap = require('./utils/parse').getSourceMap
 
 // TODO Fix ampersand in selectors
 // TODO ENFORCE THESE RULES
@@ -54,32 +59,23 @@ module.exports = (/* options */) => ({
       enter({ node }) {
         if (isStyledImport(node)) {
           importedNames = parseImports(node)
+          return
         }
 
         const helper = isHelper(node, importedNames)
 
-        const addCSSFromNode = (contentGetter) => {
-          const css = contentGetter(node)
-          extractedCSS += css
-          // Save which line in the extracted CSS is which line in the source
-          const fullCSSLength = extractedCSS.split(/\n/).length
-          const currentCSSLength = css.split(/\n/).length
-          const currentCSSStart = (fullCSSLength - currentCSSLength) + 1
-          // eslint-disable-next-line no-plusplus
-          for (let i = 0; i < currentCSSLength + 1; i++) {
-            sourceMapsCorrections[absolutePath][currentCSSStart + i] = node.loc.start.line + i
-          }
-        }
+        if (!helper && !isStyled(node, importedNames.default)) return
 
-        if (helper === 'keyframes') {
-          addCSSFromNode(getKeyframes)
-          return
-        }
-
-        if (isStyled(node, importedNames.default) || helper === 'css' || helper === 'injectGlobal') {
-          addCSSFromNode(getCSS)
-          return
-        }
+        const content = getTTLContent(node)
+        const fixedContent = fixIndentation(content).text
+        const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector
+        const wrappedContent = wrapperFn(fixedContent)
+        extractedCSS += wrappedContent
+        // Save source location, merging existing corrections with current corrections
+        sourceMapsCorrections[absolutePath] = Object.assign(
+          sourceMapsCorrections[absolutePath],
+          getSourceMap(extractedCSS, wrappedContent, node.loc.start.line)
+        )
       },
     })
 

@@ -18,8 +18,22 @@ const parseImports = (node, currentNames) => {
       names.default = singleImport.local.name
     }
   })
-  
+
   return names
 }
 
+const getSourceMap = (fullCSS, fragmentCSS, startInSource) => {
+  const correction = {}
+  // Save which line in the full CSS is which line in the source
+  const fullCSSLength = fullCSS.split(/\n/).length
+  const currentCSSLength = fragmentCSS.split(/\n/).length
+  const currentCSSStart = (fullCSSLength - currentCSSLength) + 1
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < currentCSSLength + 1; i++) {
+    correction[currentCSSStart + i] = startInSource + i
+  }
+  return correction
+}
+
 exports.parseImports = parseImports
+exports.getSourceMap = getSourceMap
