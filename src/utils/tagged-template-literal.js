@@ -13,7 +13,7 @@ const hasInterpolations = (node) => !node.quasi.quasis[0].tail
  */
 const interleave = (quasis, expressions) => (
   expressions.reduce((prev, expression, index) => (
-    prev.concat(`$\{${expression.name}}`, quasis[index + 1].value.raw)
+    prev.concat(`$${expression.name}`, quasis[index + 1].value.raw)
   ), [quasis[0].value.raw]).join('')
 )
 

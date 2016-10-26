@@ -25,7 +25,7 @@ describe('utils', () => {
       const expressions = [{
         name: 'color',
       }]
-      expect(interleave(quasis, expressions)).toEqual('\n  display: block;\n  background: blue;\n')
+      expect(interleave(quasis, expressions)).toEqual('\n  display: block;\n  color: $color;\n  background: blue;\n')
     })
   })
 })

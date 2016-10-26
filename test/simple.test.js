@@ -16,6 +16,7 @@ describe('simple', () => {
   beforeEach((done) => {
     stylelint.lint({
       files: [fixture],
+      syntax: 'scss',
       config: {
         processors: [processor],
         rules,
