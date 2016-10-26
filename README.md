@@ -29,9 +29,12 @@ Add a `.stylelintrc` file to the root of your project:
 ```JSON
 {
   "processors": ["stylelint-processor-styled-components"],
-  "extends": "stylelint-config-standard"
+  "extends": "stylelint-config-standard",
+  "syntax": "scss"
 }
 ```
+
+> Setting the `syntax` to `scss` is needed for nesting and interpolation support!
 
 Then you need to actually run `stylelint`.
 
