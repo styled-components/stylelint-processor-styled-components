@@ -1,4 +1,4 @@
-import { css, keyframes, injectGlobal } from 'styled-components'
+import styled, { css, keyframes, injectGlobal } from 'styled-components'
 
 /**
  * Valid
@@ -14,6 +14,11 @@ const animation = keyframes`
   100% {
     opacity: 0;
   }
+`
+
+const Button = styled.button`
+  ${styles}
+  animation: 3s ${animation};
 `
 
 injectGlobal`
