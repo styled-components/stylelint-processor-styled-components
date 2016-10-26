@@ -12,10 +12,10 @@ describe('utils', () => {
       expect(interleave(quasis, [])).toEqual(raw)
     })
 
-    it('should remove an interpolation', () => {
+    it('should variabelize an interpolation', () => {
       const quasis = [{
         value: {
-          raw: '\n  display: block;\ncolor: ',
+          raw: '\n  display: block;\n  color: ',
         },
       }, {
         value: {
@@ -25,7 +25,7 @@ describe('utils', () => {
       const expressions = [{
         name: 'color',
       }]
-      expect(interleave(quasis, expressions)).toEqual('\n  display: block;\n  background: blue;\n')
+      expect(interleave(quasis, expressions)).toEqual('\n  display: block;\n  color: $color;\n  background: blue;\n')
     })
   })
 })

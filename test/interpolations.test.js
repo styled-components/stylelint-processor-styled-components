@@ -14,6 +14,7 @@ describe('interpolations', () => {
   beforeEach((done) => {
     stylelint.lint({
       files: [fixture],
+      syntax: 'scss',
       config: {
         processors: [processor],
         rules,
@@ -49,7 +50,7 @@ describe('interpolations', () => {
     })
   })
 
-  describe('invalid interpolations (should be ignored)', () => {
+  describe('invalid interpolations', () => {
     beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/interpolations/invalid.js')
     })
@@ -62,12 +63,16 @@ describe('interpolations', () => {
       expect(data.results[0].source).toEqual(fixture)
     })
 
-    it('should not have errored', () => {
-      expect(data.errored).toEqual(false)
+    it('should have errored', () => {
+      expect(data.errored).toEqual(true)
     })
 
-    it('should not have any warnings', () => {
-      expect(data.results[0].warnings.length).toEqual(0)
+    it('should have warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(1)
+    })
+
+    it('should have an indentation as the first warning', () => {
+      expect(data.results[0].warnings[0].rule).toEqual('indentation')
     })
   })
 })

@@ -16,6 +16,7 @@ describe('simple', () => {
   beforeEach((done) => {
     stylelint.lint({
       files: [fixture],
+      syntax: 'scss',
       config: {
         processors: [processor],
         rules,
@@ -24,6 +25,7 @@ describe('simple', () => {
       data = result
       done()
     }).catch((err) => {
+      console.log(err)
       data = err
       done()
     })

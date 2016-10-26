@@ -49,3 +49,23 @@ const Button4 = styled.button`
   `}
   background: blue;
 `
+
+// Conditional 
+const cond = true
+const Button5 = styled.button`
+  display: block;
+  ${cond && `
+    color: blue;
+  `}
+  background: blue;
+`
+
+// Conditional 
+const cond2 = false 
+const Button6 = styled.button`
+  display: block;
+  ${cond2 && `
+    color: ${cond2};
+  `}
+  background: blue;
+`

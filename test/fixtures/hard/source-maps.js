@@ -14,3 +14,26 @@ const Button2 = styled.button`
 const Button3 = styled.button`
     color: blue;
 `
+
+// ⚠️ BAD INDENTATION at 22:5 ⚠️
+const Button4 = styled.button`
+  color: blue;
+  background: ${color};
+    display: block; 
+`
+
+// ⚠️ BAD INDENTATION at 28:5 ⚠️
+const Button5 = styled.button`
+  color: blue;
+    background: ${color};
+  display: block; 
+`
+
+// ⚠️ BAD INDENTATION at 35:5 ⚠️
+const Button6 = styled.button`
+  color: blue;
+    ${`
+      background: red;
+    `}
+  display: block; 
+`
