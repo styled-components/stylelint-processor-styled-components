@@ -99,8 +99,8 @@ describe('hard', () => {
       expect(data.errored).toEqual(true)
     })
 
-    it('should have four warning', () => {
-      expect(data.results[0].warnings.length).toEqual(4)
+    it('should have five warning', () => {
+      expect(data.results[0].warnings.length).toEqual(5)
     })
 
     it('should have four warnings about indentation', () => {
@@ -108,6 +108,7 @@ describe('hard', () => {
       expect(data.results[0].warnings[1].rule).toEqual('indentation')
       expect(data.results[0].warnings[2].rule).toEqual('indentation')
       expect(data.results[0].warnings[3].rule).toEqual('indentation')
+      expect(data.results[0].warnings[4].rule).toEqual('indentation')
     })
 
     it('should have a warning in line 5', () => {
@@ -124,6 +125,10 @@ describe('hard', () => {
 
     it('should have a warning in line 28', () => {
       expect(data.results[0].warnings[3].line).toEqual(28)
+    })
+    
+    it('should have a warning in line 35', () => {
+      expect(data.results[0].warnings[4].line).toEqual(35)
     })
   })
 })

@@ -22,9 +22,18 @@ const Button4 = styled.button`
     display: block; 
 `
 
-// ⚠️ BAD INDENTATION at 29:5 ⚠️
+// ⚠️ BAD INDENTATION at 28:5 ⚠️
 const Button5 = styled.button`
   color: blue;
     background: ${color};
+  display: block; 
+`
+
+// ⚠️ BAD INDENTATION at 35:5 ⚠️
+const Button6 = styled.button`
+  color: blue;
+    ${`
+      background: red;
+    `}
   display: block; 
 `
