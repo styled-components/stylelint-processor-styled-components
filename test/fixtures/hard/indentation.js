@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 // None of the below should throw indentation errors
 const Comp = () => {
@@ -32,5 +32,5 @@ const animations = {
     100% {
       opacity: 1;
     }
-  `
+  `,
 }

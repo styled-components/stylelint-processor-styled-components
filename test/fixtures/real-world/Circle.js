@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
+// Valid indentation
 const animations = {
   spinnerCircle: keyframes`
     0% {
@@ -12,6 +13,9 @@ const animations = {
     }
   `
 }
+
+/*
+
 
 export default (props) => {
   const CirclePrimitive = styled.div`
@@ -43,3 +47,5 @@ export default (props) => {
   `
   return <CirclePrimitive />
 }
+
+ */
