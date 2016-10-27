@@ -11,11 +11,8 @@ const animations = {
     100% {
       opacity: 1;
     }
-  `
+  `,
 }
-
-/*
-
 
 export default (props) => {
   const CirclePrimitive = styled.div`
@@ -45,7 +42,5 @@ export default (props) => {
       `}
     }
   `
-  return <CirclePrimitive />
+  return React.createElement(CirclePrimitive)
 }
-
- */
