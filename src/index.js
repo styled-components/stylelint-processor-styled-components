@@ -48,7 +48,7 @@ module.exports = (/* options */) => ({
       ],
     })
 
-    let extractedCSS = ''
+    let extractedCSS = []
     let importedNames = {
       default: 'styled',
       css: 'css',
@@ -70,16 +70,16 @@ module.exports = (/* options */) => ({
         const fixedContent = fixIndentation(content).text
         const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector
         const wrappedContent = wrapperFn(fixedContent)
-        extractedCSS += wrappedContent
+        extractedCSS.push(wrappedContent)
         // Save source location, merging existing corrections with current corrections
         sourceMapsCorrections[absolutePath] = Object.assign(
           sourceMapsCorrections[absolutePath],
-          getSourceMap(extractedCSS, wrappedContent, node.loc.start.line)
+          getSourceMap(extractedCSS.join('\n'), wrappedContent, node.loc.start.line)
         )
       },
     })
 
-    return extractedCSS
+    return extractedCSS.join('\n')
   },
   // Fix sourcemaps
   result(stylelintResult, filepath) {
