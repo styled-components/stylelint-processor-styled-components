@@ -48,7 +48,7 @@ module.exports = (/* options */) => ({
       ],
     })
 
-    let extractedCSS = []
+    const extractedCSS = []
     let importedNames = {
       default: 'styled',
       css: 'css',
