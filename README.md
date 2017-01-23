@@ -43,7 +43,7 @@ Add a `lint:css` script to your `package.json`. This script will run `stylelint`
 ```JSON
 {
   "scripts": {
-    "lint:css": "stylelint './components/**/*.js'"
+    "lint:css": "stylelint \"./components/**/*.js\""
   }
 }
 ```
