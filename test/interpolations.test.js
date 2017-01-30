@@ -3,6 +3,7 @@ const path = require('path')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
+  'property-no-unknown': true,
   'block-no-empty': true,
   indentation: 2,
 }

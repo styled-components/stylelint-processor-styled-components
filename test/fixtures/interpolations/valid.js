@@ -50,7 +50,7 @@ const Button4 = styled.button`
   background: blue;
 `
 
-// Conditional 
+// Conditional
 const cond = true
 const Button5 = styled.button`
   display: block;
@@ -60,12 +60,20 @@ const Button5 = styled.button`
   background: blue;
 `
 
-// Conditional 
-const cond2 = false 
+// Conditional
+const cond2 = false
 const Button6 = styled.button`
   display: block;
   ${cond2 && `
     color: ${cond2};
   `}
   background: blue;
+`
+
+// Complex
+const dir = 'left';
+const Button7 = styled.button`
+  display: block;
+  background: blue;
+  margin-${dir}: 12.5px;
 `
