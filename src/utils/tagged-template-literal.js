@@ -1,18 +1,4 @@
-/**
- * Checks if last line of text has whitespaces only
- */
-const isLastLineWhitespaceOnly = (text) => {
-  for (let i = text.length - 1; i >= 0; i -= 1) {
-    const char = text.charAt(i)
-    if (char === '\n') {
-      return true
-    }
-    if (char !== '\t' && char !== ' ') {
-      return false
-    }
-  }
-  return true
-}
+const isLastLineWhitespaceOnly = require('./general').isLastLineWhitespaceOnly
 
 /**
  * Check if a node is a tagged template literal
