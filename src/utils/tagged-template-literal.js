@@ -1,3 +1,5 @@
+const isLastLineWhitespaceOnly = require('./general').isLastLineWhitespaceOnly
+
 /**
  * Check if a node is a tagged template literal
  */
@@ -11,11 +13,26 @@ const hasInterpolations = (node) => !node.quasi.quasis[0].tail
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
-const interleave = (quasis, expressions) => (
-  expressions.reduce((prev, expression, index) => (
-    prev.concat(`$${expression.name}`, quasis[index + 1].value.raw)
-  ), [quasis[0].value.raw]).join('')
-)
+const interleave = (quasis, expressions) => {
+  let css = ''
+  for (let i = 0, l = expressions.length; i < l; i += 1) {
+    const prevText = quasis[i].value.raw
+    const nextText = quasis[i + 1].value.raw
+    const expression = expressions[i]
+
+    css += prevText
+    if (isLastLineWhitespaceOnly(prevText)) {
+      css += `-styled-mixin: ${expression.name}`
+      if (nextText.charAt(0) !== ';') {
+        css += ';'
+      }
+    } else {
+      css += `$${expression.name}`
+    }
+  }
+  css += quasis[quasis.length - 1].value.raw
+  return css
+}
 
 /**
  * Get the content of a tagged template literal

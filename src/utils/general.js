@@ -29,9 +29,26 @@ const fixIndentation = (str) => {
   }
 }
 
+/**
+ * Checks if last line of text has whitespaces only
+ */
+const isLastLineWhitespaceOnly = (text) => {
+  for (let i = text.length - 1; i >= 0; i -= 1) {
+    const char = text.charAt(i)
+    if (char === '\n') {
+      return true
+    }
+    if (char !== '\t' && char !== ' ') {
+      return false
+    }
+  }
+  return true
+}
+
 const wrapSelector = (content) => `.selector {${content}}\n`
 const wrapKeyframes = (content) => `@keyframes {${content}}\n`
 
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
+exports.isLastLineWhitespaceOnly = isLastLineWhitespaceOnly
