@@ -76,4 +76,33 @@ describe('interpolations', () => {
       expect(data.results[0].warnings[0].rule).toEqual('indentation')
     })
   })
+
+  describe('complex interpolations', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/interpolations/complex.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
+    })
+
+    it('should not have any warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(0)
+    })
+
+    it('should not result in a CssSyntaxError', () => {
+      const warning = data.results[0].warnings[0]
+        && data.results[0].warnings[0].rule
+
+      expect(warning).not.toEqual('CssSyntaxError')
+    })
+  })
 })
