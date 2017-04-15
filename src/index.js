@@ -95,6 +95,10 @@ module.exports = (/* options */) => ({
       prevWarnings.push(correctedWarning)
       return prevWarnings
     }, [])
+    
+    if (newWarnings.length === 0) {
+      stylelintResult.errored = false
+    }
 
     return Object.assign(stylelintResult, { warnings: newWarnings })
   },
