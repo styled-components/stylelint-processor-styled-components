@@ -5,6 +5,10 @@ const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'block-no-empty': true,
   indentation: 2,
+  'rule-empty-line-before': ['always-multi-line', {
+    except: ['first-nested'],
+    ignore: ['after-comment'],
+  }],
 }
 
 describe('simple', () => {
@@ -101,13 +105,14 @@ describe('simple', () => {
     })
 
     it('should have 11 warnings (i.e. wrong lines of code)', () => {
-      expect(data.results[0].warnings.length).toEqual(11)
+      expect(data.results[0].warnings.length).toEqual(13)
     })
 
-    it('should all be indentation warnings', () => {
-      data.results[0].warnings.forEach((warning) => {
-        expect(warning.rule).toEqual('indentation')
-      })
+    it('should be indentation and "empty line before" warnings', () => {
+      const warnings = data.results[0].warnings
+        .reduce((all, { rule }) => all.includes(rule) ? all : all.concat(rule), [])
+
+      expect(warnings).toEqual(['indentation', 'rule-empty-line-before'])
     })
   })
 
