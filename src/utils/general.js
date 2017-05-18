@@ -1,3 +1,6 @@
+// selector count
+let count = 0
+
 /**
  * Based on https://github.com/mapbox/stylelint-processor-markdown
  * @author @davidtheclark
@@ -45,7 +48,8 @@ const isLastLineWhitespaceOnly = (text) => {
   return true
 }
 
-const wrapSelector = (content) => `.selector {${content}}\n`
+// eslint-disable-next-line no-return-assign
+const wrapSelector = (content) => `.selector${count += 1} {${content}}\n`
 const wrapKeyframes = (content) => `@keyframes {${content}}\n`
 
 exports.wrapKeyframes = wrapKeyframes
