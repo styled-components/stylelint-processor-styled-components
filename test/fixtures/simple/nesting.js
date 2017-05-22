@@ -10,6 +10,7 @@ const Button = styled.button`
 // Selectors
 const Button2 = styled.button`
   color: red;
+
   &:hover {
     color: blue;
   }
@@ -18,6 +19,7 @@ const Button2 = styled.button`
 // Complex selectors
 const Button3 = styled.button`
   color: red;
+
   &:placeholder {
     color: blue;
   }
