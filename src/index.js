@@ -95,8 +95,9 @@ module.exports = (/* options */) => ({
       prevWarnings.push(correctedWarning)
       return prevWarnings
     }, [])
-    
+
     if (newWarnings.length === 0) {
+      // eslint-disable-next-line no-param-reassign
       stylelintResult.errored = false
     }
 
