@@ -34,7 +34,9 @@
     "eslint-plugin-import": "^2.0.1",
     "jest": "^16.0.2",
     "lodash": "^4.15.0",
-    "stylelint": "^7.3.0"
+    "stylelint": "^7.3.0",
+    "typescript": "^2.3.4",
+    "typescript-eslint-parser": "^3.0.0"
   },
   "dependencies": {
     "babel-traverse": "^6.16.0",
