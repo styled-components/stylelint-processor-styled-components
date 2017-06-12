@@ -39,7 +39,7 @@
   "dependencies": {
     "babel-traverse": "^6.16.0",
     "babylon": "^6.12.0",
-    "typescript": "^2.3.4",
+    "typescript": "~2.3.2",
     "typescript-eslint-parser": "^3.0.0"
   }
 }
