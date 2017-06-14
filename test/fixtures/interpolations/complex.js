@@ -15,3 +15,8 @@ const Button = styled.button`
   ${props => props.isHovering && interpolatedStyle}
 `;
 
+// Consecutive template literals
+const gap = '5px';
+const Span = styled.span`
+  padding: 0 ${gap} ${gap};
+`;
