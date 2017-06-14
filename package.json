@@ -4,7 +4,10 @@
   "description": "A stylelint processor for styled-components",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --list-different --print-width 100 --tab-width 2 --no-semi --single-quote '{src,test}/**/*.{js,jsx}'",
+    "prettier": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote '{src,test}/**/*.{js,jsx}'",
+    "precommit": "lint-staged",
     "test": "jest test/*.test.js",
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build"
@@ -33,7 +36,9 @@
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1",
     "jest": "^16.0.2",
+    "lint-staged": "^3.6.1",
     "lodash": "^4.15.0",
+    "prettier": "^1.4.4",
     "stylelint": "^7.3.0"
   },
   "dependencies": {

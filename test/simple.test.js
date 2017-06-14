@@ -5,10 +5,13 @@ const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'block-no-empty': true,
   indentation: 2,
-  'rule-empty-line-before': ['always-multi-line', {
-    except: ['first-nested'],
-    ignore: ['after-comment'],
-  }],
+  'rule-empty-line-before': [
+    'always-multi-line',
+    {
+      except: ['first-nested'],
+      ignore: ['after-comment']
+    }
+  ]
 }
 
 describe('simple', () => {
@@ -17,22 +20,25 @@ describe('simple', () => {
 
   // NOTE beforeEach() runs _after_ the beforeAll() hooks of the describe() blocks, so `fixture`
   // will have the right path
-  beforeEach((done) => {
-    stylelint.lint({
-      files: [fixture],
-      syntax: 'scss',
-      config: {
-        processors: [processor],
-        rules,
-      },
-    }).then((result) => {
-      data = result
-      done()
-    }).catch((err) => {
-      console.log(err)
-      data = err
-      done()
-    })
+  beforeEach(done => {
+    stylelint
+      .lint({
+        files: [fixture],
+        syntax: 'scss',
+        config: {
+          processors: [processor],
+          rules
+        }
+      })
+      .then(result => {
+        data = result
+        done()
+      })
+      .catch(err => {
+        console.log(err)
+        data = err
+        done()
+      })
   })
 
   describe('valid fixtures', () => {
@@ -109,8 +115,10 @@ describe('simple', () => {
     })
 
     it('should be indentation and "empty line before" warnings', () => {
-      const warnings = data.results[0].warnings
-        .reduce((all, { rule }) => all.includes(rule) ? all : all.concat(rule), [])
+      const warnings = data.results[0].warnings.reduce(
+        (all, { rule }) => (all.includes(rule) ? all : all.concat(rule)),
+        []
+      )
 
       expect(warnings).toEqual(['indentation', 'rule-empty-line-before'])
     })
@@ -138,7 +146,7 @@ describe('simple', () => {
     })
 
     it('should all be indentation warnings, even with a different name', () => {
-      data.results[0].warnings.forEach((warning) => {
+      data.results[0].warnings.forEach(warning => {
         expect(warning.rule).toEqual('indentation')
       })
     })

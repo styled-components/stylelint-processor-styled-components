@@ -4,28 +4,31 @@ const path = require('path')
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'block-no-empty': true,
-  indentation: 2,
+  indentation: 2
 }
 
 describe('interpolations', () => {
   let fixture
   let data
 
-  beforeEach((done) => {
-    stylelint.lint({
-      files: [fixture],
-      syntax: 'scss',
-      config: {
-        processors: [processor],
-        rules,
-      },
-    }).then((result) => {
-      data = result
-      done()
-    }).catch((err) => {
-      data = err
-      done()
-    })
+  beforeEach(done => {
+    stylelint
+      .lint({
+        files: [fixture],
+        syntax: 'scss',
+        config: {
+          processors: [processor],
+          rules
+        }
+      })
+      .then(result => {
+        data = result
+        done()
+      })
+      .catch(err => {
+        data = err
+        done()
+      })
   })
 
   describe('valid', () => {
@@ -98,8 +101,7 @@ describe('interpolations', () => {
     })
 
     it('should not result in a CssSyntaxError', () => {
-      const warning = data.results[0].warnings[0]
-        && data.results[0].warnings[0].rule
+      const warning = data.results[0].warnings[0] && data.results[0].warnings[0].rule
 
       expect(warning).not.toEqual('CssSyntaxError')
     })

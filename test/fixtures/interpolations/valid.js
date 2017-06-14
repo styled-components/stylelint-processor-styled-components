@@ -50,21 +50,23 @@ const Button4 = styled.button`
   background: blue;
 `
 
-// Conditional 
+// Conditional
 const cond = true
 const Button5 = styled.button`
   display: block;
-  ${cond && `
+  ${cond &&
+    `
     color: blue;
   `}
   background: blue;
 `
 
-// Conditional 
-const cond2 = false 
+// Conditional
+const cond2 = false
 const Button6 = styled.button`
   display: block;
-  ${cond2 && `
+  ${cond2 &&
+    `
     color: ${cond2};
   `}
   background: blue;
