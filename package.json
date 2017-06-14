@@ -35,6 +35,7 @@
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1",
+    "husky": "^0.13.4",
     "jest": "^16.0.2",
     "lint-staged": "^3.6.1",
     "lodash": "^4.15.0",
