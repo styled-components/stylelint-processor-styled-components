@@ -32,5 +32,5 @@ const animations = {
     100% {
       opacity: 1;
     }
-  `,
+  `
 }

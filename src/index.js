@@ -9,7 +9,7 @@ const ignoredRules = [
   // Don't throw if there's no styled-components in a file
   'no-empty-source',
   // We don't care about end-of-source newlines, users cannot control them
-  'no-missing-end-of-source-newline',
+  'no-missing-end-of-source-newline'
 ]
 
 const sourceMapsCorrections = {}
@@ -20,11 +20,11 @@ module.exports = (/* options */) => ({
     const absolutePath = path.resolve(process.cwd(), filepath)
     sourceMapsCorrections[absolutePath] = {}
     const { extractedCSS, sourceMap } = parse(input, absolutePath)
-      // Save source location, merging existing corrections with current corrections
+    // Save source location, merging existing corrections with current corrections
     sourceMapsCorrections[absolutePath] = Object.assign(
-          sourceMapsCorrections[absolutePath],
-          sourceMap
-        )
+      sourceMapsCorrections[absolutePath],
+      sourceMap
+    )
     return extractedCSS
   },
   // Fix sourcemaps
@@ -36,7 +36,7 @@ module.exports = (/* options */) => ({
         // Replace "brace" with "backtick" in warnings, e.g.
         // "Unexpected empty line before closing backtick" (instead of "brace")
         text: warning.text.replace(/brace/, 'backtick'),
-        line: lineCorrection[warning.line],
+        line: lineCorrection[warning.line]
       })
       prevWarnings.push(correctedWarning)
       return prevWarnings
@@ -48,5 +48,5 @@ module.exports = (/* options */) => ({
     }
 
     return Object.assign(stylelintResult, { warnings: newWarnings })
-  },
+  }
 })

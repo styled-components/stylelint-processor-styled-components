@@ -39,4 +39,4 @@ const Button4 = styled.button`
   &:hover {
     background-color: ${color};
   }
-`;
+`

@@ -14,13 +14,13 @@ const getTTLContent = require('../utils/tagged-template-literal.js').getTaggedTe
 const parseImports = require('../utils/parse').parseImports
 const getSourceMap = require('../utils/parse').getSourceMap
 
-const processStyledComponentsFile = (ast) => {
+const processStyledComponentsFile = ast => {
   const extractedCSS = []
   let importedNames = {
     default: 'styled',
     css: 'css',
     keyframes: 'keyframes',
-    injectGlobal: 'injectGlobal',
+    injectGlobal: 'injectGlobal'
   }
   let sourceMap = {}
   traverse(ast, {
@@ -37,14 +37,16 @@ const processStyledComponentsFile = (ast) => {
       const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector
       const wrappedContent = wrapperFn(fixedContent)
       extractedCSS.push(wrappedContent)
-      sourceMap = Object.assign(sourceMap,
-                    getSourceMap(extractedCSS.join('\n'), wrappedContent, node.loc.start.line))
-    },
+      sourceMap = Object.assign(
+        sourceMap,
+        getSourceMap(extractedCSS.join('\n'), wrappedContent, node.loc.start.line)
+      )
+    }
   })
 
   return {
     extractedCSS: extractedCSS.join('\n'),
-    sourceMap,
+    sourceMap
   }
 }
 

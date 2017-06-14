@@ -3,12 +3,12 @@ const isLastLineWhitespaceOnly = require('./general').isLastLineWhitespaceOnly
 /**
  * Check if a node is a tagged template literal
  */
-const isTaggedTemplateLiteral = (node) => node.type === 'TaggedTemplateExpression'
+const isTaggedTemplateLiteral = node => node.type === 'TaggedTemplateExpression'
 
 /**
  * Check if a tagged template literal has interpolations
  */
-const hasInterpolations = (node) => !node.quasi.quasis[0].tail
+const hasInterpolations = node => !node.quasi.quasis[0].tail
 
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
@@ -39,7 +39,7 @@ const interleave = (quasis, expressions) => {
  *
  * TODO Cover edge cases
  */
-const getTaggedTemplateLiteralContent = (node) => {
+const getTaggedTemplateLiteralContent = node => {
   if (hasInterpolations(node)) {
     return interleave(node.quasi.quasis, node.quasi.expressions)
   } else {
