@@ -1,14 +1,24 @@
 language: node_js
-sudo: true
-dist: trusty
 node_js:
-  - "6.0"
+  - "6"
+  - "7"
+  - "8"
 install:
   - npm i -g npm
   - npm install
   - npm install coveralls
 script:
-  - npm run lint && npm run test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - npm test
 notifications:
   email:
     on_failure: change
+jobs:
+  include:
+    - stage: lint
+      node_js: "8"
+      script:
+        - npm run lint
+    - stage: coverage
+      node_js: "8"
+      script:
+        - npm run test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
