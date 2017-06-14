@@ -1,12 +1,17 @@
-{
+module.exports = {
   "extends": "airbnb-base",
   "env": {
     "jest": true,
     "node": true
   },
   "rules": {
-    "semi": [2, "never"],
+    // Ignored because prettier handles this
+    "semi": 0,
+    "comma-dangle": 0,
+    "no-mixed-operators": 0,
     "arrow-parens": 0,
+
+    // Repo preferences
     "class-methods-use-this": 0,
     "symbol-description": 0,
     "no-unused-vars": [2, { "varsIgnorePattern": "^_+$" }],
