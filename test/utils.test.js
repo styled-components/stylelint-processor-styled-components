@@ -41,15 +41,15 @@ describe('utils', () => {
 
   describe('isLastLineWhitespaceOnly', () => {
     it('should return true for empty string', () => {
-      expect(isLastLineWhitespaceOnly('')).toEqual(true)
+      expect(isLastLineWhitespaceOnly('')).toEqual(false)
     })
 
     it('should return true for string of spaces', () => {
-      expect(isLastLineWhitespaceOnly('   ')).toEqual(true)
+      expect(isLastLineWhitespaceOnly('   ')).toEqual(false)
     })
 
     it('should return true for string of spaces and tabs', () => {
-      expect(isLastLineWhitespaceOnly(' \t  ')).toEqual(true)
+      expect(isLastLineWhitespaceOnly(' \t  ')).toEqual(false)
     })
 
     it('should return false for string with something other than space and tab', () => {

@@ -45,7 +45,7 @@ const isLastLineWhitespaceOnly = text => {
       return false
     }
   }
-  return true
+  return false
 }
 
 // eslint-disable-next-line no-return-assign
