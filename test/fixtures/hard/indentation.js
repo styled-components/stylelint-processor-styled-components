@@ -34,3 +34,16 @@ const animations = {
     }
   `
 }
+
+const helper = condition => {
+  if (condition) {
+    return css`
+      color: red;
+
+      &:hover {
+        color: blue;
+      }
+    `
+  }
+  return null
+}
