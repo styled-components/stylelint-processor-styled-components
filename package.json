@@ -32,6 +32,7 @@
   "greenkeeper": {
     "ignore": [
       "eslint",
+      "eslint-plugin-import",
       "typescript"
     ]
   },
