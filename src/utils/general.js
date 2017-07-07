@@ -48,6 +48,22 @@ const isLastLineWhitespaceOnly = text => {
   return true
 }
 
+/**
+ * Checks if text is empty or space only
+ */
+const isEmptyOrSpaceOnly = text => {
+  if (text === '') {
+    return true
+  }
+  for (let i = text.length - 1; i >= 0; i -= 1) {
+    const char = text.charAt(i)
+    if (char !== '\t' && char !== ' ') {
+      return false
+    }
+  }
+  return true
+}
+
 // eslint-disable-next-line no-return-assign
 const wrapSelector = content => `.selector${(count += 1)} {${content}}\n`
 const wrapKeyframes = content => `@keyframes {${content}}\n`
@@ -56,3 +72,4 @@ exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
 exports.isLastLineWhitespaceOnly = isLastLineWhitespaceOnly
+exports.isEmptyOrSpaceOnly = isEmptyOrSpaceOnly

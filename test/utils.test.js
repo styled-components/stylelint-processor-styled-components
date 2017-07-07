@@ -1,5 +1,6 @@
 const interleave = require('../src/utils/tagged-template-literal').interleave
 const isLastLineWhitespaceOnly = require('../src/utils/general').isLastLineWhitespaceOnly
+const isEmptyOrSpaceOnly = require('../src/utils/general').isEmptyOrSpaceOnly
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -58,6 +59,24 @@ describe('utils', () => {
 
     it('should return true if last line has only space and tab', () => {
       expect(isLastLineWhitespaceOnly('not space\n  ')).toEqual(true)
+    })
+  })
+
+  describe('isEmptyOrSpaceOnly', () => {
+    it('should return true for empty string', () => {
+      expect(isEmptyOrSpaceOnly('')).toEqual(true)
+    })
+
+    it('should return true for consecutive empty string', () => {
+      expect(isEmptyOrSpaceOnly(' ')).toEqual(true)
+    })
+
+    it('should return true for string of spaces and tabs', () => {
+      expect(isEmptyOrSpaceOnly(' \t  ')).toEqual(true)
+    })
+
+    it('should return false for string of newline', () => {
+      expect(isEmptyOrSpaceOnly('\n')).toEqual(false)
     })
   })
 })

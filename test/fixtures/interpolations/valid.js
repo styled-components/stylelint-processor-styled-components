@@ -71,3 +71,11 @@ const Button6 = styled.button`
   `}
   background: blue;
 `
+
+// multi interpolations within a property
+const borderWidth = '1px'
+const borderStyle = 'solid'
+const Button7 = styled.button`
+  width: 20px;
+  border: ${borderWidth} ${borderStyle} ${color};
+`
