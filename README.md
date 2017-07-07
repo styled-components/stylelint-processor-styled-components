@@ -1,5 +1,7 @@
 # `stylelint-processor-styled-components`
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/styled-components/stylelint-processor-styled-components.svg)](https://greenkeeper.io/)
+
 Lint the CSS in your [styled components](https://github.com/styled-components/styled-components) with [stylelint](http://stylelint.io/)!
 
 [![Build Status](https://travis-ci.org/styled-components/stylelint-processor-styled-components.svg?branch=master)](https://travis-ci.org/styled-components/stylelint-processor-styled-components) [![Coverage Status](https://coveralls.io/repos/github/styled-components/stylelint-processor-styled-components/badge.svg?branch=ci)](https://coveralls.io/github/styled-components/stylelint-processor-styled-components?branch=ci)
