@@ -56,6 +56,32 @@ Now you can lint your CSS by running this script! 🎉
 npm run lint:css
 ```
 
+### Syntax notes
+#### Turning rules off from within your CSS
+In order for `stylelint-processor-styled-components` to parse your `stylelint-disable` comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) they must be inside the actual Styled Components CSS as such:
+
+**Wrong**:
+```
+/* stylelint-disable color-named */
+import React from 'react';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  background-color: red;
+`;
+```
+**Right**:
+```
+import React from 'react';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  /* stylelint-disable declaration-empty-line-before */
+  background-color: red;
+`;
+```
+
+
 ## License
 
 Licensed under the MIT License, Copyright © 2016 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
