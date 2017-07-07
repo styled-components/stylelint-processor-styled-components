@@ -3,12 +3,18 @@ node_js:
   - "6"
   - "7"
   - "8"
-install:
+before_install:
   - npm i -g npm
+  - npm i -g greenkeeper-lockfile@1
+  - npm i -g coveralls
+install:
   - npm install
-  - npm install coveralls
+before_script:
+  - greenkeeper-lockfile-update
 script:
   - npm test
+after_script:
+  - greenkeeper-lockfile-upload
 notifications:
   email:
     on_failure: change
@@ -22,4 +28,4 @@ jobs:
     - stage: coverage
       node_js: "8"
       script:
-        - npm run test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+        - npm run test -- --coverage && cat ./coverage/lcov.info | coveralls
