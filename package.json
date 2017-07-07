@@ -29,12 +29,18 @@
     "url": "https://github.com/mxstbr/stylelint-processor-styled-components/issues"
   },
   "homepage": "https://github.com/mxstbr/stylelint-processor-styled-components#readme",
+  "greenkeeper": {
+    "ignore": [
+      "eslint",
+      "typescript"
+    ]
+  },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
-    "eslint": "^4.1.1",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "^0.14.3",
     "jest": "^20.0.4",
     "lint-staged": "^4.0.1",
@@ -45,7 +51,7 @@
   "dependencies": {
     "babel-traverse": "^6.16.0",
     "babylon": "^6.12.0",
-    "typescript": "~2.4.1",
+    "typescript": "~2.3.2",
     "typescript-eslint-parser": "^3.0.0"
   }
 }
