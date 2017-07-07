@@ -1,3 +1,6 @@
+### 0.2.0
+* parse consecutive template literals for a single property
+
 ### 0.1.2
 * fix: move typescript from dependencies to devdependencies
 
