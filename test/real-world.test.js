@@ -7,6 +7,7 @@ const path = require('path')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
+  'property-no-unknown': true,
   'block-no-empty': true,
   indentation: 2
 }
@@ -40,6 +41,28 @@ describe('real world failures', () => {
   describe.skip('Circle', () => {
     beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/real-world/Circle.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
+    })
+
+    it('should not have any warnings', () => {
+      expect(data.results[0].warnings).toEqual([])
+    })
+  })
+
+  describe('BidiButton', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/real-world/BidiButton.js')
     })
 
     it('should have one result', () => {

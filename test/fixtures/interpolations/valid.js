@@ -71,3 +71,11 @@ const Button6 = styled.button`
   `}
   background: blue;
 `
+
+// Complex
+const dir = 'left';
+const Button7 = styled.button`
+  display: block;
+  background: blue;
+  margin-${dir}: 12.5px;
+`
