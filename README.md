@@ -1,10 +1,10 @@
 # `stylelint-processor-styled-components`
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/styled-components/stylelint-processor-styled-components.svg)](https://greenkeeper.io/)
-
 Lint the CSS in your [styled components](https://github.com/styled-components/styled-components) with [stylelint](http://stylelint.io/)!
 
-[![Build Status](https://travis-ci.org/styled-components/stylelint-processor-styled-components.svg?branch=master)](https://travis-ci.org/styled-components/stylelint-processor-styled-components) [![Coverage Status](https://coveralls.io/repos/github/styled-components/stylelint-processor-styled-components/badge.svg?branch=ci)](https://coveralls.io/github/styled-components/stylelint-processor-styled-components?branch=ci)
+[![Build Status][build-badge]][build-url]
+[![Coverage Status][coverage-badge]][coverage-url]
+[![Greenkeeper][greenkeeper-badge]][greenkeeper-url]
 
 ![Video of project in use](http://imgur.com/br9zdHb.gif)
 
@@ -89,3 +89,10 @@ const Wrapper = styled.div`
 Licensed under the MIT License, Copyright © 2016 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
 
 Based on Mapbox' excellent [`stylelint-processor-markdown`](https://github.com/mapbox/stylelint-processor-markdown), thanks to @davidtheclark!
+
+[build-badge]: https://travis-ci.org/styled-components/stylelint-processor-styled-components.svg?branch=master
+[build-url]: https://travis-ci.org/styled-components/stylelint-processor-styled-components
+[coverage-badge]: https://coveralls.io/repos/github/styled-components/stylelint-processor-styled-components/badge.svg?branch=ci
+[coverage-url]: https://coveralls.io/github/styled-components/stylelint-processor-styled-components?branch=ci
+[greenkeeper-badge]: https://badges.greenkeeper.io/styled-components/stylelint-processor-styled-components.svg
+[greenkeeper-url]: https://greenkeeper.io/
