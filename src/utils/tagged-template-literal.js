@@ -1,5 +1,5 @@
-const isLastLineWhitespaceOnly = require('./general').isLastLineWhitespaceOnly
-const isEmptyOrSpaceOnly = require('./general').isEmptyOrSpaceOnly
+const nextNonWhitespaceChar = require('./general').nextNonWhitespaceChar
+const isLastDeclarationCompleted = require('./general').isLastDeclarationCompleted
 
 /**
  * Check if a node is a tagged template literal
@@ -14,24 +14,36 @@ const hasInterpolations = node => !node.quasi.quasis[0].tail
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
-// Used for making sure our dummy mixins are all unique
-let count = 0
 const interleave = (quasis, expressions) => {
+  // Used for making sure our dummy mixins are all unique
+  let count = 0
   let css = ''
   for (let i = 0, l = expressions.length; i < l; i += 1) {
     const prevText = quasis[i].value.raw
     const nextText = quasis[i + 1].value.raw
 
     css += prevText
-    if (isLastLineWhitespaceOnly(prevText) && !isEmptyOrSpaceOnly(prevText)) {
-      css += `-styled-mixin${count}: dummyValue`
+    let substitute
+    if (isLastDeclarationCompleted(css)) {
+      /** This block assumes that if you put an interpolation in the position
+       * of the start of a declaration that the interpolation will
+       * contain a full declaration and not later in the template literal
+       * be completed by another interpolation / completed by following text
+       * in the literal
+       */
+      substitute = `-styled-mixin${count}: dummyValue`
       count += 1
-      if (nextText.charAt(0) !== ';') {
-        css += ';'
+      if (nextNonWhitespaceChar(nextText) !== ';') {
+        substitute += ';'
       }
     } else {
-      css += '$dummyValue'
+      /* This block assumes that we are in the middle of a declaration
+       * and that the interpolation is providing a value, not a property
+       * or part of a property
+       */
+      substitute = '$dummyValue'
     }
+    css += substitute
   }
   css += quasis[quasis.length - 1].value.raw
   return css
