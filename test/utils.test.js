@@ -35,7 +35,7 @@ describe('utils', () => {
         }
       ]
       expect(interleave(quasis, expressions)).toEqual(
-        '\n  display: block;\n  color: $color;\n  background: blue;\n'
+        '\n  display: block;\n  color: $dummyValue;\n  background: blue;\n'
       )
     })
   })

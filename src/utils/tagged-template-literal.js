@@ -14,21 +14,23 @@ const hasInterpolations = node => !node.quasi.quasis[0].tail
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
+// Used for making sure our dummy mixins are all unique
+let count = 0
 const interleave = (quasis, expressions) => {
   let css = ''
   for (let i = 0, l = expressions.length; i < l; i += 1) {
     const prevText = quasis[i].value.raw
     const nextText = quasis[i + 1].value.raw
-    const expression = expressions[i]
 
     css += prevText
     if (isLastLineWhitespaceOnly(prevText) && !isEmptyOrSpaceOnly(prevText)) {
-      css += `-styled-mixin: ${expression.name}`
+      css += `-styled-mixin${count}: dummyValue`
+      count += 1
       if (nextText.charAt(0) !== ';') {
         css += ';'
       }
     } else {
-      css += `$${expression.name}`
+      css += '$dummyValue'
     }
   }
   css += quasis[quasis.length - 1].value.raw
