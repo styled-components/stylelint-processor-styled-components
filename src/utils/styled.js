@@ -51,6 +51,7 @@ const isHelper = (node, importedNames) => {
   Object.keys(importedNames).forEach(name => {
     if (importedNames[name] === node.tag.name) {
       helper = name
+      // eslint-disable-next-line no-useless-return
       return
     }
   })
