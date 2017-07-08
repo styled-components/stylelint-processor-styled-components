@@ -92,7 +92,7 @@ Based on Mapbox' excellent [`stylelint-processor-markdown`](https://github.com/m
 
 [build-badge]: https://travis-ci.org/styled-components/stylelint-processor-styled-components.svg?branch=master
 [build-url]: https://travis-ci.org/styled-components/stylelint-processor-styled-components
-[coverage-badge]: https://coveralls.io/repos/github/styled-components/stylelint-processor-styled-components/badge.svg?branch=ci
-[coverage-url]: https://coveralls.io/github/styled-components/stylelint-processor-styled-components?branch=ci
+[coverage-badge]: https://coveralls.io/repos/github/styled-components/stylelint-processor-styled-components/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/styled-components/stylelint-processor-styled-components?branch=master
 [greenkeeper-badge]: https://badges.greenkeeper.io/styled-components/stylelint-processor-styled-components.svg
 [greenkeeper-url]: https://greenkeeper.io/
