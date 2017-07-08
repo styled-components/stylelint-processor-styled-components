@@ -33,7 +33,7 @@ const fixIndentation = str => {
 }
 
 const nextNonWhitespaceChar = text => {
-  const matches = text.match(/^\s*(.)/)
+  const matches = text.match(/^\s*([^\s])/)
   if (matches) {
     return matches[1]
   } else {
