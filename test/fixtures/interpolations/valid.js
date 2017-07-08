@@ -90,3 +90,19 @@ const Button8 = styled.button`
   ${`color: ${color};`}
   ${`background: blue;`}
 `
+// Simple interpolations in one-line css
+const display = 'block'
+const colorExpression = 'color: red;'
+// prettier-ignore
+const Button9 = styled.button`
+  display: ${display}; ${colorExpression}
+`
+
+// Complex interpolations in one-line css
+const display = 'block'
+const colorExpression = 'color: red;'
+const backgroundExpression = 'background: blue;'
+// prettier-ignore
+const Button9 = styled.button`
+  display: ${display}; ${colorExpression} ${backgroundExpression}
+`
