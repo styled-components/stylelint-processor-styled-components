@@ -83,6 +83,8 @@ const Wrapper = styled.div`
 `;
 ```
 
+#### Interpolation linting
+We do not currently support linting interpolations as it could be a big performance hit though we aspire to have at least partial support in the future. You can of course lint your own mixins in their separate files, but it won't be linted in context, the implementation currently just inserts relevant dummy values. This, we are afraid, means you won't be able to lint cases such as `declaration-block-no-duplicate-properties` etc. and won't be able to lint outside mixins such as [polished](https://github.com/styled-components/polished).
 
 ## License
 
