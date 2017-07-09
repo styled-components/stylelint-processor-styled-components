@@ -1,4 +1,7 @@
 const interleave = require('../src/utils/tagged-template-literal').interleave
+const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
+const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
+const reverseString = require('../src/utils/general').reverseString
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -157,6 +160,135 @@ describe('utils', () => {
       expect(interleave(quasis2, expressions2)).toEqual(
         '\n  display: $dummyValue; -styled-mixin0: dummyValue;\n'
       )
+
+      /**
+       * It is important to also have this one as interleave would fail this if it simply
+       * checked the previous quasi and not the previous processed text.
+       * Here we also check the whole expression with and without a semi-colon in the quasi
+       */
+      const quasis3 = [
+        {
+          value: {
+            raw: '\n  display: '
+          }
+        },
+        {
+          value: {
+            raw: '; '
+          }
+        },
+        {
+          value: {
+            raw: ' '
+          }
+        },
+        {
+          value: {
+            raw: '\n'
+          }
+        }
+      ]
+      const expressions3 = [
+        {
+          name: 'display'
+        },
+        {
+          name: undefined
+        },
+        {
+          name: undefined
+        }
+      ]
+      expect(interleave(quasis3, expressions3)).toEqual(
+        '\n  display: $dummyValue; -styled-mixin0: dummyValue; -styled-mixin1: dummyValue;\n'
+      )
+    })
+  })
+
+  describe('reverseString', () => {
+    const fn = reverseString
+
+    it('reverses a string', () => {
+      expect(fn('abcd')).toEqual('dcba')
+    })
+
+    it('handles empty string', () => {
+      expect(fn('')).toEqual('')
+    })
+  })
+
+  describe('nextNonWhitespaceChar', () => {
+    const fn = nextNonWhitespaceChar
+
+    it('handles empty string', () => {
+      expect(fn('')).toBe(null)
+    })
+
+    it('handles all whitespace', () => {
+      expect(fn('  \t \n  \t')).toBe(null)
+    })
+
+    it('handles no leading whitespace', () => {
+      expect(fn('abc')).toBe('a')
+    })
+
+    it('handles spaces', () => {
+      expect(fn('  b')).toBe('b')
+    })
+
+    it('handles tabs', () => {
+      expect(fn('\tc')).toBe('c')
+    })
+
+    it('handles newlines', () => {
+      expect(fn('\nd')).toBe('d')
+    })
+
+    it('handles a mix', () => {
+      expect(fn(' \n\t\ra \t\r\nb')).toBe('a')
+    })
+  })
+
+  describe('isLastDeclarationCompleted', () => {
+    const fn = isLastDeclarationCompleted
+
+    it('handles all whitespace', () => {
+      expect(fn('   \n \n \t \r')).toBe(true)
+    })
+
+    it('handles empty string', () => {
+      expect(fn('')).toBe(true)
+    })
+
+    it('handles one-line css', () => {
+      const prevCSS = 'display: block; color: red '
+      expect(fn(prevCSS)).toBe(false)
+
+      expect(fn(`${prevCSS};`)).toBe(true)
+    })
+
+    it('handles multi-line css', () => {
+      const prevCSS = `
+        display: block;
+        color: red`
+      expect(fn(prevCSS)).toBe(false)
+
+      expect(fn(`${prevCSS};\n`)).toBe(true)
+    })
+
+    it('handles irregular css', () => {
+      const prevCSS = `display   :  block
+           ;      color:
+             red   `
+      expect(fn(prevCSS)).toBe(false)
+
+      expect(
+        fn(`${prevCSS}
+
+                ;
+
+          `)
+      ).toBe(true)
     })
   })
 })

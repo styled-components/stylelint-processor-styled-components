@@ -60,5 +60,6 @@ const wrapKeyframes = content => `@keyframes {${content}}\n`
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
+exports.reverseString = reverseString
 exports.nextNonWhitespaceChar = nextNonWhitespaceChar
 exports.isLastDeclarationCompleted = isLastDeclarationCompleted
