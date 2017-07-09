@@ -61,9 +61,12 @@ const isLastDeclarationCompleted = text => {
 const wrapSelector = content => `.selector${(count += 1)} {${content}}\n`
 const wrapKeyframes = content => `@keyframes {${content}}\n`
 
+const isStylelintComment = comment => /^\s*stylelint-(?:enable|disable)(?:\s.*)?$/.test(comment)
+
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
 exports.reverseString = reverseString
 exports.nextNonWhitespaceChar = nextNonWhitespaceChar
 exports.isLastDeclarationCompleted = isLastDeclarationCompleted
+exports.isStylelintComment = isStylelintComment
