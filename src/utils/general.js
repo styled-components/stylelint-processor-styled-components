@@ -46,7 +46,11 @@ const reverseString = str => str.split('').reverse().join('')
 const isLastDeclarationCompleted = text => {
   const reversedText = reverseString(text)
   const lastNonWhitespaceChar = nextNonWhitespaceChar(reversedText)
-  if (lastNonWhitespaceChar === ';' || lastNonWhitespaceChar === null) {
+  if (
+    lastNonWhitespaceChar === ';' ||
+    lastNonWhitespaceChar === '}' ||
+    lastNonWhitespaceChar === null
+  ) {
     return true
   } else {
     return false

@@ -290,5 +290,15 @@ describe('utils', () => {
           `)
       ).toBe(true)
     })
+
+    it('handles declaration blocks', () => {
+      const prevCSS = `
+        @media screen and (max-width: 600px) {
+          display: block;
+          color: red;
+        }
+      `
+      expect(fn(prevCSS)).toBe(true)
+    })
   })
 })
