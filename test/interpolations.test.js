@@ -4,6 +4,7 @@ const path = require('path')
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'block-no-empty': true,
+  'declaration-block-no-duplicate-properties': true,
   indentation: 2
 }
 
