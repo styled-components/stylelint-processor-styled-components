@@ -32,36 +32,29 @@ const fixIndentation = str => {
   }
 }
 
-/**
- * Checks if last line of text has whitespaces only
- */
-const isLastLineWhitespaceOnly = text => {
-  for (let i = text.length - 1; i >= 0; i -= 1) {
-    const char = text.charAt(i)
-    if (char === '\n') {
-      return true
-    }
-    if (char !== '\t' && char !== ' ') {
-      return false
-    }
+const nextNonWhitespaceChar = text => {
+  const matches = text.match(/^\s*([^\s])/)
+  if (matches) {
+    return matches[1]
+  } else {
+    return null
   }
-  return true
 }
 
-/**
- * Checks if text is empty or space only
- */
-const isEmptyOrSpaceOnly = text => {
-  if (text === '') {
+const reverseString = str => str.split('').reverse().join('')
+
+const isLastDeclarationCompleted = text => {
+  const reversedText = reverseString(text)
+  const lastNonWhitespaceChar = nextNonWhitespaceChar(reversedText)
+  if (
+    lastNonWhitespaceChar === ';' ||
+    lastNonWhitespaceChar === '}' ||
+    lastNonWhitespaceChar === null
+  ) {
     return true
+  } else {
+    return false
   }
-  for (let i = text.length - 1; i >= 0; i -= 1) {
-    const char = text.charAt(i)
-    if (char !== '\t' && char !== ' ') {
-      return false
-    }
-  }
-  return true
 }
 
 // eslint-disable-next-line no-return-assign
@@ -71,5 +64,6 @@ const wrapKeyframes = content => `@keyframes {${content}}\n`
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
-exports.isLastLineWhitespaceOnly = isLastLineWhitespaceOnly
-exports.isEmptyOrSpaceOnly = isEmptyOrSpaceOnly
+exports.reverseString = reverseString
+exports.nextNonWhitespaceChar = nextNonWhitespaceChar
+exports.isLastDeclarationCompleted = isLastDeclarationCompleted

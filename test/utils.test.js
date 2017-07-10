@@ -1,6 +1,7 @@
 const interleave = require('../src/utils/tagged-template-literal').interleave
-const isLastLineWhitespaceOnly = require('../src/utils/general').isLastLineWhitespaceOnly
-const isEmptyOrSpaceOnly = require('../src/utils/general').isEmptyOrSpaceOnly
+const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
+const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
+const reverseString = require('../src/utils/general').reverseString
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -38,45 +39,266 @@ describe('utils', () => {
         '\n  display: block;\n  color: $dummyValue;\n  background: blue;\n'
       )
     })
+
+    it('converts interpolated expressions to dummy mixins', () => {
+      const quasis = [
+        {
+          value: {
+            raw: '\n  display: block;\n  '
+          }
+        },
+        {
+          value: {
+            raw: '\n  background: blue;\n'
+          }
+        }
+      ]
+      const expressions = [
+        {
+          name: undefined
+        }
+      ]
+      expect(interleave(quasis, expressions)).toEqual(
+        '\n  display: block;\n  -styled-mixin0: dummyValue;\n  background: blue;\n'
+      )
+    })
+
+    it('correctly converts several interpolations within a single property', () => {
+      const quasis = [
+        {
+          value: {
+            raw: '\n  display: block;\n  border: '
+          }
+        },
+        {
+          value: {
+            raw: ' '
+          }
+        },
+        {
+          value: {
+            raw: ' '
+          }
+        },
+        {
+          value: {
+            raw: ';\n  background: blue;\n'
+          }
+        }
+      ]
+      const expressions = [
+        {
+          name: 'borderWidth'
+        },
+        {
+          name: 'borderStyle'
+        },
+        {
+          name: 'color'
+        }
+      ]
+      expect(interleave(quasis, expressions)).toEqual(
+        '\n  display: block;\n  border: $dummyValue $dummyValue $dummyValue;\n  background: blue;\n'
+      )
+    })
+
+    it('correctly handles several interpolations in single line of css', () => {
+      const quasis1 = [
+        {
+          value: {
+            raw: '\n  display: '
+          }
+        },
+        {
+          value: {
+            raw: '; background: '
+          }
+        },
+        {
+          value: {
+            raw: ';\n'
+          }
+        }
+      ]
+      const expressions1 = [
+        {
+          name: 'display'
+        },
+        {
+          name: 'background'
+        }
+      ]
+      expect(interleave(quasis1, expressions1)).toEqual(
+        '\n  display: $dummyValue; background: $dummyValue;\n'
+      )
+
+      const quasis2 = [
+        {
+          value: {
+            raw: '\n  display: '
+          }
+        },
+        {
+          value: {
+            raw: '; '
+          }
+        },
+        {
+          value: {
+            raw: '\n'
+          }
+        }
+      ]
+      const expressions2 = [
+        {
+          name: 'display'
+        },
+        {
+          name: undefined
+        }
+      ]
+      expect(interleave(quasis2, expressions2)).toEqual(
+        '\n  display: $dummyValue; -styled-mixin0: dummyValue;\n'
+      )
+
+      /**
+       * It is important to also have this one as interleave would fail this if it simply
+       * checked the previous quasi and not the previous processed text.
+       * Here we also check the whole expression with and without a semi-colon in the quasi
+       */
+      const quasis3 = [
+        {
+          value: {
+            raw: '\n  display: '
+          }
+        },
+        {
+          value: {
+            raw: '; '
+          }
+        },
+        {
+          value: {
+            raw: ' '
+          }
+        },
+        {
+          value: {
+            raw: '\n'
+          }
+        }
+      ]
+      const expressions3 = [
+        {
+          name: 'display'
+        },
+        {
+          name: undefined
+        },
+        {
+          name: undefined
+        }
+      ]
+      expect(interleave(quasis3, expressions3)).toEqual(
+        '\n  display: $dummyValue; -styled-mixin0: dummyValue; -styled-mixin1: dummyValue;\n'
+      )
+    })
   })
 
-  describe('isLastLineWhitespaceOnly', () => {
-    it('should return true for empty string', () => {
-      expect(isLastLineWhitespaceOnly('')).toEqual(true)
+  describe('reverseString', () => {
+    const fn = reverseString
+
+    it('reverses a string', () => {
+      expect(fn('abcd')).toEqual('dcba')
     })
 
-    it('should return true for string of spaces', () => {
-      expect(isLastLineWhitespaceOnly('   ')).toEqual(true)
-    })
-
-    it('should return true for string of spaces and tabs', () => {
-      expect(isLastLineWhitespaceOnly(' \t  ')).toEqual(true)
-    })
-
-    it('should return false for string with something other than space and tab', () => {
-      expect(isLastLineWhitespaceOnly('not space')).toEqual(false)
-    })
-
-    it('should return true if last line has only space and tab', () => {
-      expect(isLastLineWhitespaceOnly('not space\n  ')).toEqual(true)
+    it('handles empty string', () => {
+      expect(fn('')).toEqual('')
     })
   })
 
-  describe('isEmptyOrSpaceOnly', () => {
-    it('should return true for empty string', () => {
-      expect(isEmptyOrSpaceOnly('')).toEqual(true)
+  describe('nextNonWhitespaceChar', () => {
+    const fn = nextNonWhitespaceChar
+
+    it('handles empty string', () => {
+      expect(fn('')).toBe(null)
     })
 
-    it('should return true for consecutive empty string', () => {
-      expect(isEmptyOrSpaceOnly(' ')).toEqual(true)
+    it('handles all whitespace', () => {
+      expect(fn('  \t \n  \t')).toBe(null)
     })
 
-    it('should return true for string of spaces and tabs', () => {
-      expect(isEmptyOrSpaceOnly(' \t  ')).toEqual(true)
+    it('handles no leading whitespace', () => {
+      expect(fn('abc')).toBe('a')
     })
 
-    it('should return false for string of newline', () => {
-      expect(isEmptyOrSpaceOnly('\n')).toEqual(false)
+    it('handles spaces', () => {
+      expect(fn('  b')).toBe('b')
+    })
+
+    it('handles tabs', () => {
+      expect(fn('\tc')).toBe('c')
+    })
+
+    it('handles newlines', () => {
+      expect(fn('\nd')).toBe('d')
+    })
+
+    it('handles a mix', () => {
+      expect(fn(' \n\t\ra \t\r\nb')).toBe('a')
+    })
+  })
+
+  describe('isLastDeclarationCompleted', () => {
+    const fn = isLastDeclarationCompleted
+
+    it('handles all whitespace', () => {
+      expect(fn('   \n \n \t \r')).toBe(true)
+    })
+
+    it('handles empty string', () => {
+      expect(fn('')).toBe(true)
+    })
+
+    it('handles one-line css', () => {
+      const prevCSS = 'display: block; color: red '
+      expect(fn(prevCSS)).toBe(false)
+
+      expect(fn(`${prevCSS};`)).toBe(true)
+    })
+
+    it('handles multi-line css', () => {
+      const prevCSS = `
+        display: block;
+        color: red`
+      expect(fn(prevCSS)).toBe(false)
+
+      expect(fn(`${prevCSS};\n`)).toBe(true)
+    })
+
+    it('handles irregular css', () => {
+      const prevCSS = `display   :  block
+           ;      color:
+             red   `
+      expect(fn(prevCSS)).toBe(false)
+
+      expect(
+        fn(`${prevCSS}
+
+                ;
+
+          `)
+      ).toBe(true)
+    })
+
+    it('handles declaration blocks', () => {
+      const prevCSS = `
+        @media screen and (max-width: 600px) {
+          display: block;
+          color: red;
+        }
+      `
+      expect(fn(prevCSS)).toBe(true)
     })
   })
 })
