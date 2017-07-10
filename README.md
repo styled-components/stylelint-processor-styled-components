@@ -78,7 +78,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  /* stylelint-disable declaration-empty-line-before */
+  /* stylelint-disable color-named */
   background-color: red;
 `;
 ```
