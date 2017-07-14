@@ -12,6 +12,47 @@ const isTaggedTemplateLiteral = node => node.type === 'TaggedTemplateExpression'
 const hasInterpolations = node => !node.quasi.quasis[0].tail
 
 /**
+ * Retrieves all the starting and ending comments of a TTL expression
+ */
+const retrieveStartEndComments = expression =>
+  (expression.leadingComments || [])
+    .concat(expression.trailingComments || [])
+    .map(commentObject => commentObject.value)
+
+/**
+ * Checks if given comment value is an interpolation tag
+ */
+const isScpTag = comment => /^\s*?scp-[a-z]/.test(comment)
+
+/**
+ * Checks if an interpolation has an scp comment tag
+ */
+const hasInterpolationTag = expression => {
+  const relevantComments = retrieveStartEndComments(expression)
+  return relevantComments.some(isScpTag)
+}
+
+/**
+ * Enact the interpolation tagging API
+ */
+const parseInterpolationTag = expression => {
+  // We temporarily return a dummyvalue pending complete implemenation
+  const relevantComments = retrieveStartEndComments(expression)
+  let substitute
+  relevantComments.some(comment => {
+    if (isScpTag(comment)) {
+      switch (comment) {
+        default:
+          substitute = '-interpolation-tag-mixin: test'
+      }
+      return true // Break loop
+    }
+    return false // Continue loop
+  })
+  return substitute
+}
+
+/**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
 const interleave = (quasis, expressions) => {
@@ -24,7 +65,10 @@ const interleave = (quasis, expressions) => {
 
     css += prevText
     let substitute
-    if (isLastDeclarationCompleted(css)) {
+    if (hasInterpolationTag(expressions[i])) {
+      substitute = parseInterpolationTag(expressions[i])
+    } else if (isLastDeclarationCompleted(css)) {
+      // No scp tag so we guess defaults
       /** This block assumes that if you put an interpolation in the position
        * of the start of a declaration that the interpolation will
        * contain a full declaration and not later in the template literal
@@ -65,3 +109,5 @@ const getTaggedTemplateLiteralContent = node => {
 exports.isTaggedTemplateLiteral = isTaggedTemplateLiteral
 exports.getTaggedTemplateLiteralContent = getTaggedTemplateLiteralContent
 exports.interleave = interleave
+exports.hasInterpolationTag = hasInterpolationTag
+exports.parseInterpolationTag = parseInterpolationTag
