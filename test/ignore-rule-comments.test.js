@@ -75,11 +75,11 @@ describe('ignore rule comments', () => {
     it('should error at exactly the correct places', () => {
       const warnings = data.results[0].warnings
 
-      expect(warnings[0].line).toBe(5)
+      expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('color-named')
       expect(warnings[0].severity).toBe('error')
 
-      expect(warnings[1].line).toBe(17)
+      expect(warnings[1].line).toBe(14)
       expect(warnings[1].rule).toBe('color-named')
       expect(warnings[1].severity).toBe('error')
     })
@@ -105,11 +105,11 @@ describe('ignore rule comments', () => {
     it('should error at exactly the correct places', () => {
       const warnings = data.results[0].warnings
 
-      expect(warnings[0].line).toBe(5)
+      expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('color-named')
       expect(warnings[0].severity).toBe('error')
 
-      expect(warnings[1].line).toBe(17)
+      expect(warnings[1].line).toBe(14)
       expect(warnings[1].rule).toBe('color-named')
       expect(warnings[1].severity).toBe('error')
     })
@@ -135,11 +135,11 @@ describe('ignore rule comments', () => {
     it('should error at exactly the correct places', () => {
       const warnings = data.results[0].warnings
 
-      expect(warnings[0].line).toBe(6)
+      expect(warnings[0].line).toBe(5)
       expect(warnings[0].rule).toBe('color-named')
       expect(warnings[0].severity).toBe('error')
 
-      expect(warnings[1].line).toBe(20)
+      expect(warnings[1].line).toBe(17)
       expect(warnings[1].rule).toBe('color-named')
       expect(warnings[1].severity).toBe('error')
     })

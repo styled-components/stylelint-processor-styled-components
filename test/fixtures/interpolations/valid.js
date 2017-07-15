@@ -42,7 +42,6 @@ const Box3 = styled(Box2)`
 `
 
 // Multiline
-// prettier-ignore
 const Button4 = styled.button`
   display: block;
   ${`
@@ -53,7 +52,6 @@ const Button4 = styled.button`
 
 // Conditional
 const cond = true
-// prettier-ignore
 const Button5 = styled.button`
   display: block;
   ${cond &&
@@ -65,7 +63,6 @@ const Button5 = styled.button`
 
 // Conditional
 const cond2 = false
-// prettier-ignore
 const Button6 = styled.button`
   display: block;
   ${cond2 &&
@@ -84,7 +81,6 @@ const Button7 = styled.button`
 `
 
 // Several interpolation statements in a block
-// prettier-ignore
 const Button8 = styled.button`
   ${`display: block;`}
   ${`color: ${color};`}
@@ -93,7 +89,6 @@ const Button8 = styled.button`
 // Simple interpolations in one-line css
 const display = 'block'
 const colorExpression = 'color: red;'
-// prettier-ignore
 const Button9 = styled.button`
   display: ${display}; ${colorExpression}
 `
@@ -102,7 +97,6 @@ const Button9 = styled.button`
 const display = 'block'
 const colorExpression = 'color: red;'
 const backgroundExpression = 'background: blue;'
-// prettier-ignore
 const Button9 = styled.button`
   display: ${display}; ${colorExpression} ${backgroundExpression}
 `
