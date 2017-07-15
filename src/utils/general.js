@@ -61,9 +61,17 @@ const isLastDeclarationCompleted = text => {
 const wrapSelector = content => `.selector${(count += 1)} {${content}}\n`
 const wrapKeyframes = content => `@keyframes {${content}}\n`
 
+/**
+ * The reason we put a \s before .* in the last part of the regex is to make sure we don't
+ * match stylelint-disable-line and stylelint-disable-next-line or, for now, any future extensions
+ * as these line specific disables should not be placed outside a css TTL
+ */
+const isStylelintComment = comment => /^\s*stylelint-(?:enable|disable)(?:\s.*)?$/.test(comment)
+
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
 exports.reverseString = reverseString
 exports.nextNonWhitespaceChar = nextNonWhitespaceChar
 exports.isLastDeclarationCompleted = isLastDeclarationCompleted
+exports.isStylelintComment = isStylelintComment

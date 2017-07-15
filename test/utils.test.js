@@ -2,6 +2,7 @@ const interleave = require('../src/utils/tagged-template-literal').interleave
 const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
 const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
 const reverseString = require('../src/utils/general').reverseString
+const isStylelintComment = require('../src/utils/general').isStylelintComment
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -299,6 +300,32 @@ describe('utils', () => {
         }
       `
       expect(fn(prevCSS)).toBe(true)
+    })
+  })
+
+  describe('isStylelintComment', () => {
+    const fn = isStylelintComment
+
+    it('should match general block ignores', () => {
+      expect(fn('stylelint-disable')).toBe(true)
+
+      expect(fn('stylelint-enable')).toBe(true)
+    })
+
+    it('should match block ignores with any arguments', () => {
+      expect(fn('stylelint-enable some-rule')).toBe(true)
+
+      expect(fn('stylelint-disable asdfsafdsa-fdsafd9a0fd9sa0f asfd8af afdsa7f')).toBe(true)
+    })
+
+    it("shouldn't match line specific ignores", () => {
+      expect(fn('stylelint-disable-line')).toBe(false)
+
+      expect(fn('stylelint-disable-next-line')).toBe(false)
+    })
+
+    it('should handle whitespace in start and end', () => {
+      expect(fn('   \tstylelint-disable   \t')).toBe(true)
     })
   })
 })

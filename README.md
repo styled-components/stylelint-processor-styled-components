@@ -60,28 +60,32 @@ npm run lint:css
 
 ### Syntax notes
 #### Turning rules off from within your CSS
-In order for `stylelint-processor-styled-components` to parse your `stylelint-disable` comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) they must be inside the actual Styled Components CSS as such:
+Turning off rules with `stylelint-disable`-like comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) is fully supported inside and outside of the tagged template literals, do note though that what actually happens behind the scene is that all `stylelint-(disable|enable)` comments are moved into the compiled css that is actually linted, so something like this:
 
-**Wrong**:
+
 ```
-/* stylelint-disable color-named */
+/* stylelint-disable */
 import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  /* stylelint-disable */
   background-color: red;
 `;
 ```
-**Right**:
+or even
 ```
+/* stylelint-disable */
 import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  /* stylelint-disable color-named */
+  /* stylelint-disable-next-line */
   background-color: red;
 `;
 ```
+
+would throw a stylelint error similar to `All rules have already been disabled (CssSyntaxError)`.
 
 #### Interpolation linting
 We do not currently support linting interpolations as it could be a big performance hit though we aspire to have at least partial support in the future. You can of course lint your own mixins in their separate files, but it won't be linted in context, the implementation currently just inserts relevant dummy values. This, we are afraid, means you won't be able to lint cases such as `declaration-block-no-duplicate-properties` etc. and won't be able to lint outside mixins such as [polished](https://github.com/styled-components/polished).
