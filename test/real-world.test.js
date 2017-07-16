@@ -37,7 +37,7 @@ describe('real world failures', () => {
       })
   })
 
-  describe.skip('Circle', () => {
+  describe('Circle', () => {
     beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/real-world/Circle.js')
     })
