@@ -53,6 +53,6 @@
     "babel-traverse": "^6.16.0",
     "babylon": "^6.12.0",
     "typescript": "~2.3.2",
-    "typescript-eslint-parser": "^3.0.0"
+    "typescript-eslint-parser": "^4.0.0"
   }
 }
