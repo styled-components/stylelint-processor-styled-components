@@ -49,6 +49,7 @@ const isLastDeclarationCompleted = text => {
   if (
     lastNonWhitespaceChar === ';' ||
     lastNonWhitespaceChar === '}' ||
+    lastNonWhitespaceChar === '{' ||
     lastNonWhitespaceChar === null
   ) {
     return true
