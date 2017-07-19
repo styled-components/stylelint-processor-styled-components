@@ -301,6 +301,13 @@ describe('utils', () => {
       `
       expect(fn(prevCSS)).toBe(true)
     })
+
+    it('handles being inside a declaration block', () => {
+      const prevCSS = `
+        span {
+          `
+      expect(fn(prevCSS)).toBe(true)
+    })
   })
 
   describe('isStylelintComment', () => {

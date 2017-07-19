@@ -100,3 +100,9 @@ const backgroundExpression = 'background: blue;'
 const Button9 = styled.button`
   display: ${display}; ${colorExpression} ${backgroundExpression}
 `
+// Interpolations in nested blocks
+const Button10 = styled.button`
+  span {
+    ${'display: block;'}
+  }
+`;
