@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 // None of the below should throw indentation errors
 const Comp = () => {
@@ -33,4 +33,17 @@ const animations = {
       opacity: 1;
     }
   `
+}
+
+const helper = condition => {
+  if (condition) {
+    return css`
+      color: red;
+
+      &:hover {
+        color: blue;
+      }
+    `
+  }
+  return null
 }
