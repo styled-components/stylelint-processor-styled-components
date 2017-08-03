@@ -10,30 +10,23 @@ const fixIndentation = str => {
   // Get whitespaces
   const match = str.match(/^[ \t]*(?=\S|$)/gm)
 
-  // Handle oneline TTL case
-  if (match.length === 1) {
-    return {
-      text: str,
-      indentColumns: 0
-    }
-  }
-  // Remove first, empty item, and if it is a oneline TTL we already handled it
-  match.splice(0, 1)
-
-  if (!match) {
+  // Handle oneline TTL case and empty line etc.
+  if (!match || match.length <= 1) {
     return {
       text: str,
       indentColumns: 0
     }
   }
 
-  // Get the base level of indentation assuming standard javascript TTL style
+  // We enforce that final backtick should be at base indentation level
   const baseIndentationLength = match[match.length - 1].length
-  const re = new RegExp(`^[ \\t]{${baseIndentationLength}}`, 'gm')
-
+  // Remove whitespace on empty lines before reindenting
+  const emptyLinesHandled = str.replace(/^[ \t]$/gm, '')
+  // Normalize indentation by removing common indent
+  const re = new RegExp(String.raw`^[ \t]{${baseIndentationLength}}`, 'gm')
+  const reIndentedString = emptyLinesHandled.replace(re, '')
   return {
-    // Remove the min indentation from every line
-    text: baseIndentationLength > 0 ? str.replace(re, '') : str,
+    text: reIndentedString,
     indentColumns: baseIndentationLength
   }
 }
