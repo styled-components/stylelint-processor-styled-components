@@ -94,8 +94,6 @@ const Button9 = styled.button`
 `
 
 // Complex interpolations in one-line css
-const display = 'block'
-const colorExpression = 'color: red;'
 const backgroundExpression = 'background: blue;'
 const Button9 = styled.button`
   display: ${display}; ${colorExpression} ${backgroundExpression}
@@ -106,3 +104,15 @@ const Button10 = styled.button`
     ${'display: block;'}
   }
 `;
+
+// Interpolations after comments
+const Button11 = styled.button`
+  display: block; /* stylelint-disable-line */
+  ${colorExpression}
+`
+
+const Button12 = styled.button`
+  display: block;
+  /* stylelint-disable */
+  ${colorExpression}
+`

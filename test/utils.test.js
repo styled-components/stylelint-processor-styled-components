@@ -308,6 +308,30 @@ describe('utils', () => {
           `
       expect(fn(prevCSS)).toBe(true)
     })
+
+    it('handles being preceded by a comment', () => {
+      const prevCSS1 = `
+        display: block; /* stylelint-disable */
+        `
+      expect(fn(prevCSS1)).toBe(true)
+
+      const prevCSS2 = `
+      display: block;
+      /* stylelint-disable */
+        `
+      expect(fn(prevCSS2)).toBe(true)
+
+      const prevCSS3 = `
+        display: /* stylelint-disable */
+        `
+      expect(fn(prevCSS3)).toBe(false)
+
+      const prevCSS4 = `
+      display:
+      /* stylelint-disable */
+        `
+      expect(fn(prevCSS4)).toBe(false)
+    })
   })
 
   describe('isStylelintComment', () => {
