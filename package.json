@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mxstbr/stylelint-processor-styled-components.git"
+    "url": "git+https://github.com/styled-components/stylelint-processor-styled-components.git"
   },
   "keywords": [
     "stylelint",
