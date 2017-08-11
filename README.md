@@ -63,7 +63,7 @@ npm run lint:css
 Turning off rules with `stylelint-disable`-like comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) is fully supported inside and outside of the tagged template literals, do note though that what actually happens behind the scene is that all `stylelint-(disable|enable)` comments are moved into the compiled css that is actually linted, so something like this:
 
 
-```
+```js
 /* stylelint-disable */
 import React from 'react';
 import styled from 'styled-components';
@@ -74,7 +74,7 @@ const Wrapper = styled.div`
 `;
 ```
 or even
-```
+```js
 /* stylelint-disable */
 import React from 'react';
 import styled from 'styled-components';
@@ -89,6 +89,42 @@ would throw a stylelint error similar to `All rules have already been disabled (
 
 #### Interpolation linting
 We do not currently support linting interpolations as it could be a big performance hit though we aspire to have at least partial support in the future. You can of course lint your own mixins in their separate files, but it won't be linted in context, the implementation currently just inserts relevant dummy values. This, we are afraid, means you won't be able to lint cases such as `declaration-block-no-duplicate-properties` etc. and won't be able to lint outside mixins such as [polished](https://github.com/styled-components/polished).
+
+#### Template literal style and indentation
+In order to have stylelint correctly apply indentation rules we need to do a bit of opinionated preprocessing on the `styled-components` styles, which results in us only officially supporting one coding style when it comes to `styled-components` tagged template literals. This style consists of always placing the closing backtick on the base level of indentation as follows:
+
+**Right**
+```js
+const Button = styled.button`
+  color: red;
+`
+```
+
+```js
+if (condition) {
+  const Button = styled.button`
+    color: red;
+  `
+}
+```
+
+**Wrong**
+```js
+if (condition) {
+  const Button = styled.button`
+    color: red;
+`
+}
+```
+
+```js
+if (condition) {
+  const Button = styled.button`
+    color: red;`
+}
+```
+
+It may be that other tagged template literal styles are coincidentally supported, but no issues will be handled regarding indentation unless the above style was used.
 
 ## License
 
