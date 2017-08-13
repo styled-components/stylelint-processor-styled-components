@@ -1,4 +1,6 @@
 const interleave = require('../src/utils/tagged-template-literal').interleave
+const hasInterpolationTag = require('../src/utils/tagged-template-literal').hasInterpolationTag
+const parseInterpolationTag = require('../src/utils/tagged-template-literal').parseInterpolationTag
 const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
 const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
 const reverseString = require('../src/utils/general').reverseString
@@ -372,6 +374,43 @@ describe('utils', () => {
 
       const test3 = '\t\tdisplay:block;'
       expect(fixIndentation(test3).text).toBe(test3)
+    })
+  })
+
+  describe('hasInterpolationTag', () => {
+    const fn = hasInterpolationTag
+    it('works for starting comment', () => {
+      const expression = {
+        leadingComments: [{ value: ' scp-block ' }],
+        trailingComments: []
+      }
+      expect(fn(expression)).toBe(true)
+    })
+
+    it('correctly identifies lack of tag', () => {
+      const expression = {
+        leadingComments: [{ value: 'some test value' }],
+        trailingComments: [{ value: 'second test value' }]
+      }
+      expect(fn(expression)).toBe(false)
+    })
+  })
+
+  describe('parseInterpolationTag', () => {
+    const fn = parseInterpolationTag
+    it('correctly works as dummy', () => {
+      // This is temporary
+      const expression1 = {
+        leadingComments: [{ value: ' scp-block ' }],
+        trailingComments: []
+      }
+      expect(fn(expression1)).toBe('-interpolation-tag-mixin: test')
+
+      const expression2 = {
+        leadingComments: [{ value: 'some test value' }],
+        trailingComments: [{ value: 'second test value' }]
+      }
+      expect(fn(expression2)).toBe(undefined)
     })
   })
 })
