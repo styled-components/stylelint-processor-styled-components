@@ -3,6 +3,7 @@ const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclara
 const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
 const reverseString = require('../src/utils/general').reverseString
 const isStylelintComment = require('../src/utils/general').isStylelintComment
+const fixIndentation = require('../src/utils/general').fixIndentation
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -357,6 +358,20 @@ describe('utils', () => {
 
     it('should handle whitespace in start and end', () => {
       expect(fn('   \tstylelint-disable   \t')).toBe(true)
+    })
+  })
+
+  describe('fixIndentation', () => {
+    // We only check the one-line case for now as the rest is be covered thoroughly in hard.test.js
+    it('leaves one-line css alone', () => {
+      const test1 = 'display: block;'
+      expect(fixIndentation(test1).text).toBe(test1)
+
+      const test2 = '       display: block;'
+      expect(fixIndentation(test2).text).toBe(test2)
+
+      const test3 = '\t\tdisplay:block;'
+      expect(fixIndentation(test3).text).toBe(test3)
     })
   })
 })

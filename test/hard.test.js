@@ -73,8 +73,8 @@ describe('hard', () => {
         expect(data.errored).toEqual(true)
       })
 
-      it('should have 4 warnings', () => {
-        expect(data.results[0].warnings.length).toEqual(4)
+      it('should have 13 warnings', () => {
+        expect(data.results[0].warnings.length).toEqual(13)
       })
 
       it('should all be indentation warnings', () => {

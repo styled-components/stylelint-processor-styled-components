@@ -25,3 +25,48 @@ const Comp2 = () => {
 
   return InnerComp()
 }
+
+// The below don't follow our specifications of keeping closing backtick on base indentation level
+// ⚠ 3 indentation errors ⚠
+const Comp3 = () => {
+  const InnerComp = () => {
+    const Button = styled.button`
+      color: blue;
+      background: red;
+      display: block;
+`
+
+    return Button
+  }
+
+  return InnerComp()
+}
+
+// ⚠ 3 indentation errors ⚠
+const Comp4 = () => {
+  const InnerComp = () => {
+    const Button = styled.button`
+      color: blue;
+      background: red;
+      display: block;`
+
+    return Button
+  }
+
+  return InnerComp()
+}
+
+// ⚠ 3 indentation errors ⚠
+const Comp5 = () => {
+  const InnerComp = () => {
+    const Button = styled.button`
+      color: blue;
+      background: red;
+      display: block;
+  `
+
+    return Button
+  }
+
+  return InnerComp()
+}

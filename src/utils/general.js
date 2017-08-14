@@ -8,27 +8,26 @@ let count = 0
  */
 const fixIndentation = str => {
   // Get whitespaces
-  let match = str.match(/^[ \t]*(?=\S|$)/gm)
-  // Remove first, empty item
-  match.splice(0, 1)
-  // Remove empty lines
-  match = match.map(x => (x.length < match[match.length - 1].length ? '  ' : x))
+  const match = str.match(/^[ \t]*(?=\S|$)/gm)
 
-  if (!match) {
+  // Handle oneline TTL case and empty line etc.
+  if (!match || match.length <= 1) {
     return {
       text: str,
       indentColumns: 0
     }
   }
 
-  // Get the minimum amount of indentation
-  const indent = Math.min(...match.map(x => x.length))
-  const re = new RegExp(`^[ \\t]{${indent}}`, 'gm')
-
+  // We enforce that final backtick should be at base indentation level
+  const baseIndentationLength = match[match.length - 1].length
+  // Remove whitespace on empty lines before reindenting
+  const emptyLinesHandled = str.replace(/^[ \t]$/gm, '')
+  // Normalize indentation by removing common indent
+  const re = new RegExp(String.raw`^[ \t]{${baseIndentationLength}}`, 'gm')
+  const reIndentedString = emptyLinesHandled.replace(re, '')
   return {
-    // Remove the min indentation from every line
-    text: indent > 0 ? str.replace(re, '') : str,
-    indentColumns: indent
+    text: reIndentedString,
+    indentColumns: baseIndentationLength
   }
 }
 
