@@ -44,7 +44,9 @@ const nextNonWhitespaceChar = text => {
 const reverseString = str => str.split('').reverse().join('')
 
 const isLastDeclarationCompleted = text => {
-  const reversedText = reverseString(text)
+  // We disregard all comments in this assessment of declaration completion
+  const commentsRemoved = text.replace(/\/\*.*?\*\//g, '')
+  const reversedText = reverseString(commentsRemoved)
   const lastNonWhitespaceChar = nextNonWhitespaceChar(reversedText)
   if (
     lastNonWhitespaceChar === ';' ||
