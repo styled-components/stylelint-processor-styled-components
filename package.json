@@ -26,9 +26,9 @@
   "author": "Max Stoiber",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mxstbr/stylelint-processor-styled-components/issues"
+    "url": "https://github.com/styled-components/stylelint-processor-styled-components/issues"
   },
-  "homepage": "https://github.com/mxstbr/stylelint-processor-styled-components#readme",
+  "homepage": "https://github.com/styled-components/stylelint-processor-styled-components#readme",
   "greenkeeper": {
     "ignore": [
       "eslint",
