@@ -4,6 +4,7 @@ Lint the CSS in your [styled components](https://github.com/styled-components/st
 
 [![Build Status][build-badge]][build-url]
 [![Coverage Status][coverage-badge]][coverage-url]
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/styled-components/stylelint-processor)
 [![Greenkeeper][greenkeeper-badge]][greenkeeper-url]
 
 ![Video of project in use](http://imgur.com/br9zdHb.gif)
