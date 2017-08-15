@@ -9,7 +9,7 @@ Lint the CSS in your [styled components](https://github.com/styled-components/st
 
 ![Video of project in use](http://imgur.com/br9zdHb.gif)
 
-**NOTE**: This is currently in alpha. While unit-tested, it doesn't yet have a lot of real world project exposure, so there'll be some edge cases we haven't covered. Please try it out and submit bug reports!
+**NOTE**: This is currently in beta. We're getting close to being fully production ready, and have now covered most normal use cases. There are still some edge cases though, but we are working hard on getting them fixed for a v1.0 release in the near future. Please keep using it and submit bug reports!
 
 ## Usage
 
