@@ -1,5 +1,4 @@
 const estreeParse = require('./babylon-parser')
-const typescriptParse = require('./typescript-parser')
 
 const traverse = require('babel-traverse').default
 const isStyled = require('../utils/styled').isStyled
@@ -70,6 +69,10 @@ const processStyledComponentsFile = ast => {
 module.exports = (input, absolutePath) => {
   let ast = null
   if (absolutePath.endsWith('.ts') || absolutePath.endsWith('.tsx')) {
+    // We import it dynamically in order to be able to not include typescript as a dependency
+    // but merely as a devDependency
+    // eslint-disable-next-line global-require
+    const typescriptParse = require('./typescript-parser')
     ast = typescriptParse(input)
   } else {
     ast = estreeParse(input)
