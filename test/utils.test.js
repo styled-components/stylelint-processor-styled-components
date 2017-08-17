@@ -6,6 +6,7 @@ const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceC
 const reverseString = require('../src/utils/general').reverseString
 const isStylelintComment = require('../src/utils/general').isStylelintComment
 const fixIndentation = require('../src/utils/general').fixIndentation
+const extrapolateShortenedCommand = require('../src/utils/general').extrapolateShortenedCommand
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -411,6 +412,35 @@ describe('utils', () => {
         trailingComments: [{ value: 'second test value' }]
       }
       expect(fn(expression2)).toBe(undefined)
+    })
+  })
+
+  describe('extrapolateShortenedCommand', () => {
+    const fn = extrapolateShortenedCommand
+    const commands = ['hello', 'heaven', 'command']
+
+    it('handles correctly shortened commands', () => {
+      expect(fn(commands, 'hel')).toBe('hello')
+      expect(fn(commands, 'hea')).toBe('heaven')
+      expect(fn(commands, 'c')).toBe('command')
+      expect(fn(commands, 'comm')).toBe('command')
+    })
+
+    it('handles full commands', () => {
+      expect(fn(commands, 'hello')).toBe('hello')
+      expect(fn(commands, 'heaven')).toBe('heaven')
+      expect(fn(commands, 'command')).toBe('command')
+    })
+
+    it('rejects ambigously shortened commands', () => {
+      expect(fn(commands, 'h')).toBeNull()
+      expect(fn(commands, 'he')).toBeNull()
+    })
+
+    it('rejects nonsense', () => {
+      expect(fn(commands, 'nonsense')).toBeNull()
+      expect(fn(commands, 'asdfasfd')).toBeNull()
+      expect(fn(commands, 'x')).toBeNull()
     })
   })
 })
