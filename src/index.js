@@ -1,6 +1,5 @@
 const path = require('path')
 const parse = require('./parsers/index')
-// TODO Fix ampersand in selectors
 
 const sourceMapsCorrections = {}
 
