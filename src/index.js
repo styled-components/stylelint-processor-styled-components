@@ -20,7 +20,7 @@ module.exports = (/* options */) => ({
   result(stylelintResult, filepath) {
     const lineCorrection = sourceMapsCorrections[filepath]
     const warnings = stylelintResult.warnings.map(warning =>
-      Object.assign(warning, {
+      Object.assign({}, warning, {
         // Replace "brace" with "backtick" in warnings, e.g.
         // "Unexpected empty line before closing backtick" (instead of "brace")
         text: warning.text.replace(/brace/, 'backtick'),
@@ -28,6 +28,6 @@ module.exports = (/* options */) => ({
       })
     )
 
-    return Object.assign(stylelintResult, { warnings })
+    return Object.assign({}, stylelintResult, { warnings })
   }
 })
