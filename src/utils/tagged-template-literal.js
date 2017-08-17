@@ -1,5 +1,6 @@
 const nextNonWhitespaceChar = require('./general').nextNonWhitespaceChar
 const isLastDeclarationCompleted = require('./general').isLastDeclarationCompleted
+const extrapolateShortenedCommand = require('./general').extrapolateShortenedCommand
 
 /**
  * Check if a node is a tagged template literal
@@ -32,6 +33,17 @@ const hasInterpolationTag = expression => {
   return relevantComments.some(isScpTag)
 }
 
+const extractScpTagInformation = comment => {
+  const matchArray = comment.match(/^(\s*?)scp-([a-z]+)(?: (.+?)(\s*)$)?/)
+  return {
+    leadingWhitespace: matchArray[1],
+    command: matchArray[2],
+    // The following two are only supposed to be cared about if command is 'custom'
+    customPlaceholder: matchArray[3],
+    trailingWhitespace: matchArray[4]
+  }
+}
+
 /**
  * Enact the interpolation tagging API
  */
@@ -41,6 +53,11 @@ const parseInterpolationTag = expression => {
   let substitute
   relevantComments.some(comment => {
     if (isScpTag(comment)) {
+      const scpTagInformation = extractScpTagInformation(comment)
+      scpTagInformation.command = extrapolateShortenedCommand(
+        ['placeholder'],
+        scpTagInformation.command
+      )
       switch (comment) {
         default:
           substitute = '-interpolation-tag-mixin: test'
@@ -111,3 +128,4 @@ exports.getTaggedTemplateLiteralContent = getTaggedTemplateLiteralContent
 exports.interleave = interleave
 exports.hasInterpolationTag = hasInterpolationTag
 exports.parseInterpolationTag = parseInterpolationTag
+exports.extractScpTagInformation = extractScpTagInformation

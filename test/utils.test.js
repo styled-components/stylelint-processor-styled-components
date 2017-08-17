@@ -1,6 +1,8 @@
 const interleave = require('../src/utils/tagged-template-literal').interleave
 const hasInterpolationTag = require('../src/utils/tagged-template-literal').hasInterpolationTag
 const parseInterpolationTag = require('../src/utils/tagged-template-literal').parseInterpolationTag
+const extractScpTagInformation = require('../src/utils/tagged-template-literal')
+  .extractScpTagInformation
 const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
 const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
 const reverseString = require('../src/utils/general').reverseString
@@ -441,6 +443,48 @@ describe('utils', () => {
       expect(fn(commands, 'nonsense')).toBeNull()
       expect(fn(commands, 'asdfasfd')).toBeNull()
       expect(fn(commands, 'x')).toBeNull()
+    })
+  })
+
+  describe('extractScpTagInformation', () => {
+    const fn = extractScpTagInformation
+    it('handles normal Scp Tag', () => {
+      expect(fn(' scp-block ')).toEqual({
+        leadingWhitespace: ' ',
+        command: 'block',
+        customPlaceholder: undefined,
+        trailingWhitespace: undefined
+      })
+
+      expect(fn('scp-selector')).toEqual({
+        leadingWhitespace: '',
+        command: 'selector',
+        customPlaceholder: undefined,
+        trailingWhitespace: undefined
+      })
+
+      expect(fn('scp-block   ')).toEqual({
+        leadingWhitespace: '',
+        command: 'block',
+        customPlaceholder: ' ',
+        trailingWhitespace: ' '
+      })
+
+      expect(fn('scp-block    ')).toEqual({
+        leadingWhitespace: '',
+        command: 'block',
+        customPlaceholder: ' ',
+        trailingWhitespace: '  '
+      })
+    })
+
+    it('handles custom placeholder', () => {
+      expect(fn(' scp-custom placeholder test  ')).toEqual({
+        leadingWhitespace: ' ',
+        command: 'custom',
+        customPlaceholder: 'placeholder test',
+        trailingWhitespace: '  '
+      })
     })
   })
 })
