@@ -55,7 +55,7 @@
   "dependencies": {
     "babel-traverse": "^6.16.0",
     "babylon": "^6.12.0",
-    "typescript": "^2.4.0",
+    "typescript": "~2.3.2",
     "typescript-eslint-parser": "^5.0.0"
   }
 }
