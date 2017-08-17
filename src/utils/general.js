@@ -70,6 +70,27 @@ const wrapKeyframes = content => `@keyframes {${content}}\n`
  */
 const isStylelintComment = comment => /^\s*stylelint-(?:enable|disable)(?:\s.*)?$/.test(comment)
 
+const extrapolateShortenedCommand = (commands, shortCommand) => {
+  let extrapolatedCommand = null
+  // We use .some so we can break the loop using return true
+  commands.some(singleCommand => {
+    if (singleCommand.substr(0, shortCommand.length) === shortCommand) {
+      if (extrapolatedCommand === null) {
+        // This is the first time we found a match
+        extrapolatedCommand = singleCommand
+      } else {
+        // We have already found another command which means this is not a unique short command
+        extrapolatedCommand = null
+        // break loop
+        return true
+      }
+    }
+    // continue loop
+    return false
+  })
+  return extrapolatedCommand
+}
+
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
@@ -77,3 +98,4 @@ exports.reverseString = reverseString
 exports.nextNonWhitespaceChar = nextNonWhitespaceChar
 exports.isLastDeclarationCompleted = isLastDeclarationCompleted
 exports.isStylelintComment = isStylelintComment
+exports.extrapolateShortenedCommand = extrapolateShortenedCommand
