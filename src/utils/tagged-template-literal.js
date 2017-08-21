@@ -44,10 +44,19 @@ const extractScpTagInformation = comment => {
   }
 }
 
+const interpolationTagAPI = [
+  'ref',
+  'block',
+  'selector',
+  'declaration',
+  'property',
+  'value',
+  'custom'
+]
 /**
  * Enact the interpolation tagging API
  */
-const parseInterpolationTag = expression => {
+const parseInterpolationTag = (expression, id) => {
   // We temporarily return a dummyvalue pending complete implemenation
   const relevantComments = retrieveStartEndComments(expression)
   let substitute
@@ -55,12 +64,35 @@ const parseInterpolationTag = expression => {
     if (isScpTag(comment)) {
       const scpTagInformation = extractScpTagInformation(comment)
       scpTagInformation.command = extrapolateShortenedCommand(
-        ['placeholder'],
+        interpolationTagAPI,
         scpTagInformation.command
       )
-      switch (comment) {
+      switch (scpTagInformation.command) {
+        case 'ref':
+        case 'selector':
+          substitute = 'div'
+          break
+
+        case 'block':
+        case 'declaration':
+          substitute = `-styled-mixin${id}: dummyValue;`
+          break
+
+        case 'property':
+          substitute = `-styled-mixin${id}`
+          break
+
+        case 'value':
+          substitute = '$dummyValue'
+          break
+
+        case 'custom':
+          // TODO put relevant logic here for whitespace
+          substitute = scpTagInformation.customPlaceholder
+          break
+
         default:
-          substitute = '-interpolation-tag-mixin: test'
+        // TODO put error here of some kind
       }
       return true // Break loop
     }
@@ -83,7 +115,8 @@ const interleave = (quasis, expressions) => {
     css += prevText
     let substitute
     if (hasInterpolationTag(expressions[i])) {
-      substitute = parseInterpolationTag(expressions[i])
+      substitute = parseInterpolationTag(expressions[i], count)
+      count += 1
     } else if (isLastDeclarationCompleted(css)) {
       // No scp tag so we guess defaults
       /** This block assumes that if you put an interpolation in the position

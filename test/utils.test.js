@@ -399,7 +399,7 @@ describe('utils', () => {
     })
   })
 
-  describe('parseInterpolationTag', () => {
+  describe.skip('parseInterpolationTag', () => {
     const fn = parseInterpolationTag
     it('correctly works as dummy', () => {
       // This is temporary
