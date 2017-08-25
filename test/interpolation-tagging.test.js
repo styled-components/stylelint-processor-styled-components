@@ -53,4 +53,20 @@ describe('interpolation-tagging', () => {
       expect(data.results[0].warnings.length).toEqual(0)
     })
   })
+
+  describe('invalid', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/interpolation-tagging/invalid.js')
+    })
+
+    it('should throw an error', () => {
+      expect(data).toEqual(expect.any(Error))
+    })
+
+    it('should throw correct error', () => {
+      expect(data.message).toEqual(
+        expect.stringContaining('fixtures/interpolation-tagging/invalid.js line 6 column 4:')
+      )
+    })
+  })
 })

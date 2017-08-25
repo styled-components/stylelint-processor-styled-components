@@ -435,8 +435,10 @@ describe('utils', () => {
     })
 
     it('rejects ambigously shortened commands', () => {
-      expect(fn(commands, 'h')).toBeNull()
-      expect(fn(commands, 'he')).toBeNull()
+      expect(fn.bind(this, commands, 'h')).toThrow()
+      expect(fn.bind(this, commands, 'he', '/path/to/file', { line: 4, column: 6 })).toThrow(
+        /path\/to\/file line 4 column 6:/
+      )
     })
 
     it('rejects nonsense', () => {

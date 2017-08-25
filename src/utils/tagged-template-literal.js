@@ -16,9 +16,7 @@ const hasInterpolations = node => !node.quasi.quasis[0].tail
  * Retrieves all the starting and ending comments of a TTL expression
  */
 const retrieveStartEndComments = expression =>
-  (expression.leadingComments || [])
-    .concat(expression.trailingComments || [])
-    .map(commentObject => commentObject.value)
+  (expression.leadingComments || []).concat(expression.trailingComments || [])
 
 /**
  * Checks if given comment value is an interpolation tag
@@ -29,7 +27,9 @@ const isScTag = comment => /^\s*?sc-[a-z]/.test(comment)
  * Checks if an interpolation has an sc comment tag
  */
 const hasInterpolationTag = expression => {
-  const relevantComments = retrieveStartEndComments(expression)
+  const relevantComments = retrieveStartEndComments(expression).map(
+    commentObject => commentObject.value
+  )
   return relevantComments.some(isScTag)
 }
 
@@ -56,16 +56,18 @@ const interpolationTagAPI = [
 /**
  * Enact the interpolation tagging API
  */
-const parseInterpolationTag = (expression, id) => {
+const parseInterpolationTag = (expression, id, absolutePath) => {
   // We temporarily return a dummyvalue pending complete implemenation
   const relevantComments = retrieveStartEndComments(expression)
   let substitute
   relevantComments.some(comment => {
-    if (isScTag(comment)) {
-      const scTagInformation = extractScTagInformation(comment)
+    if (isScTag(comment.value)) {
+      const scTagInformation = extractScTagInformation(comment.value)
       scTagInformation.command = extrapolateShortenedCommand(
         interpolationTagAPI,
-        scTagInformation.command
+        scTagInformation.command,
+        absolutePath,
+        comment.loc.start
       )
       switch (scTagInformation.command) {
         case 'ref':
@@ -92,7 +94,11 @@ const parseInterpolationTag = (expression, id) => {
           break
 
         default:
-        // TODO put error here of some kind
+          throw new Error(
+            `ERROR at ${absolutePath} line ${comment.loc.start.line} column ${comment.loc.start
+              .column}:` +
+              '\nYou tagged a Styled Components interpolation with an invalid sc- tag. Refer to the documentation to see valid interpolation tags'
+          )
       }
       return true // Break loop
     }
@@ -104,7 +110,7 @@ const parseInterpolationTag = (expression, id) => {
 /**
  * Merges the interpolations in a parsed tagged template literals with the strings
  */
-const interleave = (quasis, expressions) => {
+const interleave = (quasis, expressions, absolutePath) => {
   // Used for making sure our dummy mixins are all unique
   let count = 0
   let css = ''
@@ -115,7 +121,7 @@ const interleave = (quasis, expressions) => {
     css += prevText
     let substitute
     if (hasInterpolationTag(expressions[i])) {
-      substitute = parseInterpolationTag(expressions[i], count)
+      substitute = parseInterpolationTag(expressions[i], count, absolutePath)
       count += 1
     } else if (isLastDeclarationCompleted(css)) {
       // No sc tag so we guess defaults
@@ -148,9 +154,9 @@ const interleave = (quasis, expressions) => {
  *
  * TODO Cover edge cases
  */
-const getTaggedTemplateLiteralContent = node => {
+const getTaggedTemplateLiteralContent = (node, absolutePath) => {
   if (hasInterpolations(node)) {
-    return interleave(node.quasi.quasis, node.quasi.expressions)
+    return interleave(node.quasi.quasis, node.quasi.expressions, absolutePath)
   } else {
     return node.quasi.quasis[0].value.raw
   }
