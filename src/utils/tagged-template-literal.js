@@ -23,18 +23,18 @@ const retrieveStartEndComments = expression =>
 /**
  * Checks if given comment value is an interpolation tag
  */
-const isScpTag = comment => /^\s*?scp-[a-z]/.test(comment)
+const isScTag = comment => /^\s*?sc-[a-z]/.test(comment)
 
 /**
- * Checks if an interpolation has an scp comment tag
+ * Checks if an interpolation has an sc comment tag
  */
 const hasInterpolationTag = expression => {
   const relevantComments = retrieveStartEndComments(expression)
-  return relevantComments.some(isScpTag)
+  return relevantComments.some(isScTag)
 }
 
-const extractScpTagInformation = comment => {
-  const matchArray = comment.match(/^(\s*?)scp-([a-z]+)(?: (.+?)(\s*)$)?/)
+const extractScTagInformation = comment => {
+  const matchArray = comment.match(/^(\s*?)sc-([a-z]+)(?: (.+?)(\s*)$)?/)
   return {
     leadingWhitespace: matchArray[1],
     command: matchArray[2],
@@ -61,13 +61,13 @@ const parseInterpolationTag = (expression, id) => {
   const relevantComments = retrieveStartEndComments(expression)
   let substitute
   relevantComments.some(comment => {
-    if (isScpTag(comment)) {
-      const scpTagInformation = extractScpTagInformation(comment)
-      scpTagInformation.command = extrapolateShortenedCommand(
+    if (isScTag(comment)) {
+      const scTagInformation = extractScTagInformation(comment)
+      scTagInformation.command = extrapolateShortenedCommand(
         interpolationTagAPI,
-        scpTagInformation.command
+        scTagInformation.command
       )
-      switch (scpTagInformation.command) {
+      switch (scTagInformation.command) {
         case 'ref':
         case 'selector':
           substitute = 'div'
@@ -88,7 +88,7 @@ const parseInterpolationTag = (expression, id) => {
 
         case 'custom':
           // TODO put relevant logic here for whitespace
-          substitute = scpTagInformation.customPlaceholder
+          substitute = scTagInformation.customPlaceholder
           break
 
         default:
@@ -118,7 +118,7 @@ const interleave = (quasis, expressions) => {
       substitute = parseInterpolationTag(expressions[i], count)
       count += 1
     } else if (isLastDeclarationCompleted(css)) {
-      // No scp tag so we guess defaults
+      // No sc tag so we guess defaults
       /** This block assumes that if you put an interpolation in the position
        * of the start of a declaration that the interpolation will
        * contain a full declaration and not later in the template literal
@@ -161,4 +161,4 @@ exports.getTaggedTemplateLiteralContent = getTaggedTemplateLiteralContent
 exports.interleave = interleave
 exports.hasInterpolationTag = hasInterpolationTag
 exports.parseInterpolationTag = parseInterpolationTag
-exports.extractScpTagInformation = extractScpTagInformation
+exports.extractScTagInformation = extractScTagInformation
