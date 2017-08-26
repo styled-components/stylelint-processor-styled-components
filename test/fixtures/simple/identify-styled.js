@@ -23,3 +23,9 @@ const Image2 = styled(Image1).attrs({ src: 'newUrl' })`
     color: red;
   }
 `;
+
+const Image3 = Image2.extend`
+  bad-selector2 {
+    color: blue;
+  }
+`;

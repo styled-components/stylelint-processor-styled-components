@@ -33,6 +33,9 @@ const isStyledCall = (node, styledVariableName) =>
   // And that the function name matches the imported name
   node.tag.callee.name === styledVariableName
 
+/**
+ * Check if it has a .attrs postfix which we in that case handle specially
+ */
 const hasAttrsCall = node =>
   // Check that it's a function call
   node.tag &&
@@ -50,6 +53,13 @@ const getAttrsObject = node => node.tag.callee.object
 const isStyled = (node, styledVariableName) =>
   isTaggedTemplateLiteral(node) &&
   (isStyledCall(node, styledVariableName) || isStyledShorthand(node, styledVariableName))
+
+/**
+ * Check if it is a .extend call and we pretty reasonable assume that any TTL that ends
+ * in a .extend must be a styled components call as there is no way to check if it was
+ * called on a Styled Component
+ */
+const isExtendCall = node => node.tag && node.tag.property && node.tag.property.name === 'extend'
 
 /**
  * Check if something is a call to one of our helper methods
@@ -76,3 +86,4 @@ exports.isStyled = isStyled
 exports.isHelper = isHelper
 exports.hasAttrsCall = hasAttrsCall
 exports.getAttrsObject = getAttrsObject
+exports.isExtendCall = isExtendCall

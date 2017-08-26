@@ -6,6 +6,7 @@ const isHelper = require('../utils/styled').isHelper
 const isStyledImport = require('../utils/styled').isStyledImport
 const hasAttrsCall = require('../utils/styled').hasAttrsCall
 const getAttrsObject = require('../utils/styled').getAttrsObject
+const isExtendCall = require('../utils/styled').isExtendCall
 
 const wrapSelector = require('../utils/general').wrapSelector
 const wrapKeyframes = require('../utils/general').wrapKeyframes
@@ -45,7 +46,7 @@ const processStyledComponentsFile = ast => {
       if (hasAttrsCall(node)) {
         processedNode.tag = getAttrsObject(node)
       }
-      if (!helper && !isStyled(processedNode, importedNames.default)) return
+      if (!helper && !isStyled(processedNode, importedNames.default) && !isExtendCall(node)) return
       const content = getTTLContent(processedNode)
       const fixedContent = fixIndentation(content).text
       const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector

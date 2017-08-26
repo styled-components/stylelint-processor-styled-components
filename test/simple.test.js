@@ -215,7 +215,7 @@ describe('simple', () => {
     })
 
     it('should have 4 warnings', () => {
-      expect(data.results[0].warnings.length).toEqual(4)
+      expect(data.results[0].warnings.length).toEqual(5)
     })
 
     it('should have correct warnings', () => {
@@ -231,6 +231,9 @@ describe('simple', () => {
 
       expect(warnings[3].line).toBe(22)
       expect(warnings[3].rule).toBe('selector-type-no-unknown')
+
+      expect(warnings[4].line).toBe(28)
+      expect(warnings[4].rule).toBe('selector-type-no-unknown')
     })
   })
 })
