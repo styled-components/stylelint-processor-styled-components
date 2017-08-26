@@ -44,5 +44,5 @@ const Button6 = styled.button`
 const bool = true;
 const Button7 = styled.button`
   color: red;
-  margin-${/* sc-custom left */ bool ? 'left' : 'right'}: 10px;
+  margin-${/* sc-custom 'left' */ bool ? 'left' : 'right'}: 10px;
 `;

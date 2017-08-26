@@ -34,13 +34,14 @@ const hasInterpolationTag = expression => {
 }
 
 const extractScTagInformation = comment => {
-  const matchArray = comment.match(/^(\s*?)sc-([a-z]+)(?: (.+?)(\s*)$)?/)
+  const matchArray = comment.match(/^\s*?sc-([a-z]+)\s*(?:(?:'(.*?)')|(?:"(.*?)"))?\s*$/)
+  if (matchArray === null) {
+    return null
+  }
   return {
-    leadingWhitespace: matchArray[1],
-    command: matchArray[2],
-    // The following two are only supposed to be cared about if command is 'custom'
-    customPlaceholder: matchArray[3],
-    trailingWhitespace: matchArray[4]
+    command: matchArray[1],
+    // This is only cared about if command is custom
+    customPlaceholder: matchArray[2] || matchArray[3]
   }
 }
 
@@ -63,6 +64,13 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
   relevantComments.some(comment => {
     if (isScTag(comment.value)) {
       const scTagInformation = extractScTagInformation(comment.value)
+      if (scTagInformation === null) {
+        throw new Error(
+          `ERROR at ${absolutePath} line ${comment.loc.start.line} column ${comment.loc.start
+            .column}:` +
+            '\nWe were unable to parse your Styled Components interpolation tag, this is most likely due to lack of quotes in an sc-custom tag, refer to the documentation for correct format'
+        )
+      }
       scTagInformation.command = extrapolateShortenedCommand(
         interpolationTagAPI,
         scTagInformation.command,
@@ -89,7 +97,6 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
           break
 
         case 'custom':
-          // TODO put relevant logic here for whitespace
           substitute = scTagInformation.customPlaceholder
           break
 

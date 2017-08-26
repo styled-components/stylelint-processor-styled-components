@@ -452,40 +452,35 @@ describe('utils', () => {
     const fn = extractScTagInformation
     it('handles normal Sc Tag', () => {
       expect(fn(' sc-block ')).toEqual({
-        leadingWhitespace: ' ',
         command: 'block',
-        customPlaceholder: undefined,
-        trailingWhitespace: undefined
+        customPlaceholder: undefined
       })
 
       expect(fn('sc-selector')).toEqual({
-        leadingWhitespace: '',
         command: 'selector',
-        customPlaceholder: undefined,
-        trailingWhitespace: undefined
+        customPlaceholder: undefined
       })
 
       expect(fn('sc-block   ')).toEqual({
-        leadingWhitespace: '',
         command: 'block',
-        customPlaceholder: ' ',
-        trailingWhitespace: ' '
+        customPlaceholder: undefined
       })
 
       expect(fn('sc-block    ')).toEqual({
-        leadingWhitespace: '',
         command: 'block',
-        customPlaceholder: ' ',
-        trailingWhitespace: '  '
+        customPlaceholder: undefined
       })
     })
 
     it('handles custom placeholder', () => {
-      expect(fn(' sc-custom placeholder test  ')).toEqual({
-        leadingWhitespace: ' ',
+      expect(fn(' sc-custom "placeholder test"  ')).toEqual({
         command: 'custom',
-        customPlaceholder: 'placeholder test',
-        trailingWhitespace: '  '
+        customPlaceholder: 'placeholder test'
+      })
+
+      expect(fn(" sc-custom 'placeholder test'  ")).toEqual({
+        command: 'custom',
+        customPlaceholder: 'placeholder test'
       })
     })
   })
