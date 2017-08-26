@@ -33,6 +33,17 @@ const isStyledCall = (node, styledVariableName) =>
   // And that the function name matches the imported name
   node.tag.callee.name === styledVariableName
 
+const hasAttrsCall = node =>
+  // Check that it's a function call
+  node.tag &&
+  node.tag.callee &&
+  // Check that the last member of the call is attrs
+  node.tag.callee.property &&
+  node.tag.callee.property.name === 'attrs'
+
+// We don't need the checks here as they were checked in hasAttrsCall
+const getAttrsObject = node => node.tag.callee.object
+
 /**
  * Check if something is a styled component call
  */
@@ -63,3 +74,5 @@ exports.isStyledShorthand = isStyledShorthand
 exports.isStyledCall = isStyledCall
 exports.isStyled = isStyled
 exports.isHelper = isHelper
+exports.hasAttrsCall = hasAttrsCall
+exports.getAttrsObject = getAttrsObject

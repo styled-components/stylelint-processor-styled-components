@@ -215,7 +215,6 @@ describe('simple', () => {
     })
 
     it('should have 4 warnings', () => {
-      console.log(data.results[0].warnings)
       expect(data.results[0].warnings.length).toEqual(4)
     })
 
