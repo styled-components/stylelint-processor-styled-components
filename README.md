@@ -112,7 +112,46 @@ would throw a stylelint error similar to `All rules have already been disabled (
 
 #### Interpolation linting
 
-We do not currently support linting interpolations as it could be a big performance hit though we aspire to have at least partial support in the future. You can of course lint your own mixins in their separate files, but it won't be linted in context, the implementation currently just inserts relevant dummy values. This, we are afraid, means you won't be able to lint cases such as `declaration-block-no-duplicate-properties` etc. and won't be able to lint outside mixins such as [polished](https://github.com/styled-components/polished).
+We are afraid that we don't support linting interpolations (meaning the actual CSS that would be inserted into an interpolation through a variable or function during runtime) as it could be a big performance hit. You can of course lint your own mixins in their separate files, but it won't be linted in context, our implementation simply inserts relevant dummy values. This, we are afraid, means you won't be able to lint cases such as `declaration-block-no-duplicate-properties` etc. and won't be able to lint outside mixins such as [polished](https://github.com/styled-components/polished) in context.
+
+#### Interpolation tagging
+In order to handle a lot of edge cases in the above mentioned inserting of relevant dummy values in the interpolations we have made an API for you to be able to clearly tag what purpose your interpolation has with a comment. A quick example of something that would've caused a bug before that is now fixed is:
+```js
+const property = condition ? property1 : property2
+const Button = styled.div`
+  ${/* sc-prop */ property}: someValue;
+`
+```
+as we wouldn't have been able to tell in all cases whether the interpolation was only a property or a whole declaration.
+
+The API is defined as follows:
+- `sc-` interpolation tags can only be placed before the first expression in the interpolation or after the last expression
+- If no tag is found, our defaults work which guess whether the interpolation is just a value, multiple values or a whole declaration. This is error prone but should be able to handle most normal cases
+- If a tag is found but the tag is invalid (doesn't follow the below specifications) an error will be thrown
+- All tags are prefixed by `sc-` and the full list of possible tags is listed below. You may shorten the commands as much as you wish as long as it remains a unique shortening. If you are in doubt of the vocabulary you can refer to [this vocabulary list](http://apps.workflower.fi/vocabs/css/en) with examples. Here are the defined tags:
+  - ref
+  - block
+  - selector
+  - declaration
+  - property
+  - value
+  - custom
+- the custom tag is special as this is meant to handle the more unique and uncommon edge cases. When you use this tag, you can decide yourself what the placeholder will be by enclosing in quotes (either single or double) the placeholder such as this example: `/* sc-custom 'SOME PLACEHOLDER' */`
+
+A few more real world examples for clarity and inspiration:
+```js
+
+const Button = styled.button`
+  background: green;
+  margin-${/* sc-custom 'left' */ props => ((props.theme.dir === 'rtl') ? 'left':'right')}: 12.5px;
+`;
+
+const Wrapper = styled.div`
+  ${/* sc-sel */ Button} {
+    color: red;
+  }
+`;
+```
 
 #### Template literal style and indentation
 
