@@ -397,23 +397,61 @@ describe('utils', () => {
       }
       expect(fn(expression)).toBe(false)
     })
+
+    it('handles tag not being first comment', () => {
+      const expression = {
+        leadingComments: [{ value: 'some test value' }, { value: 'second test value' }],
+        trailingComments: [{ value: '  sc-s' }]
+      }
+      expect(fn(expression)).toBe(true)
+    })
   })
 
-  describe.skip('parseInterpolationTag', () => {
+  describe('parseInterpolationTag', () => {
     const fn = parseInterpolationTag
-    it('correctly works as dummy', () => {
-      // This is temporary
-      const expression1 = {
-        leadingComments: [{ value: ' sc-block ' }],
-        trailingComments: []
-      }
-      expect(fn(expression1)).toBe('-interpolation-tag-mixin: test')
+    const prepExpression = command => ({
+      leadingComments: [
+        { value: 'some test comment' },
+        {
+          value: `sc-${command}`,
+          loc: {
+            start: {
+              line: 1,
+              column: 3
+            }
+          }
+        }
+      ],
+      trailingComments: []
+    })
+    it('handles the API', () => {
+      const refExpression = prepExpression('ref')
+      expect(fn(refExpression, 1, 'path/to/file')).toBe('div')
 
-      const expression2 = {
-        leadingComments: [{ value: 'some test value' }],
-        trailingComments: [{ value: 'second test value' }]
-      }
-      expect(fn(expression2)).toBe(undefined)
+      const selectorExpression = prepExpression('selector')
+      expect(fn(selectorExpression, 1, 'path/to/file')).toBe('div')
+
+      const blockExpression = prepExpression('block')
+      expect(fn(blockExpression, 1, 'path/to/file')).toBe('-styled-mixin1: dummyValue;')
+
+      const declarationExpression = prepExpression('declaration')
+      expect(fn(declarationExpression, 1, 'path/to/file')).toBe('-styled-mixin1: dummyValue;')
+
+      const propertyExpression = prepExpression('property')
+      expect(fn(propertyExpression, 1, 'path/to/file')).toBe('-styled-mixin1')
+
+      const valueExpression = prepExpression('value')
+      expect(fn(valueExpression, 1, 'path/to/file')).toBe('$dummyValue')
+
+      const customExpression = prepExpression('custom " my test placeholder"')
+      expect(fn(customExpression, 1, 'path/to/file')).toBe(' my test placeholder')
+    })
+
+    it('throws on invalid tag', () => {
+      const invalidExpression = prepExpression('invalid')
+      expect(fn.bind(null, invalidExpression, 1, 'path/to/file')).toThrow(
+        /path\/to\/file line 1 column 3:\n.*invalid sc- tag/
+      )
     })
   })
 
