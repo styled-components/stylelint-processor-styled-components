@@ -81,7 +81,7 @@ change any of these rules you can always override them in your stylelint config.
 For use with Webpack you can use the [`stylelint-custom-processor-loader`](https://github.com/emilgoldsmith/stylelint-custom-processor-loader).
 
 ### Syntax notes
-#### Turning rules off from within your CSS
+#### Turning rules off from within your JS/CSS
 
 Turning off rules with `stylelint-disable`-like comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) is fully supported inside and outside of the tagged template literals, do note though that what actually happens behind the scene is that all `stylelint-(disable|enable)` comments are moved into the compiled css that is actually linted, so something like this:
 
