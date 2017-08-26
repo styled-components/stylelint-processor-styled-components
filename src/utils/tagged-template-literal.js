@@ -58,11 +58,11 @@ const interpolationTagAPI = [
  * Enact the interpolation tagging API
  */
 const parseInterpolationTag = (expression, id, absolutePath) => {
-  // We temporarily return a dummyvalue pending complete implemenation
   const relevantComments = retrieveStartEndComments(expression)
   let substitute
   relevantComments.some(comment => {
     if (isScTag(comment.value)) {
+      // We always assume that there is only one sc tag in an interpolation
       const scTagInformation = extractScTagInformation(comment.value)
       if (scTagInformation === null) {
         throw new Error(
