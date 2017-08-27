@@ -425,9 +425,6 @@ describe('utils', () => {
       trailingComments: []
     })
     it('handles the API', () => {
-      const refExpression = prepExpression('ref')
-      expect(fn(refExpression, 1, 'path/to/file')).toBe('div')
-
       const selectorExpression = prepExpression('selector')
       expect(fn(selectorExpression, 1, 'path/to/file')).toBe('div')
 

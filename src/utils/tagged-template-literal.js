@@ -45,15 +45,7 @@ const extractScTagInformation = comment => {
   }
 }
 
-const interpolationTagAPI = [
-  'ref',
-  'block',
-  'selector',
-  'declaration',
-  'property',
-  'value',
-  'custom'
-]
+const interpolationTagAPI = ['block', 'selector', 'declaration', 'property', 'value', 'custom']
 /**
  * Enact the interpolation tagging API
  */
@@ -78,7 +70,6 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
         comment.loc.start
       )
       switch (scTagInformation.command) {
-        case 'ref':
         case 'selector':
           substitute = 'div'
           break

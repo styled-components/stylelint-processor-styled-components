@@ -112,7 +112,6 @@ To tag an interpolation add a comment at either the start or the end of the inte
 
 The full list of supported tags:
 
-- `sc-ref`
 - `sc-block`
 - `sc-selector`
 - `sc-declaration`
