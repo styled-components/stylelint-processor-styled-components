@@ -4,6 +4,9 @@ const traverse = require('babel-traverse').default
 const isStyled = require('../utils/styled').isStyled
 const isHelper = require('../utils/styled').isHelper
 const isStyledImport = require('../utils/styled').isStyledImport
+const hasAttrsCall = require('../utils/styled').hasAttrsCall
+const getAttrsObject = require('../utils/styled').getAttrsObject
+const isExtendCall = require('../utils/styled').isExtendCall
 
 const wrapSelector = require('../utils/general').wrapSelector
 const wrapKeyframes = require('../utils/general').wrapKeyframes
@@ -39,8 +42,12 @@ const processStyledComponentsFile = ast => {
         return
       }
       const helper = isHelper(node, importedNames)
-      if (!helper && !isStyled(node, importedNames.default)) return
-      const content = getTTLContent(node)
+      const processedNode = Object.assign({}, node)
+      if (hasAttrsCall(node)) {
+        processedNode.tag = getAttrsObject(node)
+      }
+      if (!helper && !isStyled(processedNode, importedNames.default) && !isExtendCall(node)) return
+      const content = getTTLContent(processedNode)
       const fixedContent = fixIndentation(content).text
       const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector
       const wrappedContent = wrapperFn(fixedContent)
@@ -50,7 +57,7 @@ const processStyledComponentsFile = ast => {
       extractedCSS.push(stylelintCommentsAdded)
       sourceMap = Object.assign(
         sourceMap,
-        getSourceMap(extractedCSS.join('\n'), wrappedContent, node.loc.start.line)
+        getSourceMap(extractedCSS.join('\n'), wrappedContent, processedNode.loc.start.line)
       )
       /**
        * All queued comments have been added to the file so we don't need to, and actually shouldn't
