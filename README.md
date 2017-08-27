@@ -1,6 +1,6 @@
 # `stylelint-processor-styled-components`
 
-Lint the CSS in your [styled components](https://github.com/styled-components/styled-components) with [stylelint](http://stylelint.io/)!
+Lint your [styled components](https://github.com/styled-components/styled-components) with [stylelint](http://stylelint.io/)!
 
 [![Build Status][build-badge]][build-url]
 [![Coverage Status][coverage-badge]][coverage-url]
@@ -9,8 +9,6 @@ Lint the CSS in your [styled components](https://github.com/styled-components/st
 
 ![Video of project in use](http://imgur.com/br9zdHb.gif)
 
-**NOTE**: This is currently in beta. We're getting close to being fully production ready, and have now covered most normal use cases. There are still some edge cases though, but we are working hard on getting them fixed for a v1.0 release in the near future. Please keep using it and submit bug reports!
-
 ## Usage
 
 ### Installation
@@ -18,12 +16,16 @@ Lint the CSS in your [styled components](https://github.com/styled-components/st
 You need:
 
 - `stylelint` (duh)
-- This processor (to add `styled-components` support)
-- The [stylelint-config-styled-components-processor](https://github.com/styled-components/stylelint-config-styled-components-processor) shareable config
-- The standard config for stylelint (or any config you like)
+- This processor, to extract styles from `styled-components`
+- The [`stylelint-config-styled-components-processor`](https://github.com/styled-components/stylelint-config-styled-components-processor) to disable stylelint rules that clash with `styled-components`
+- Your favorite `stylelint` config! (for example [`stylelint-config-standard`](https://github.com/stylelint/stylelint-config-standard))
 
 ```
-npm install --save-dev stylelint-processor-styled-components stylelint-config-styled-components-processor stylelint stylelint-config-standard
+(npm install --save-dev
+  stylelint
+  stylelint-processor-styled-components
+  stylelint-config-styled-components-processor
+  stylelint-config-standard)
 ```
 
 ### Setup
@@ -41,111 +43,97 @@ Add a `.stylelintrc` file to the root of your project:
 }
 ```
 
-> Setting the `syntax` to `scss` is needed for nesting and interpolation support!
+> **NOTE:** Setting the `syntax` to `scss` is needed for nesting and interpolation support!
 
-Then you need to actually run `stylelint`.
-
-Add a `lint:css` script to your `package.json`. This script will run `stylelint` with a path to all of your files containing `styled-components` code:
+Then you need to run `stylelint`. Add a `lint:css` script to your `package.json` which runs `stylelint` with a glob to all of your styled components:
 
 ```JSON
 {
   "scripts": {
-    "lint:css": "stylelint './components/**/*.js'"
+    "lint:css": "stylelint './src/**/*.js'"
   }
 }
 ```
 
-> **NOTE:** Don't worry about passing in files that don't contain any styled-components code – we take care of that.
+> **NOTE:** The processor ignores javascript files that don't contain any `styled-components`, so don't worry about being too broad as long as you restrict it to javascript (or TypeScript).
 
-Now you can lint your CSS by running this script! 🎉
+Now you can lint your CSS by running the script! 🎉
 
 ```
 npm run lint:css
 ```
 
+#### Webpack
+
+If you want to lint on build, rather than as a separate command, you can use the [`stylelint-custom-processor-loader`](https://github.com/emilgoldsmith/stylelint-custom-processor-loader) for webpack.
+
 ### Processor specific stylelint rules
 
-When using this processor a couple of stylelint rules throw errors that you cannot prevent. Like
-'[no-empty-source](https://stylelint.io/user-guide/rules/no-empty-source)' or
-'[no-missing-end-of-source-newline](https://stylelint.io/user-guide/rules/no-missing-end-of-source-newline)'.
+When using this processor a couple of stylelint rules throw errors that cannot be prevented, like [`no-empty-source`](https://stylelint.io/user-guide/rules/no-empty-source) or [`no-missing-end-of-source-newline`](https://stylelint.io/user-guide/rules/no-missing-end-of-source-newline). There's also a couple rules which we need to enforce, like [`no-vendor-prefix` rules](https://stylelint.io/user-guide/rules/property-no-vendor-prefix). (`styled-components` automatically vendor prefixes your code, so you don't need to do it manually)
 
-The [stylelint-config-styled-components-processor](https://github.com/styled-components/stylelint-config-styled-components-processor)
-shareable config will automatically disable rules that cause unresolvable conflicts. Besides those
-rules vendor prefixed [properties](https://stylelint.io/user-guide/rules/property-no-vendor-prefix)
-and [values](https://stylelint.io/user-guide/rules/value-no-vendor-prefix) will throw an error since
-styled-components automatically generates vendor prefixes for your css. Note that if you want to
-change any of these rules you can always override them in your stylelint config.
+The [`stylelint-config-styled-components-processor`](https://github.com/styled-components/stylelint-config-styled-components-processor) will automatically disable rules that cause conflicts.
 
-### Webpack
+> **NOTE:** You can override rules defined in shared configs in your custom `.stylelintrc`.
 
-For use with Webpack you can use the [`stylelint-custom-processor-loader`](https://github.com/emilgoldsmith/stylelint-custom-processor-loader).
+### Interpolation tagging
 
-### Syntax notes
-#### Turning rules off from within your JS/CSS
+Sometimes `stylelint` can throw an error (e.g. `CssSyntaxError`) even though nothing is wrong with your CSS. This is often due to an interpolation, more specifically the fact that the processor doesn't know what you're interpolating.
 
-Turning off rules with `stylelint-disable`-like comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) is fully supported inside and outside of the tagged template literals, do note though that what actually happens behind the scene is that all `stylelint-(disable|enable)` comments are moved into the compiled css that is actually linted, so something like this:
-
+A simplified example:
 
 ```js
-/* stylelint-disable */
-import React from 'react';
-import styled from 'styled-components';
+const something = 'background';
 
-const Wrapper = styled.div`
-  /* stylelint-disable */
-  background-color: red;
-`;
-```
-or even
-```js
-/* stylelint-disable */
-import React from 'react';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  /* stylelint-disable-next-line */
-  background-color: red;
-`;
-```
-
-would throw a stylelint error similar to `All rules have already been disabled (CssSyntaxError)`.
-
-#### Interpolation linting
-
-We are afraid that we don't support linting interpolations (meaning the actual CSS that would be inserted into an interpolation through a variable or function during runtime) as it could be a big performance hit. You can of course lint your own mixins in their separate files, but it won't be linted in context, our implementation simply inserts relevant dummy values. This, we are afraid, means you won't be able to lint cases such as `declaration-block-no-duplicate-properties` etc. and won't be able to lint outside mixins such as [polished](https://github.com/styled-components/polished) in context.
-
-#### Interpolation tagging
-In order to handle a lot of edge cases in the above mentioned inserting of relevant dummy values in the interpolations we have made an API for you to be able to clearly tag what purpose your interpolation has with a comment. A quick example of something that would've caused a bug before that is now fixed is:
-```js
-const property = condition ? property1 : property2
 const Button = styled.div`
-  ${/* sc-prop */ property}: someValue;
+  ${something}: papayawhip;
 `
 ```
-as we wouldn't have been able to tell in all cases whether the interpolation was only a property or a whole declaration.
 
-The API is defined as follows:
-- `sc-` interpolation tags can only be placed before the first expression in the interpolation or after the last expression
-- If no tag is found, our defaults work which guess whether the interpolation is just a value, multiple values or a whole declaration. This is error prone but should be able to handle most normal cases
-- If a tag is found but the tag is invalid (doesn't follow the below specifications) an error will be thrown
-- All tags are prefixed by `sc-` and the full list of possible tags is listed below. You may shorten the commands as much as you wish as long as it remains a unique shortening. If you are in doubt of the vocabulary you can refer to [this vocabulary list](http://apps.workflower.fi/vocabs/css/en) with examples. Here are the defined tags:
-  - ref
-  - block
-  - selector
-  - declaration
-  - property
-  - value
-  - custom
-- the custom tag is special as this is meant to handle the more unique and uncommon edge cases. When you use this tag, you can decide yourself what the placeholder will be by enclosing in quotes (either single or double) the placeholder such as this example: `/* sc-custom 'SOME PLACEHOLDER' */`
+When you have interpolations in your styles the processor can't know what they are, so it makes a good guess and replaces them with a syntactically equivalent placeholder value. Since `stylelint` is not a code flow analysis tool this doesn't cover all edge cases and the processor will get it wrong every now and then.
 
-A few more real world examples for clarity and inspiration:
+Interpolation tagging allows you to tell the processor what an interpolation is in case it guesses wrong; it can then replace the interpolation with a syntactically correct value based on your tag.
+
+For example:
+
 ```js
+const something = 'background';
 
-const Button = styled.button`
-  background: green;
-  margin-${/* sc-custom 'left' */ props => ((props.theme.dir === 'rtl') ? 'left':'right')}: 12.5px;
+const Button = styled.div`
+  // Tell the processor that "something" is a property
+  ${/* sc-prop */ something}: papayawhip;
+`
+```
+
+Now the processor knows that the `something` interpolation is a property, and it can replace the interpolation with a property for linting.
+
+To tag an interpolation add a comment at either the start or the end of the interpolation. (`${/* sc-tag */ foo}` or `${bar /* sc-tag */}`) Tags start with `sc-` and, if specified, a tag overrides the processors guess about what the interpolation is.
+
+#### Tags
+
+The full list of supported tags:
+
+- `sc-ref`
+- `sc-block`
+- `sc-selector`
+- `sc-declaration`
+- `sc-property`
+- `sc-value`
+
+> **NOTE:** If you are in doubt of the vocabulary you can refer to [this CSS vocabulary list](http://apps.workflower.fi/vocabs/css/en) with examples.
+
+For example, when you interpolate another styled component, what you really interpolate is its unique selector. Since the processor doesn't know that, you can tell it to replace it with a selector when linting:
+
+```js
+const Wrapper = styled.div`
+  ${/* sc-selector */ Button} {
+    color: red;
+  }
 `;
+```
 
+You can also use shorthand tags to avoid cluttering the code. For example:
+
+```js
 const Wrapper = styled.div`
   ${/* sc-sel */ Button} {
     color: red;
@@ -153,16 +141,56 @@ const Wrapper = styled.div`
 `;
 ```
 
+##### `sc-custom`
+
+**`sc-custom` is meant to be used as a last resort escape hatch. Prefer to use the standard tags if possible!**
+
+On top of the above standard tags the processor also has the `sc-custom` tag to allow you to cover more unique and uncommon edge cases. With the `sc-custom` tag you can decide yourself what the placeholder value will be.
+
+For example:
+
+```js
+// Switch between left and right based on language settings passed through via the theme
+const rtlSwitch = props => props.theme.dir === 'rtl' ? 'left' : 'right';
+
+const Button = styled.button`
+  background: green;
+  // Tell the processor to replace the interpolation with "left"
+  // when linting
+  margin-${/* sc-custom 'left' */ rtlSwitch}: 12.5px;
+`;
+```
+
+### Syntax notes
+
+#### Turning rules off from within your JS/CSS
+
+Turn off rules with `stylelint-disable` comments (see the [stylelint documentation](https://stylelint.io/user-guide/configuration/#turning-rules-off-from-within-your-css) for all allowed syntax) both inside and outside of the tagged template literals.
+
+```js
+import React from 'react';
+import styled from 'styled-components';
+
+// Disable stylelint from within the tagged template literal
+const Wrapper = styled.div`
+  /* stylelint-disable */
+  background-color: 123;
+`;
+
+// Or from the JavaScript around the tagged template literal
+/* stylelint-disable */
+const Wrapper = styled.div`
+  background-color: 123;
+`;
+```
+
 #### Template literal style and indentation
 
-In order to have stylelint correctly apply indentation rules we need to do a bit of opinionated preprocessing on the `styled-components` styles, which results in us only officially supporting one coding style when it comes to `styled-components` tagged template literals. This style consists of always placing the closing backtick on the base level of indentation as follows:
+In order to have stylelint correctly apply indentation rules the processor needs to do a bit of opinionated preprocessing on the styles, which results in us only officially supporting one indentation style. (the supported style is the "default" one as shown in all the documentation)
+
+The important thing is that you put the closing backtick on the base level of indentation as follows:
 
 **Right**
-```js
-const Button = styled.button`
-  color: red;
-`
-```
 
 ```js
 if (condition) {
@@ -173,6 +201,7 @@ if (condition) {
 ```
 
 **Wrong**
+
 ```js
 if (condition) {
   const Button = styled.button`
@@ -192,7 +221,7 @@ It may be that other tagged template literal styles are coincidentally supported
 
 ## License
 
-Licensed under the MIT License, Copyright © 2016 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
+Licensed under the MIT License, Copyright © 2017 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
 
 Based on Mapbox' excellent [`stylelint-processor-markdown`](https://github.com/mapbox/stylelint-processor-markdown), thanks to @davidtheclark!
 
