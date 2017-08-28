@@ -50,6 +50,9 @@
     "typescript": "~2.4.0",
     "stylelint": "^8.0.0"
   },
+  "peerDependency": {
+    "stylelint-config-styled-components-processor": "^0.1.0"
+  },
   "dependencies": {
     "babel-traverse": "^6.16.0",
     "babylon": "^6.12.0",

@@ -36,6 +36,7 @@ describe('simple', () => {
         done()
       })
       .catch(err => {
+        // eslint-disable-next-line
         console.log(err)
         data = err
         done()

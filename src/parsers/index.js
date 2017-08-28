@@ -17,7 +17,7 @@ const getTTLContent = require('../utils/tagged-template-literal.js').getTaggedTe
 const parseImports = require('../utils/parse').parseImports
 const getSourceMap = require('../utils/parse').getSourceMap
 
-const processStyledComponentsFile = ast => {
+const processStyledComponentsFile = (ast, absolutePath) => {
   const extractedCSS = []
   let ignoreRuleComments = []
   let importedNames = {
@@ -46,8 +46,10 @@ const processStyledComponentsFile = ast => {
       if (hasAttrsCall(node)) {
         processedNode.tag = getAttrsObject(node)
       }
-      if (!helper && !isStyled(processedNode, importedNames.default) && !isExtendCall(node)) return
-      const content = getTTLContent(processedNode)
+      if (!helper && !isStyled(processedNode, importedNames.default) && !isExtendCall(node)) {
+        return
+      }
+      const content = getTTLContent(node, absolutePath)
       const fixedContent = fixIndentation(content).text
       const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector
       const wrappedContent = wrapperFn(fixedContent)

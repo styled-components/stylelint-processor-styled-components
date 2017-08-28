@@ -1,9 +1,14 @@
 const interleave = require('../src/utils/tagged-template-literal').interleave
+const hasInterpolationTag = require('../src/utils/tagged-template-literal').hasInterpolationTag
+const parseInterpolationTag = require('../src/utils/tagged-template-literal').parseInterpolationTag
+const extractScTagInformation = require('../src/utils/tagged-template-literal')
+  .extractScTagInformation
 const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
 const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
 const reverseString = require('../src/utils/general').reverseString
 const isStylelintComment = require('../src/utils/general').isStylelintComment
 const fixIndentation = require('../src/utils/general').fixIndentation
+const extrapolateShortenedCommand = require('../src/utils/general').extrapolateShortenedCommand
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -372,6 +377,146 @@ describe('utils', () => {
 
       const test3 = '\t\tdisplay:block;'
       expect(fixIndentation(test3).text).toBe(test3)
+    })
+  })
+
+  describe('hasInterpolationTag', () => {
+    const fn = hasInterpolationTag
+    it('works for starting comment', () => {
+      const expression = {
+        leadingComments: [{ value: ' sc-block ' }],
+        trailingComments: []
+      }
+      expect(fn(expression)).toBe(true)
+    })
+
+    it('correctly identifies lack of tag', () => {
+      const expression = {
+        leadingComments: [{ value: 'some test value' }],
+        trailingComments: [{ value: 'second test value' }]
+      }
+      expect(fn(expression)).toBe(false)
+    })
+
+    it('handles tag not being first comment', () => {
+      const expression = {
+        leadingComments: [{ value: 'some test value' }, { value: 'second test value' }],
+        trailingComments: [{ value: '  sc-s' }]
+      }
+      expect(fn(expression)).toBe(true)
+    })
+  })
+
+  describe('parseInterpolationTag', () => {
+    const fn = parseInterpolationTag
+    const prepExpression = command => ({
+      leadingComments: [
+        { value: 'some test comment' },
+        {
+          value: `sc-${command}`,
+          loc: {
+            start: {
+              line: 1,
+              column: 3
+            }
+          }
+        }
+      ],
+      trailingComments: []
+    })
+    it('handles the API', () => {
+      const selectorExpression = prepExpression('selector')
+      expect(fn(selectorExpression, 1, 'path/to/file')).toBe('div')
+
+      const blockExpression = prepExpression('block')
+      expect(fn(blockExpression, 1, 'path/to/file')).toBe('-styled-mixin1: dummyValue;')
+
+      const declarationExpression = prepExpression('declaration')
+      expect(fn(declarationExpression, 1, 'path/to/file')).toBe('-styled-mixin1: dummyValue;')
+
+      const propertyExpression = prepExpression('property')
+      expect(fn(propertyExpression, 1, 'path/to/file')).toBe('-styled-mixin1')
+
+      const valueExpression = prepExpression('value')
+      expect(fn(valueExpression, 1, 'path/to/file')).toBe('$dummyValue')
+
+      const customExpression = prepExpression('custom " my test placeholder"')
+      expect(fn(customExpression, 1, 'path/to/file')).toBe(' my test placeholder')
+    })
+
+    it('throws on invalid tag', () => {
+      const invalidExpression = prepExpression('invalid')
+      expect(fn.bind(null, invalidExpression, 1, 'path/to/file')).toThrow(
+        /path\/to\/file line 1 column 3:\n.*invalid sc- tag/
+      )
+    })
+  })
+
+  describe('extrapolateShortenedCommand', () => {
+    const fn = extrapolateShortenedCommand
+    const commands = ['hello', 'heaven', 'command']
+
+    it('handles correctly shortened commands', () => {
+      expect(fn(commands, 'hel')).toBe('hello')
+      expect(fn(commands, 'hea')).toBe('heaven')
+      expect(fn(commands, 'c')).toBe('command')
+      expect(fn(commands, 'comm')).toBe('command')
+    })
+
+    it('handles full commands', () => {
+      expect(fn(commands, 'hello')).toBe('hello')
+      expect(fn(commands, 'heaven')).toBe('heaven')
+      expect(fn(commands, 'command')).toBe('command')
+    })
+
+    it('rejects ambigously shortened commands', () => {
+      expect(fn.bind(this, commands, 'h')).toThrow()
+      expect(fn.bind(this, commands, 'he', '/path/to/file', { line: 4, column: 6 })).toThrow(
+        /path\/to\/file line 4 column 6:/
+      )
+    })
+
+    it('rejects nonsense', () => {
+      expect(fn(commands, 'nonsense')).toBeNull()
+      expect(fn(commands, 'asdfasfd')).toBeNull()
+      expect(fn(commands, 'x')).toBeNull()
+    })
+  })
+
+  describe('extractScTagInformation', () => {
+    const fn = extractScTagInformation
+    it('handles normal Sc Tag', () => {
+      expect(fn(' sc-block ')).toEqual({
+        command: 'block',
+        customPlaceholder: undefined
+      })
+
+      expect(fn('sc-selector')).toEqual({
+        command: 'selector',
+        customPlaceholder: undefined
+      })
+
+      expect(fn('sc-block   ')).toEqual({
+        command: 'block',
+        customPlaceholder: undefined
+      })
+
+      expect(fn('sc-block    ')).toEqual({
+        command: 'block',
+        customPlaceholder: undefined
+      })
+    })
+
+    it('handles custom placeholder', () => {
+      expect(fn(' sc-custom "placeholder test"  ')).toEqual({
+        command: 'custom',
+        customPlaceholder: 'placeholder test'
+      })
+
+      expect(fn(" sc-custom 'placeholder test'  ")).toEqual({
+        command: 'custom',
+        customPlaceholder: 'placeholder test'
+      })
     })
   })
 })
