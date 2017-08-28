@@ -218,6 +218,30 @@ if (condition) {
 
 It may be that other tagged template literal styles are coincidentally supported, but no issues will be handled regarding indentation unless the above style was used.
 
+### Usage with other libraries
+
+Some other libraries also implement the `styled.x` pattern with tagged template literals. This processor will lint the CSS in those tagged template literals too.
+
+If you want to avoid edge cases when you assing the default import to a variable not called "styled" set the `importName` option to the library name. (set to `styled-components` by default)
+
+```js
+import cool from 'other-library';
+
+const Button = cool.button`
+  color: blue;
+`
+```
+
+```json
+{
+  "processors": [["stylelint-processor-styled-components", {
+      "importName": "other-library"
+  }]]
+}
+```
+
+> **NOTE:** That double array is on purpose but only necessary if you set options, see the [processors configuration docs](https://stylelint.io/user-guide/configuration/#processors).
+
 ## License
 
 Licensed under the MIT License, Copyright © 2017 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!

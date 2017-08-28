@@ -2,13 +2,20 @@ const path = require('path')
 const parse = require('./parsers/index')
 
 const sourceMapsCorrections = {}
+const DEFAULT_OPTIONS = {
+  importName: 'styled-components'
+}
 
-module.exports = (/* options */) => ({
+module.exports = options => ({
   // Get string for stylelint to lint
   code(input, filepath) {
     const absolutePath = path.resolve(process.cwd(), filepath)
     sourceMapsCorrections[absolutePath] = {}
-    const { extractedCSS, sourceMap } = parse(input, absolutePath)
+    const { extractedCSS, sourceMap } = parse(
+      input,
+      absolutePath,
+      Object.assign({}, DEFAULT_OPTIONS, options)
+    )
     // Save source location, merging existing corrections with current corrections
     sourceMapsCorrections[absolutePath] = Object.assign(
       sourceMapsCorrections[absolutePath],
