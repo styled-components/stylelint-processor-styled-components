@@ -70,6 +70,29 @@ const wrapKeyframes = content => `@keyframes {${content}}\n`
  */
 const isStylelintComment = comment => /^\s*stylelint-(?:enable|disable)(?:\s.*)?$/.test(comment)
 
+const extrapolateShortenedCommand = (commands, shortCommand, absolutePath, location) => {
+  let extrapolatedCommand = null
+  // We use .some so we can break the loop using return true
+  commands.some(singleCommand => {
+    if (singleCommand.substr(0, shortCommand.length) === shortCommand) {
+      if (extrapolatedCommand === null) {
+        // This is the first time we found a match
+        extrapolatedCommand = singleCommand
+      } else {
+        // We have already found another command which means this is not a unique short command.
+        // This will probably never throw, as all our current commands start with different letters
+        throw new Error(
+          `ERROR at ${absolutePath} line ${location.line} column ${location.column}:` +
+            '\nYou shortened a Styled Components interpolation tag ambiguously, add a few more characters to fix this error'
+        )
+      }
+    }
+    // continue loop
+    return false
+  })
+  return extrapolatedCommand
+}
+
 exports.wrapKeyframes = wrapKeyframes
 exports.wrapSelector = wrapSelector
 exports.fixIndentation = fixIndentation
@@ -77,3 +100,4 @@ exports.reverseString = reverseString
 exports.nextNonWhitespaceChar = nextNonWhitespaceChar
 exports.isLastDeclarationCompleted = isLastDeclarationCompleted
 exports.isStylelintComment = isStylelintComment
+exports.extrapolateShortenedCommand = extrapolateShortenedCommand
