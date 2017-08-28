@@ -11,7 +11,8 @@ const rules = {
       except: ['first-nested'],
       ignore: ['after-comment']
     }
-  ]
+  ],
+  'selector-type-no-unknown': true
 }
 
 describe('simple', () => {
@@ -193,6 +194,46 @@ describe('simple', () => {
 
     it('should have 8 warnings', () => {
       expect(data.results[0].warnings.length).toEqual(8)
+    })
+  })
+
+  describe('identify styled', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/simple/identify-styled.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should have errored', () => {
+      expect(data.errored).toEqual(true)
+    })
+
+    it('should have 4 warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(5)
+    })
+
+    it('should have correct warnings', () => {
+      const warnings = data.results[0].warnings
+      expect(warnings[0].line).toBe(4)
+      expect(warnings[0].rule).toBe('selector-type-no-unknown')
+
+      expect(warnings[1].line).toBe(10)
+      expect(warnings[1].rule).toBe('selector-type-no-unknown')
+
+      expect(warnings[2].line).toBe(16)
+      expect(warnings[2].rule).toBe('selector-type-no-unknown')
+
+      expect(warnings[3].line).toBe(22)
+      expect(warnings[3].rule).toBe('selector-type-no-unknown')
+
+      expect(warnings[4].line).toBe(28)
+      expect(warnings[4].rule).toBe('selector-type-no-unknown')
     })
   })
 })
