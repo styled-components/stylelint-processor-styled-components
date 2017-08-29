@@ -17,7 +17,7 @@ You need:
 
 - `stylelint` (duh)
 - This processor, to extract styles from `styled-components`
-- The [`stylelint-config-styled-components`](https://github.com/styled-components/stylelint-config-styled-components) to disable stylelint rules that clash with `styled-components`
+- The [`stylelint-config-styled-components`](https://github.com/styled-components/stylelint-config-styled-components) config to disable stylelint rules that clash with `styled-components`
 - Your favorite `stylelint` config! (for example [`stylelint-config-standard`](https://github.com/stylelint/stylelint-config-standard))
 
 ```
@@ -71,7 +71,7 @@ If you want to lint on build, rather than as a separate command, you can use the
 
 When using this processor a couple of stylelint rules throw errors that cannot be prevented, like [`no-empty-source`](https://stylelint.io/user-guide/rules/no-empty-source) or [`no-missing-end-of-source-newline`](https://stylelint.io/user-guide/rules/no-missing-end-of-source-newline). There's also a couple rules which we need to enforce, like [`no-vendor-prefix` rules](https://stylelint.io/user-guide/rules/property-no-vendor-prefix). (`styled-components` automatically vendor prefixes your code, so you don't need to do it manually)
 
-The [`stylelint-config-styled-components`](https://github.com/styled-components/stylelint-config-styled-components) will automatically disable rules that cause conflicts.
+The [`stylelint-config-styled-components`](https://github.com/styled-components/stylelint-config-styled-components) config will automatically disable rules that cause conflicts.
 
 > **NOTE:** You can override rules defined in shared configs in your custom `.stylelintrc`.
 
