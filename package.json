@@ -51,7 +51,7 @@
     "stylelint": "^8.0.0"
   },
   "peerDependency": {
-    "stylelint-config-styled-components": "^0.1.0"
+    "stylelint-config-styled-components": "^0.1.1"
   },
   "dependencies": {
     "babel-traverse": "^6.16.0",
