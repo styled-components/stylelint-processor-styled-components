@@ -9,6 +9,7 @@ const reverseString = require('../src/utils/general').reverseString
 const isStylelintComment = require('../src/utils/general').isStylelintComment
 const fixIndentation = require('../src/utils/general').fixIndentation
 const extrapolateShortenedCommand = require('../src/utils/general').extrapolateShortenedCommand
+const removeBaseIndentation = require('../src/utils/general').removeBaseIndentation
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -517,6 +518,29 @@ describe('utils', () => {
         command: 'custom',
         customPlaceholder: 'placeholder test'
       })
+    })
+  })
+
+  describe('removeBaseIndentation', () => {
+    const fn = removeBaseIndentation
+    it('removes indentation correctly', () => {
+      const inputCss = `
+        html {
+          color: red;
+        }
+      `
+      const expectedOutput = `
+html {
+  color: red;
+}
+`
+      expect(fn(inputCss)).toBe(expectedOutput)
+    })
+
+    it('handles oneline css', () => {
+      const inputCss = '   display: block;   '
+      const expectedOutput = 'display: block;'
+      expect(fn(inputCss)).toBe(expectedOutput)
     })
   })
 })
