@@ -30,10 +30,14 @@ You need:
 
 ## [Documentation](https://www.styled-components.com/docs/tooling#stylelint)
 
-**The documentation for this plugin lives on [the styled-components website](https://www.styled-components.com/docs/tooling#stylelint)!**
+**The documentation for this processor lives on [the styled-components website](https://www.styled-components.com/docs/tooling#stylelint)!**
 
 - [Setup](https://www.styled-components.com/docs/tooling#setup)
 - [Webpack](https://www.styled-components.com/docs/tooling#webpack)
+- [Interpolation tagging](https://www.styled-components.com/docs/tooling#interpolation-taggingp)
+- [Tags](https://www.styled-components.com/docs/tooling#tags)
+- [sc-custom](https://www.styled-components.com/docs/tooling#sc-custom)
+- [Syntax Notes](https://www.styled-components.com/docs/tooling#syntax-notes)
 
 
 ## License
