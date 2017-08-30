@@ -7,10 +7,10 @@ const isStyledImport = require('../utils/styled').isStyledImport
 const hasAttrsCall = require('../utils/styled').hasAttrsCall
 const getAttrsObject = require('../utils/styled').getAttrsObject
 const isExtendCall = require('../utils/styled').isExtendCall
-
 const wrapSelector = require('../utils/general').wrapSelector
 const wrapKeyframes = require('../utils/general').wrapKeyframes
 const fixIndentation = require('../utils/general').fixIndentation
+const removeBaseIndentation = require('../utils/general').removeBaseIndentation
 const isStylelintComment = require('../utils/general').isStylelintComment
 
 const getTTLContent = require('../utils/tagged-template-literal.js').getTaggedTemplateLiteralContent
@@ -51,11 +51,27 @@ const processStyledComponentsFile = (ast, absolutePath) => {
       }
       const content = getTTLContent(node, absolutePath)
       const fixedContent = fixIndentation(content).text
-      const wrapperFn = helper === 'keyframes' ? wrapKeyframes : wrapSelector
-      const wrappedContent = wrapperFn(fixedContent)
-      const stylelintCommentsAdded = ignoreRuleComments.length > 0
-        ? `${ignoreRuleComments.join('\n')}\n${wrappedContent}`
-        : wrappedContent
+      let wrappedContent
+      switch (helper) {
+        case 'keyframes':
+          // wrap it in a @keyframes block
+          wrappedContent = wrapKeyframes(fixedContent)
+          break
+
+        case 'injectGlobal':
+          // Don't wrap it as it goes in global scope, but put it to
+          // base line to avoid indentation errors
+          wrappedContent = removeBaseIndentation(fixedContent)
+          break
+
+        default:
+          // Wrap it in a dummy selector as this is what Styled Components would do
+          wrappedContent = wrapSelector(fixedContent)
+      }
+      const stylelintCommentsAdded =
+        ignoreRuleComments.length > 0
+          ? `${ignoreRuleComments.join('\n')}\n${wrappedContent}`
+          : wrappedContent
       extractedCSS.push(stylelintCommentsAdded)
       sourceMap = Object.assign(
         sourceMap,
