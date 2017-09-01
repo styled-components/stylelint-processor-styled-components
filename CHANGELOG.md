@@ -1,5 +1,28 @@
+### 0.4.0
+* move typescript to devDependencies
+* upgrade typescript-eslint-parser to 7.0.0
+* support .extend and .attrs Styled Components attributes
+
+### 0.3.0
+* fix interpolation following a comment edge case
+* rewrote our indentation handling fixing a lot of indentation rule problems
+
+### 0.2.2
+* upgrade typescript-eslint-parser to 5.0.0
+
+### 0.2.1
+* fix edge case in interpolations inside a declaration block
+
 ### 0.2.0
 * parse consecutive template literals for a single property
+* upgrade devDependencies
+* add interpolation linting section to README
+* make styled-mixin interpolation substitutes unique
+* added support for multiple interpolations in a property
+* handles interpolations in one-line css
+* support using stylelint-disable outside of tagged template literals
+* upgrade stylelint to 8.0.0
+* upgrade typescript-eslint-parser to 4.0.0
 
 ### 0.1.2
 * fix: move typescript from dependencies to devdependencies
