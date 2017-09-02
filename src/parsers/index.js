@@ -68,10 +68,9 @@ const processStyledComponentsFile = (ast, absolutePath) => {
           // Wrap it in a dummy selector as this is what Styled Components would do
           wrappedContent = wrapSelector(fixedContent)
       }
-      const stylelintCommentsAdded =
-        ignoreRuleComments.length > 0
-          ? `${ignoreRuleComments.join('\n')}\n${wrappedContent}`
-          : wrappedContent
+      const stylelintCommentsAdded = ignoreRuleComments.length > 0
+        ? `${ignoreRuleComments.join('\n')}\n${wrappedContent}`
+        : wrappedContent
       extractedCSS.push(stylelintCommentsAdded)
       sourceMap = Object.assign(
         sourceMap,
