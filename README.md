@@ -222,7 +222,7 @@ It may be that other tagged template literal styles are coincidentally supported
 
 Some other libraries also implement the `styled.x` pattern with tagged template literals. This processor will lint the CSS in those tagged template literals too.
 
-If you want to avoid edge cases when you assing the default import to a variable not called "styled" set the `importName` option to the library name. (set to `styled-components` by default)
+By default this module only works for variables imported from the the module name `styled-components` such as `import default, { some, variables } from 'styled-components'`, but if you want to use our module with a different library with a similar API you can simply change the `LETS_CHOOSE_A_GOOD_NAME` option and `stylelint-processor-styled-components` will lint your css from that library (note that we only have official support for `styled-components` though, but we hope others can also have benefit from this module). You would also need this option if you for some reason imported `styled-components` from a different path like `import styled from './node_modules/styled-components'` or something similar.
 
 ```js
 import cool from 'other-library';
