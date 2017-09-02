@@ -12,13 +12,6 @@ const animation = keyframes`
 }
 `
 
-// ⚠️ Wrong indentation ⚠️
-injectGlobal`
-html {
-  margin: 0;
-}
-`
-
 const styles = css`
 color: blue;
 `
