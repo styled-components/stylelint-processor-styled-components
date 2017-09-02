@@ -198,6 +198,28 @@ describe('simple', () => {
     })
   })
 
+  describe('other library', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/simple/other-library.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should have errored', () => {
+      expect(data.errored).toEqual(true)
+    })
+
+    it('should have 1 warning', () => {
+      expect(data.results[0].warnings.length).toEqual(1)
+    })
+  })
+
   describe('identify styled', () => {
     beforeAll(() => {
       fixture = path.join(__dirname, './fixtures/simple/identify-styled.js')
