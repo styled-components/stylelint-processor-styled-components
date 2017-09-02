@@ -542,5 +542,11 @@ html {
       const expectedOutput = 'display: block;'
       expect(fn(inputCss)).toBe(expectedOutput)
     })
+
+    it('handles no indentation edge case', () => {
+      const inputCss = '\ndisplay: block;\ncolor: red;'
+      const expectedOutput = inputCss
+      expect(fn(inputCss)).toBe(expectedOutput)
+    })
   })
 })
