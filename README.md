@@ -9,9 +9,7 @@ Lint your [styled components](https://github.com/styled-components/styled-compon
 
 ![Video of project in use](http://imgur.com/br9zdHb.gif)
 
-## Usage
-
-### Installation
+## Setup
 
 You need:
 
@@ -28,9 +26,24 @@ You need:
   stylelint-config-standard)
 ```
 
+Now use those in your `.stylelintrc` and run stylelint with your JavaScript files!
+
+```json
+{
+  "processors": ["stylelint-processor-styled-components"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-styled-components"
+  ],
+  "syntax": "scss"
+}
+```
+
+> **NOTE:** The processor works with Flow- and TypeScript-typed files too! (we'll assume TypeScript usage if you're files end in `.ts` or `.tsx`)
+
 ## [Documentation](https://www.styled-components.com/docs/tooling#stylelint)
 
-**The documentation for this processor lives on [the styled-components website](https://www.styled-components.com/docs/tooling#stylelint)!**
+**Further documentation for this processor lives on [the styled-components website](https://www.styled-components.com/docs/tooling#stylelint)!**
 
 - [Setup](https://www.styled-components.com/docs/tooling#setup)
 - [Webpack](https://www.styled-components.com/docs/tooling#webpack)
