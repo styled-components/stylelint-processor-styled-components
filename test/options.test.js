@@ -68,4 +68,30 @@ describe('options', () => {
       expect(data.results[0].warnings[0].rule).toEqual('block-no-empty')
     })
   })
+
+  describe('relative moduleName', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/options/relative-module-name.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should have errored', () => {
+      expect(data.results[0].errored).toEqual(true)
+    })
+
+    it('should have one warning (i.e. wrong lines of code)', () => {
+      expect(data.results[0].warnings.length).toEqual(1)
+    })
+
+    it('should have a block-no-empty as the first warning', () => {
+      expect(data.results[0].warnings[0].rule).toEqual('block-no-empty')
+    })
+  })
 })
