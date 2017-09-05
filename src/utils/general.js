@@ -31,6 +31,28 @@ const fixIndentation = str => {
   }
 }
 
+const removeBaseIndentation = str => {
+  // Remove empty lines
+  const emptyLinesRemoved = str.replace(/^[ \t]*$/gm, '')
+  // Get whitespaces
+  const match = emptyLinesRemoved.match(/^[ \t]*(?=\S|$)/gm)
+
+  if (!match || match.length <= 1) {
+    return str.trim()
+  }
+
+  const indentationLevels = match.map(indent => indent.length).filter(indent => indent > 0)
+  // Math,min would return infinity if list is empty
+  if (indentationLevels.length === 0) {
+    return str
+  }
+  const baseIndentationLevel = Math.min(...indentationLevels)
+  // Remove baseIndentation from string
+  const regex = new RegExp(String.raw`^[ /t]{${baseIndentationLevel}}`, 'gm')
+  const baseIndentationRemoved = emptyLinesRemoved.replace(regex, '')
+  return baseIndentationRemoved
+}
+
 const nextNonWhitespaceChar = text => {
   const matches = text.match(/^\s*([^\s])/)
   if (matches) {
@@ -101,3 +123,4 @@ exports.nextNonWhitespaceChar = nextNonWhitespaceChar
 exports.isLastDeclarationCompleted = isLastDeclarationCompleted
 exports.isStylelintComment = isStylelintComment
 exports.extrapolateShortenedCommand = extrapolateShortenedCommand
+exports.removeBaseIndentation = removeBaseIndentation

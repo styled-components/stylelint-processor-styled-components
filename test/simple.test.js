@@ -113,7 +113,7 @@ describe('simple', () => {
     })
 
     it('should have 11 warnings (i.e. wrong lines of code)', () => {
-      expect(data.results[0].warnings.length).toEqual(13)
+      expect(data.results[0].warnings.length).toEqual(11)
     })
 
     it('should be indentation and "empty line before" warnings', () => {
@@ -143,8 +143,8 @@ describe('simple', () => {
       expect(data.results[0].errored).toEqual(true)
     })
 
-    it('should have 11 warnings, even with a different name (i.e. wrong lines of code)', () => {
-      expect(data.results[0].warnings.length).toEqual(11)
+    it('should have 9 warnings, even with a different name (i.e. wrong lines of code)', () => {
+      expect(data.results[0].warnings.length).toEqual(9)
     })
 
     it('should all be indentation warnings, even with a different name', () => {
@@ -193,8 +193,8 @@ describe('simple', () => {
       expect(data.errored).toEqual(true)
     })
 
-    it('should have 8 warnings', () => {
-      expect(data.results[0].warnings.length).toEqual(8)
+    it('should have 5 warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(5)
     })
   })
 
@@ -237,7 +237,7 @@ describe('simple', () => {
       expect(data.errored).toEqual(true)
     })
 
-    it('should have 4 warnings', () => {
+    it('should have 5 warnings', () => {
       expect(data.results[0].warnings.length).toEqual(5)
     })
 
