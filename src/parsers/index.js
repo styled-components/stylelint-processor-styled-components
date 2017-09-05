@@ -17,7 +17,7 @@ const getTTLContent = require('../utils/tagged-template-literal.js').getTaggedTe
 const parseImports = require('../utils/parse').parseImports
 const getSourceMap = require('../utils/parse').getSourceMap
 
-const processStyledComponentsFile = (ast, absolutePath) => {
+const processStyledComponentsFile = (ast, absolutePath, options) => {
   const extractedCSS = []
   let ignoreRuleComments = []
   let importedNames = {
@@ -37,7 +37,7 @@ const processStyledComponentsFile = (ast, absolutePath) => {
           }
         })
       }
-      if (isStyledImport(node)) {
+      if (isStyledImport(node, options.moduleName)) {
         importedNames = parseImports(node)
         return
       }
@@ -90,7 +90,7 @@ const processStyledComponentsFile = (ast, absolutePath) => {
   }
 }
 
-module.exports = (input, absolutePath) => {
+module.exports = (input, absolutePath, options) => {
   let ast = null
   if (absolutePath.endsWith('.ts') || absolutePath.endsWith('.tsx')) {
     // We import it dynamically in order to be able to not include typescript as a dependency
@@ -101,5 +101,5 @@ module.exports = (input, absolutePath) => {
   } else {
     ast = estreeParse(input)
   }
-  return processStyledComponentsFile(ast, absolutePath)
+  return processStyledComponentsFile(ast, absolutePath, options)
 }

@@ -1,10 +1,11 @@
+const path = require('path')
 const isTaggedTemplateLiteral = require('./tagged-template-literal').isTaggedTemplateLiteral
 
 /**
  * Check if something is a styled-components import declaration
  */
-const isStyledImport = node =>
-  node.type === 'ImportDeclaration' && node.source.value === 'styled-components'
+const isStyledImport = (node, moduleName) =>
+  node.type === 'ImportDeclaration' && path.basename(node.source.value) === moduleName
 
 /**
  * Check if something is a styled shorthand call

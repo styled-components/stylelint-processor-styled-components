@@ -52,7 +52,6 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 - [sc-custom](https://www.styled-components.com/docs/tooling#sc-custom)
 - [Syntax Notes](https://www.styled-components.com/docs/tooling#syntax-notes)
 
-
 ## License
 
 Licensed under the MIT License, Copyright © 2017 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
