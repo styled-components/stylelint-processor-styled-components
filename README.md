@@ -52,31 +52,6 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 - [sc-custom](https://www.styled-components.com/docs/tooling#sc-custom)
 - [Syntax Notes](https://www.styled-components.com/docs/tooling#syntax-notes)
 
-
-### Usage with other libraries
-
-Some other libraries also implement the `styled.x` pattern with tagged template literals. This processor will lint the CSS in those tagged template literals too.
-
-By default this module only works for variables imported from the the module name `styled-components` such as `import default, { some, variables } from 'styled-components'`, but if you want to use our module with a different library with a similar API you can simply change the `LETS_CHOOSE_A_GOOD_NAME` option and `stylelint-processor-styled-components` will lint your css from that library (note that we only have official support for `styled-components` though, but we hope others can also have benefit from this module). You would also need this option if you for some reason imported `styled-components` from a different path like `import styled from './node_modules/styled-components'` or something similar.
-
-```js
-import cool from 'other-library';
-
-const Button = cool.button`
-  color: blue;
-`
-```
-
-```json
-{
-  "processors": [["stylelint-processor-styled-components", {
-      "importName": "other-library"
-  }]]
-}
-```
-
-> **NOTE:** That double array is on purpose but only necessary if you set options, see the [processors configuration docs](https://stylelint.io/user-guide/configuration/#processors).
-
 ## License
 
 Licensed under the MIT License, Copyright © 2017 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
