@@ -27,8 +27,8 @@ describe('options', () => {
         files: [fixture],
         syntax: 'scss',
         config: {
-          // Set importName option to "emotion"
-          processors: [[processor, { importName: 'emotion' }]],
+          // Set moduleName option to "emotion"
+          processors: [[processor, { moduleName: 'emotion' }]],
           rules
         }
       })
@@ -43,9 +43,9 @@ describe('options', () => {
       })
   })
 
-  describe('importName', () => {
+  describe('moduleName', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/options/import-name.js')
+      fixture = path.join(__dirname, './fixtures/options/module-name.js')
     })
 
     it('should have one result', () => {

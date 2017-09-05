@@ -3,7 +3,7 @@ const parse = require('./parsers/index')
 
 const sourceMapsCorrections = {}
 const DEFAULT_OPTIONS = {
-  importName: 'styled-components'
+  moduleName: 'styled-components'
 }
 
 module.exports = options => ({

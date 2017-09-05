@@ -37,7 +37,7 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
           }
         })
       }
-      if (isStyledImport(node, options.importName)) {
+      if (isStyledImport(node, options.moduleName)) {
         importedNames = parseImports(node)
         return
       }
