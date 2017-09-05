@@ -94,4 +94,22 @@ describe('options', () => {
       expect(data.results[0].warnings[0].rule).toEqual('block-no-empty')
     })
   })
+
+  describe('invalid moduleName', () => {
+    beforeAll(() => {
+      fixture = path.join(__dirname, './fixtures/options/invalid-module-name.js')
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.results[0].errored).toEqual(undefined)
+    })
+  })
 })
