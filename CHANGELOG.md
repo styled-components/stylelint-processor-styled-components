@@ -1,3 +1,9 @@
+### 1.0.0
+* added shared stylelint config to configure a couple of rules to fit with styled-components’ style of writing CSS
+* added support for interpolation tagging to take care of all interpolation edge cases
+* added moduleName option for better support for alternative libraries using a similar API
+* moved documentation to https://styled-components.com/docs/tooling#stylelint
+
 ### 0.4.0
 * move typescript to devDependencies
 * upgrade typescript-eslint-parser to 7.0.0
