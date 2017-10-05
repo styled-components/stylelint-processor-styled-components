@@ -33,7 +33,14 @@
     "ignore": [
       "eslint",
       "eslint-plugin-import",
-      "typescript"
+      "eslint-config-airbnb-base",
+      "babel-cli",
+      "babel-preset-latest",
+      "husky",
+      "jest",
+      "lint-staged",
+      "lodash",
+      "prettier"
     ]
   },
   "devDependencies": {
