@@ -74,7 +74,7 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
       extractedCSS.push(stylelintCommentsAdded)
       sourceMap = Object.assign(
         sourceMap,
-        getSourceMap(extractedCSS.join('\n'), wrappedContent, processedNode.loc.start.line)
+        getSourceMap(extractedCSS.join('\n'), wrappedContent, processedNode.quasi.loc.start.line)
       )
       /**
        * All queued comments have been added to the file so we don't need to, and actually shouldn't
