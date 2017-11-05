@@ -78,6 +78,10 @@ describe('interpolations', () => {
     it('should have an indentation as the first warning', () => {
       expect(data.results[0].warnings[0].rule).toEqual('indentation')
     })
+
+    it('should have the indentation warning in the right line', () => {
+      expect(data.results[0].warnings[0].line).toEqual(13)
+    })
   })
 
   describe('complex interpolations', () => {
