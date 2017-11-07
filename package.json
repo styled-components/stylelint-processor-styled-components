@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
-    "babel-preset-latest": "^6.16.0",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
@@ -54,8 +54,8 @@
     "lint-staged": "^4.0.1",
     "lodash": "^4.15.0",
     "prettier": "^1.4.4",
-    "typescript": "~2.6.1",
-    "stylelint": "^8.0.0"
+    "stylelint": "^8.0.0",
+    "typescript": "~2.6.1"
   },
   "peerDependency": {
     "stylelint-config-styled-components": "^0.1.1"
