@@ -1,3 +1,4 @@
+const CssError = require('postcss/lib/css-syntax-error')
 const nextNonWhitespaceChar = require('./general').nextNonWhitespaceChar
 const isLastDeclarationCompleted = require('./general').isLastDeclarationCompleted
 const extrapolateShortenedCommand = require('./general').extrapolateShortenedCommand
@@ -57,10 +58,12 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
       // We always assume that there is only one sc tag in an interpolation
       const scTagInformation = extractScTagInformation(comment.value)
       if (scTagInformation === null) {
-        throw new Error(
-          `ERROR at ${absolutePath} line ${comment.loc.start.line} column ${comment.loc.start
-            .column}:` +
-            '\nWe were unable to parse your Styled Components interpolation tag, this is most likely due to lack of quotes in an sc-custom tag, refer to the documentation for correct format'
+        throw new CssError(
+          'We were unable to parse your Styled Components interpolation tag, this is most likely due to lack of quotes in an sc-custom tag, refer to the documentation for correct format',
+          comment.loc.start.line,
+          comment.loc.start.column,
+          undefined,
+          absolutePath
         )
       }
       scTagInformation.command = extrapolateShortenedCommand(
@@ -92,10 +95,12 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
           break
 
         default:
-          throw new Error(
-            `ERROR at ${absolutePath} line ${comment.loc.start.line} column ${comment.loc.start
-              .column}:` +
-              '\nYou tagged a Styled Components interpolation with an invalid sc- tag. Refer to the documentation to see valid interpolation tags'
+          throw new CssError(
+            'You tagged a Styled Components interpolation with an invalid sc- tag. Refer to the documentation to see valid interpolation tags',
+            comment.loc.start.line,
+            comment.loc.start.column,
+            undefined,
+            absolutePath
           )
       }
       return true // Break loop

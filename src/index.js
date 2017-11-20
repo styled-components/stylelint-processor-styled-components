@@ -24,7 +24,11 @@ module.exports = options => ({
       )
       return extractedCSS
     } catch (e) {
-      return "";
+      // incorrect interpolations will throw CssSyntaxError and they'll be handled by stylelint
+      if (e.name === 'CssSyntaxError') {
+        throw e
+      }
+      return ''
     }
   },
   // Fix sourcemaps
