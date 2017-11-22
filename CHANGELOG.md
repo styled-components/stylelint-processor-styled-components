@@ -1,3 +1,8 @@
+### 1.1.0
+* Add support for Node v4
+* Catch errors to avoid them bubbling up to Stylelint (which broke the Stylelint plugin for VSCode)
+* upgrade typescript-eslint-parser to 9.0.0
+
 ### 1.0.0
 * added support for interpolation tagging to take care of all interpolation edge cases
 * added moduleName option for better support for alternative libraries using a similar API
