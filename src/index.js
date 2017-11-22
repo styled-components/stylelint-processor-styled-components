@@ -11,17 +11,25 @@ module.exports = options => ({
   code(input, filepath) {
     const absolutePath = path.resolve(process.cwd(), filepath)
     sourceMapsCorrections[absolutePath] = {}
-    const { extractedCSS, sourceMap } = parse(
-      input,
-      absolutePath,
-      Object.assign({}, DEFAULT_OPTIONS, options)
-    )
-    // Save source location, merging existing corrections with current corrections
-    sourceMapsCorrections[absolutePath] = Object.assign(
-      sourceMapsCorrections[absolutePath],
-      sourceMap
-    )
-    return extractedCSS
+    try {
+      const { extractedCSS, sourceMap } = parse(
+        input,
+        absolutePath,
+        Object.assign({}, DEFAULT_OPTIONS, options)
+      )
+      // Save source location, merging existing corrections with current corrections
+      sourceMapsCorrections[absolutePath] = Object.assign(
+        sourceMapsCorrections[absolutePath],
+        sourceMap
+      )
+      return extractedCSS
+    } catch (e) {
+      // incorrect interpolations will throw CssSyntaxError and they'll be handled by stylelint
+      if (e.name === 'CssSyntaxError') {
+        throw e
+      }
+      return ''
+    }
   },
   // Fix sourcemaps
   result(stylelintResult, filepath) {

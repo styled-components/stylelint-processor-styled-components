@@ -448,7 +448,7 @@ describe('utils', () => {
     it('throws on invalid tag', () => {
       const invalidExpression = prepExpression('invalid')
       expect(fn.bind(null, invalidExpression, 1, 'path/to/file')).toThrow(
-        /path\/to\/file line 1 column 3:\n.*invalid sc- tag/
+        /path\/to\/file:1:3:.*invalid sc- tag/
       )
     })
   })
@@ -473,7 +473,7 @@ describe('utils', () => {
     it('rejects ambigously shortened commands', () => {
       expect(fn.bind(this, commands, 'h')).toThrow()
       expect(fn.bind(this, commands, 'he', '/path/to/file', { line: 4, column: 6 })).toThrow(
-        /path\/to\/file line 4 column 6:/
+        /path\/to\/file:4:6:/
       )
     })
 
