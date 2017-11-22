@@ -1,6 +1,6 @@
 {
   "name": "stylelint-processor-styled-components",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A stylelint processor for styled-components",
   "main": "lib/index.js",
   "scripts": {
