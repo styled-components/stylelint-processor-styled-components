@@ -1,3 +1,6 @@
+### 1.1.1
+* FIX: Also catch errors regarding resolving absolute path of file and avoid them bubbling up to Stylelint
+
 ### 1.1.0
 * Add support for Node v4
 * Catch errors to avoid them bubbling up to Stylelint (which broke the Stylelint plugin for VSCode)
