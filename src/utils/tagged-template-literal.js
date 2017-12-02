@@ -146,6 +146,14 @@ const interleave = (quasis, expressions, absolutePath) => {
        */
       substitute = '$dummyValue'
     }
+    // Make sure substituted by same count of lines
+    const targetLines = quasis[i + 1].loc.start.line - quasis[i].loc.end.line + 1
+    let currentLines = substitute.split('\n').length
+    while (currentLines < targetLines) {
+      substitute += '\n/* dummyComment */'
+      currentLines += 1
+    }
+
     css += substitute
   }
   css += quasis[quasis.length - 1].value.raw
