@@ -10,6 +10,9 @@ const Button2 = styled.button.attrs({
   ${
     props => props.isHovering && interpolatedStyle
   }
+  position: ${
+    props => props.position
+  };
 color: ${color};
   background: blue;
 `

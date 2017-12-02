@@ -80,7 +80,7 @@ describe('interpolations', () => {
     })
 
     it('should have the indentation warning in the right line', () => {
-      expect(data.results[0].warnings[0].line).toEqual(13)
+      expect(data.results[0].warnings[0].line).toEqual(16)
     })
   })
 
