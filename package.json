@@ -1,6 +1,6 @@
 {
   "name": "stylelint-processor-styled-components",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "A stylelint processor for styled-components",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "lint:prettier": "prettier --list-different --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
     "prettier": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
     "precommit": "lint-staged",
-    "test": "jest test/*.test.js",
+    "test": "npm run build && jest test/*.test.js",
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build"
   },
@@ -33,12 +33,19 @@
     "ignore": [
       "eslint",
       "eslint-plugin-import",
-      "typescript"
+      "eslint-config-airbnb-base",
+      "babel-cli",
+      "babel-preset-latest",
+      "husky",
+      "jest",
+      "lint-staged",
+      "lodash",
+      "prettier"
     ]
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
-    "babel-preset-latest": "^6.16.0",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
@@ -47,8 +54,8 @@
     "lint-staged": "^4.0.1",
     "lodash": "^4.15.0",
     "prettier": "^1.4.4",
-    "typescript": "~2.4.0",
-    "stylelint": "^8.0.0"
+    "stylelint": "^8.0.0",
+    "typescript": "~2.6.1"
   },
   "peerDependency": {
     "stylelint-config-styled-components": "^0.1.1"
@@ -56,6 +63,7 @@
   "dependencies": {
     "babel-traverse": "^6.16.0",
     "babylon": "^6.12.0",
-    "typescript-eslint-parser": "^7.0.0"
+    "postcss": "^6.0.14",
+    "typescript-eslint-parser": "^9.0.0"
   }
 }

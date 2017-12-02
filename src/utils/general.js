@@ -1,3 +1,4 @@
+const CssError = require('postcss/lib/css-syntax-error')
 // selector count
 let count = 0
 
@@ -103,9 +104,12 @@ const extrapolateShortenedCommand = (commands, shortCommand, absolutePath, locat
       } else {
         // We have already found another command which means this is not a unique short command.
         // This will probably never throw, as all our current commands start with different letters
-        throw new Error(
-          `ERROR at ${absolutePath} line ${location.line} column ${location.column}:` +
-            '\nYou shortened a Styled Components interpolation tag ambiguously, add a few more characters to fix this error'
+        throw new CssError(
+          'You shortened a Styled Components interpolation tag ambiguously, add a few more characters to fix this error',
+          location.line,
+          location.column,
+          undefined,
+          absolutePath
         )
       }
     }

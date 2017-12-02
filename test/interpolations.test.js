@@ -1,7 +1,7 @@
 const stylelint = require('stylelint')
 const path = require('path')
 
-const processor = path.join(__dirname, '../src/index.js')
+const processor = path.join(__dirname, '../lib/index.js')
 const rules = {
   'block-no-empty': true,
   'declaration-block-no-duplicate-properties': true,
@@ -77,6 +77,10 @@ describe('interpolations', () => {
 
     it('should have an indentation as the first warning', () => {
       expect(data.results[0].warnings[0].rule).toEqual('indentation')
+    })
+
+    it('should have the indentation warning in the right line', () => {
+      expect(data.results[0].warnings[0].line).toEqual(16)
     })
   })
 

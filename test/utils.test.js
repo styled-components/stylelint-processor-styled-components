@@ -1,15 +1,24 @@
-const interleave = require('../src/utils/tagged-template-literal').interleave
-const hasInterpolationTag = require('../src/utils/tagged-template-literal').hasInterpolationTag
-const parseInterpolationTag = require('../src/utils/tagged-template-literal').parseInterpolationTag
-const extractScTagInformation = require('../src/utils/tagged-template-literal')
+const interleave = require('../lib/utils/tagged-template-literal').interleave
+const hasInterpolationTag = require('../lib/utils/tagged-template-literal').hasInterpolationTag
+const parseInterpolationTag = require('../lib/utils/tagged-template-literal').parseInterpolationTag
+const extractScTagInformation = require('../lib/utils/tagged-template-literal')
   .extractScTagInformation
-const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
-const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
-const reverseString = require('../src/utils/general').reverseString
-const isStylelintComment = require('../src/utils/general').isStylelintComment
-const fixIndentation = require('../src/utils/general').fixIndentation
-const extrapolateShortenedCommand = require('../src/utils/general').extrapolateShortenedCommand
-const removeBaseIndentation = require('../src/utils/general').removeBaseIndentation
+const isLastDeclarationCompleted = require('../lib/utils/general').isLastDeclarationCompleted
+const nextNonWhitespaceChar = require('../lib/utils/general').nextNonWhitespaceChar
+const reverseString = require('../lib/utils/general').reverseString
+const isStylelintComment = require('../lib/utils/general').isStylelintComment
+const fixIndentation = require('../lib/utils/general').fixIndentation
+const extrapolateShortenedCommand = require('../lib/utils/general').extrapolateShortenedCommand
+const removeBaseIndentation = require('../lib/utils/general').removeBaseIndentation
+
+const mockLoc = (startLine, endLine) => ({
+  start: {
+    line: startLine
+  },
+  end: {
+    line: endLine
+  }
+})
 
 describe('utils', () => {
   describe('interleave', () => {
@@ -28,11 +37,13 @@ describe('utils', () => {
     it('should variabelize an interpolation', () => {
       const quasis = [
         {
+          loc: mockLoc(1, 3),
           value: {
             raw: '\n  display: block;\n  color: '
           }
         },
         {
+          loc: mockLoc(3, 5),
           value: {
             raw: ';\n  background: blue;\n'
           }
@@ -40,6 +51,7 @@ describe('utils', () => {
       ]
       const expressions = [
         {
+          loc: mockLoc(3, 3),
           name: 'color'
         }
       ]
@@ -51,11 +63,13 @@ describe('utils', () => {
     it('converts interpolated expressions to dummy mixins', () => {
       const quasis = [
         {
+          loc: mockLoc(1, 3),
           value: {
             raw: '\n  display: block;\n  '
           }
         },
         {
+          loc: mockLoc(3, 5),
           value: {
             raw: '\n  background: blue;\n'
           }
@@ -63,6 +77,7 @@ describe('utils', () => {
       ]
       const expressions = [
         {
+          loc: mockLoc(3, 3),
           name: undefined
         }
       ]
@@ -74,21 +89,25 @@ describe('utils', () => {
     it('correctly converts several interpolations within a single property', () => {
       const quasis = [
         {
+          loc: mockLoc(1, 3),
           value: {
             raw: '\n  display: block;\n  border: '
           }
         },
         {
+          loc: mockLoc(3, 3),
           value: {
             raw: ' '
           }
         },
         {
+          loc: mockLoc(3, 3),
           value: {
             raw: ' '
           }
         },
         {
+          loc: mockLoc(3, 5),
           value: {
             raw: ';\n  background: blue;\n'
           }
@@ -96,12 +115,15 @@ describe('utils', () => {
       ]
       const expressions = [
         {
+          loc: mockLoc(3, 3),
           name: 'borderWidth'
         },
         {
+          loc: mockLoc(3, 3),
           name: 'borderStyle'
         },
         {
+          loc: mockLoc(3, 3),
           name: 'color'
         }
       ]
@@ -113,16 +135,19 @@ describe('utils', () => {
     it('correctly handles several interpolations in single line of css', () => {
       const quasis1 = [
         {
+          loc: mockLoc(1, 2),
           value: {
             raw: '\n  display: '
           }
         },
         {
+          loc: mockLoc(2, 2),
           value: {
             raw: '; background: '
           }
         },
         {
+          loc: mockLoc(2, 3),
           value: {
             raw: ';\n'
           }
@@ -130,9 +155,11 @@ describe('utils', () => {
       ]
       const expressions1 = [
         {
+          loc: mockLoc(2, 2),
           name: 'display'
         },
         {
+          loc: mockLoc(2, 2),
           name: 'background'
         }
       ]
@@ -142,16 +169,19 @@ describe('utils', () => {
 
       const quasis2 = [
         {
+          loc: mockLoc(1, 2),
           value: {
             raw: '\n  display: '
           }
         },
         {
+          loc: mockLoc(2, 2),
           value: {
             raw: '; '
           }
         },
         {
+          loc: mockLoc(2, 3),
           value: {
             raw: '\n'
           }
@@ -159,9 +189,11 @@ describe('utils', () => {
       ]
       const expressions2 = [
         {
+          loc: mockLoc(2, 2),
           name: 'display'
         },
         {
+          loc: mockLoc(3, 3),
           name: undefined
         }
       ]
@@ -176,21 +208,25 @@ describe('utils', () => {
        */
       const quasis3 = [
         {
+          loc: mockLoc(1, 2),
           value: {
             raw: '\n  display: '
           }
         },
         {
+          loc: mockLoc(2, 2),
           value: {
             raw: '; '
           }
         },
         {
+          loc: mockLoc(2, 2),
           value: {
             raw: ' '
           }
         },
         {
+          loc: mockLoc(2, 3),
           value: {
             raw: '\n'
           }
@@ -198,12 +234,15 @@ describe('utils', () => {
       ]
       const expressions3 = [
         {
+          loc: mockLoc(2, 2),
           name: 'display'
         },
         {
+          loc: mockLoc(2, 2),
           name: undefined
         },
         {
+          loc: mockLoc(2, 2),
           name: undefined
         }
       ]
@@ -448,7 +487,7 @@ describe('utils', () => {
     it('throws on invalid tag', () => {
       const invalidExpression = prepExpression('invalid')
       expect(fn.bind(null, invalidExpression, 1, 'path/to/file')).toThrow(
-        /path\/to\/file line 1 column 3:\n.*invalid sc- tag/
+        /path\/to\/file:1:3:.*invalid sc- tag/
       )
     })
   })
@@ -473,7 +512,7 @@ describe('utils', () => {
     it('rejects ambigously shortened commands', () => {
       expect(fn.bind(this, commands, 'h')).toThrow()
       expect(fn.bind(this, commands, 'he', '/path/to/file', { line: 4, column: 6 })).toThrow(
-        /path\/to\/file line 4 column 6:/
+        /path\/to\/file:4:6:/
       )
     })
 
