@@ -1,3 +1,6 @@
+### 1.2.0
+* Substitute multiline interpolations with relevant multiline substitutions so line information about errors should now be correctly displayed
+
 ### 1.1.1
 * FIX: Also catch errors regarding resolving absolute path of file and avoid them bubbling up to Stylelint
 
