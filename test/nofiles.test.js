@@ -62,35 +62,9 @@ describe('no files', () => {
     })
   })
 
-  describe('not existed codeFilename', () => {
+  describe('has codeFilename', () => {
     beforeAll(() => {
-      codeFilename = 'not-existed-file'
-    })
-
-    it('should have one result', () => {
-      expect(data.results.length).toEqual(1)
-    })
-
-    it('should use the right file', () => {
-      expect(data.results[0].source).toEqual('<input css 7>')
-    })
-
-    it('should have errored', () => {
-      expect(data.errored).toEqual(true)
-    })
-
-    it('should have one warnings', () => {
-      expect(data.results[0].warnings.length).toEqual(1)
-    })
-
-    it('should have the right line number', () => {
-      expect(data.results[0].warnings[0].line).toEqual(3)
-    })
-  })
-
-  describe('existed codeFilename', () => {
-    beforeAll(() => {
-      codeFilename = 'package.json'
+      codeFilename = 'somefile.js'
     })
 
     it('should have one result', () => {
