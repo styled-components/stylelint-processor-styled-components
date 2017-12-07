@@ -39,13 +39,16 @@ describe('no files', () => {
   })
 
   describe('no codeFilename', () => {
-    beforeAll(() => {})
+    beforeAll(() => {
+      codeFilename = undefined
+    })
 
     it('should have one result', () => {
       expect(data.results.length).toEqual(1)
     })
 
     it('should use the right file', () => {
+      // Every new linting that occurs in beforeEach() will increase the id
       expect(data.results[0].source).toEqual('<input css 2>')
     })
 
@@ -53,7 +56,7 @@ describe('no files', () => {
       expect(data.errored).toEqual(true)
     })
 
-    it('should have one warnings', () => {
+    it('should have one warning', () => {
       expect(data.results[0].warnings.length).toEqual(1)
     })
 
@@ -79,7 +82,7 @@ describe('no files', () => {
       expect(data.errored).toEqual(true)
     })
 
-    it('should have one warnings', () => {
+    it('should have one warning', () => {
       expect(data.results[0].warnings.length).toEqual(1)
     })
 
