@@ -1,6 +1,7 @@
 const path = require('path')
 const parse = require('./parsers/index')
 
+let inputId = 1
 const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
 const DEFAULT_OPTIONS = {
@@ -11,7 +12,14 @@ module.exports = options => ({
   // Get string for stylelint to lint
   code(input, filepath) {
     try {
-      const absolutePath = path.resolve(process.cwd(), filepath)
+      let absolutePath
+      if (filepath) {
+        absolutePath = path.resolve(process.cwd(), filepath)
+      } else {
+        absolutePath = `<input css ${inputId}>`
+        inputId += 1
+      }
+
       sourceMapsCorrections[absolutePath] = {}
       const { extractedCSS, interpolationLines, sourceMap } = parse(
         input,
