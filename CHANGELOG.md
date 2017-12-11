@@ -1,3 +1,6 @@
+### 1.2.1
+* FIX: Don't throw errors on using processor without filename (with Node.js API / CLI)
+
 ### 1.2.0
 * Substitute multiline interpolations with relevant multiline substitutions so line information about errors should now be correctly displayed
 
