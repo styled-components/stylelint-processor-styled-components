@@ -12,6 +12,9 @@
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build"
   },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./test/jest-setup.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/styled-components/stylelint-processor-styled-components.git"
