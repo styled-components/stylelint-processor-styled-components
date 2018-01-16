@@ -1,3 +1,6 @@
+### 1.2.2
+* FIX: Correctly remove base indentation from injectGlobal when using tabs
+
 ### 1.2.1
 * FIX: Don't throw errors on using processor without filename (with Node.js API / CLI)
 
