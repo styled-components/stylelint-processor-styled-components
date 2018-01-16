@@ -49,7 +49,7 @@ const removeBaseIndentation = str => {
   }
   const baseIndentationLevel = Math.min(...indentationLevels)
   // Remove baseIndentation from string
-  const regex = new RegExp(String.raw`^[ /t]{${baseIndentationLevel}}`, 'gm')
+  const regex = new RegExp(String.raw`^[ \t]{${baseIndentationLevel}}`, 'gm')
   const baseIndentationRemoved = emptyLinesRemoved.replace(regex, '')
   return baseIndentationRemoved
 }
