@@ -70,7 +70,7 @@ describe('interpolation-tagging', () => {
     it('should throw correct error', () => {
       const warning = data.results[0].warnings[0]
       expect(warning.line).toBe(5)
-      expect(warning.column).toBe(5)
+      expect(warning.column).toBe(4)
       expect(warning.severity).toBe('error')
       expect(warning.text).toMatch(/Styled Components.*invalid sc- tag/)
     })
@@ -92,7 +92,7 @@ describe('interpolation-tagging', () => {
     it('should throw correct error', () => {
       const warning = data.results[0].warnings[0]
       expect(warning.line).toBe(5)
-      expect(warning.column).toBe(5)
+      expect(warning.column).toBe(4)
       expect(warning.severity).toBe('error')
       expect(warning.text).toMatch(/We were unable to parse.*Styled Components/)
     })
