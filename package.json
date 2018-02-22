@@ -57,7 +57,7 @@
     "lint-staged": "^4.0.1",
     "lodash": "^4.15.0",
     "prettier": "^1.4.4",
-    "stylelint": "^9.1.0",
+    "stylelint": "^9.1.1",
     "typescript": "~2.6.1"
   },
   "peerDependency": {
