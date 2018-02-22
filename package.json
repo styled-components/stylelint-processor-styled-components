@@ -61,7 +61,8 @@
     "typescript": "~2.6.1"
   },
   "peerDependency": {
-    "stylelint-config-styled-components": "^0.1.1"
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint": ">= 9"
   },
   "dependencies": {
     "babel-traverse": "^6.16.0",
