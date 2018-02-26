@@ -134,4 +134,29 @@ describe('hard', () => {
       expect(data.results[0].warnings[4].line).toEqual(35)
     })
   })
+
+  describe('js style comments', () => {
+    describe('valid', () => {
+      beforeAll(() => {
+        fixture = path.join(__dirname, './fixtures/hard/valid-js-comments.js')
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(1)
+      })
+
+      it('should use the right file', () => {
+        expect(data.results[0].source).toEqual(fixture)
+        console.log(data.results[0])
+      })
+
+      it('should not have errored', () => {
+        expect(data.errored).toEqual(false)
+      })
+
+      it('should not have any warnings', () => {
+        expect(data.results[0].warnings).toEqual([])
+      })
+    })
+  })
 })

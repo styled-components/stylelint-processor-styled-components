@@ -1,3 +1,20 @@
+### 1.2.2
+* FIX: Correctly remove base indentation from injectGlobal when using tabs
+
+### 1.2.1
+* FIX: Don't throw errors on using processor without filename (with Node.js API / CLI)
+
+### 1.2.0
+* Substitute multiline interpolations with relevant multiline substitutions so line information about errors should now be correctly displayed
+
+### 1.1.1
+* FIX: Also catch errors regarding resolving absolute path of file and avoid them bubbling up to Stylelint
+
+### 1.1.0
+* Add support for Node v4
+* Catch errors to avoid them bubbling up to Stylelint (which broke the Stylelint plugin for VSCode)
+* upgrade typescript-eslint-parser to 9.0.0
+
 ### 1.0.0
 * added support for interpolation tagging to take care of all interpolation edge cases
 * added moduleName option for better support for alternative libraries using a similar API

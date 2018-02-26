@@ -1,6 +1,6 @@
 {
   "name": "stylelint-processor-styled-components",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "description": "A stylelint processor for styled-components",
   "main": "lib/index.js",
   "scripts": {
@@ -11,6 +11,9 @@
     "test": "npm run build && jest test/*.test.js",
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./test/jest-setup.js"
   },
   "repository": {
     "type": "git",
@@ -62,6 +65,8 @@
   },
   "dependencies": {
     "@babel/traverse": "^7.0.0-beta.32",
-    "babylon": "^7.0.0-beta.31"
+    "babylon": "^7.0.0-beta.31",
+    "postcss": "^6.0.14",
+    "typescript-eslint-parser": "^14.0.0"
   }
 }

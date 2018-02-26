@@ -59,14 +59,12 @@ describe('interpolation-tagging', () => {
       fixture = path.join(__dirname, './fixtures/interpolation-tagging/invalid-tag.js')
     })
 
-    it('should throw an error', () => {
-      expect(data).toEqual(expect.any(Error))
+    it('should return error', () => {
+      expect(data.errored).toEqual(true)
     })
 
     it('should throw correct error', () => {
-      expect(data.message).toMatch(
-        /fixtures\/interpolation-tagging\/invalid-tag\.js line 5 column 4:\n.*invalid sc- tag/
-      )
+      expect(data.output).toMatch(/.*invalid-tag\.js.*"line":5.*"column":4.*invalid sc- tag/)
     })
   })
 
@@ -75,13 +73,13 @@ describe('interpolation-tagging', () => {
       fixture = path.join(__dirname, './fixtures/interpolation-tagging/invalid-custom.js')
     })
 
-    it('should throw an error', () => {
-      expect(data).toEqual(expect.any(Error))
+    it('should return error', () => {
+      expect(data.errored).toEqual(true)
     })
 
     it('should throw correct error', () => {
-      expect(data.message).toMatch(
-        /fixtures\/interpolation-tagging\/invalid-custom\.js line 5 column 4:\n.*We were unable to parse/
+      expect(data.output).toMatch(
+        /.*invalid-custom\.js.*"line":5.*"column":4.*We were unable to parse/
       )
     })
   })
