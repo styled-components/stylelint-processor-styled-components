@@ -1,6 +1,6 @@
 const estreeParse = require('./babylon-parser')
 
-const traverse = require('babel-traverse').default
+const traverse = require('@babel/traverse').default
 const isStyled = require('../utils/styled').isStyled
 const isHelper = require('../utils/styled').isHelper
 const isStyledImport = require('../utils/styled').isStyledImport
