@@ -63,8 +63,16 @@ describe('interpolation-tagging', () => {
       expect(data.errored).toEqual(true)
     })
 
+    it('should have exactly one warning', () => {
+      expect(data.results[0].warnings.length).toBe(1)
+    })
+
     it('should throw correct error', () => {
-      expect(data.output).toMatch(/.*invalid-tag\.js.*"line":5.*"column":4.*invalid sc- tag/)
+      const warning = data.results[0].warnings[0]
+      expect(warning.line).toBe(5)
+      expect(warning.column).toBe(4)
+      expect(warning.severity).toBe('error')
+      expect(warning.text).toMatch(/Styled Components.*invalid sc- tag/)
     })
   })
 
@@ -77,10 +85,16 @@ describe('interpolation-tagging', () => {
       expect(data.errored).toEqual(true)
     })
 
+    it('should have exactly one warning', () => {
+      expect(data.results[0].warnings.length).toBe(1)
+    })
+
     it('should throw correct error', () => {
-      expect(data.output).toMatch(
-        /.*invalid-custom\.js.*"line":5.*"column":4.*We were unable to parse/
-      )
+      const warning = data.results[0].warnings[0]
+      expect(warning.line).toBe(5)
+      expect(warning.column).toBe(4)
+      expect(warning.severity).toBe('error')
+      expect(warning.text).toMatch(/We were unable to parse.*Styled Components/)
     })
   })
 })

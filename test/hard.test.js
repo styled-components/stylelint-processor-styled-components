@@ -147,7 +147,6 @@ describe('hard', () => {
 
       it('should use the right file', () => {
         expect(data.results[0].source).toEqual(fixture)
-        console.log(data.results[0])
       })
 
       it('should not have errored', () => {

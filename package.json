@@ -57,11 +57,12 @@
     "lint-staged": "^4.0.1",
     "lodash": "^4.15.0",
     "prettier": "^1.4.4",
-    "stylelint": "^8.0.0",
+    "stylelint": "^9.1.1",
     "typescript": "~2.6.1"
   },
   "peerDependency": {
-    "stylelint-config-styled-components": "^0.1.1"
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint": ">= 9"
   },
   "dependencies": {
     "@babel/traverse": "^7.0.0-beta.40",
