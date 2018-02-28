@@ -1,3 +1,8 @@
+### 1.3.0
+* FIX: Moved to using babylon's new parser that handles typescript, this will fix the problems we had with interpolation tags not being useable in Typescript
+* FIX: We now properly handle applying sourcemaps to CSS syntax errors and displaying correct line numbers for errors, Stylelint v9+ is required for this fix though as the biggest part of the fix was on their end
+* Stylelint v9+ was added as a peerdependency due to above reasons, no promises are made with this version if you do not update your Stylelint version
+
 ### 1.2.2
 * FIX: Correctly remove base indentation from injectGlobal when using tabs
 
