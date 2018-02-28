@@ -65,9 +65,8 @@
     "stylelint": ">= 9"
   },
   "dependencies": {
-    "babel-traverse": "^6.16.0",
-    "babylon": "^6.12.0",
-    "postcss": "^6.0.14",
-    "typescript-eslint-parser": "^14.0.0"
+    "@babel/traverse": "^7.0.0-beta.40",
+    "babylon": "^7.0.0-beta.40",
+    "postcss": "^6.0.14"
   }
 }
