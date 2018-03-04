@@ -25,7 +25,6 @@ describe('options', () => {
     stylelint
       .lint({
         files: [fixture],
-        syntax: 'scss',
         config: {
           // Set moduleName option to "emotion"
           processors: [[processor, { moduleName: 'emotion' }]],

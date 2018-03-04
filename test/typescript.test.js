@@ -17,7 +17,6 @@ const doLint = (fixture, done) =>
   stylelint
     .lint({
       files: [fixture],
-      syntax: 'scss',
       config: {
         processors: [processor],
         rules

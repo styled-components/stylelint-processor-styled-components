@@ -16,7 +16,6 @@ describe('interpolations', () => {
     stylelint
       .lint({
         files: [fixture],
-        syntax: 'scss',
         config: {
           processors: [processor],
           rules
