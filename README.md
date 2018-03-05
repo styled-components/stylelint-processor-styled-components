@@ -34,8 +34,7 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
   "extends": [
     "stylelint-config-recommended",
     "stylelint-config-styled-components"
-  ],
-  "syntax": "scss"
+  ]
 }
 ```
 

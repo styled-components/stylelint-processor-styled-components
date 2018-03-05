@@ -28,7 +28,6 @@ describe('real world failures', () => {
     stylelint
       .lint({
         files: [fixture],
-        syntax: 'scss',
         config: {
           processors: [processor],
           rules
