@@ -116,3 +116,19 @@ const Button12 = styled.button`
   /* stylelint-disable */
   ${colorExpression}
 `
+
+const Button13 = styled.button`
+  display: block;
+  /*
+    multiline comment with "*" and "/"
+  */
+  ${colorExpression}
+`
+
+const Button14 = styled.button`
+  display: block;
+  /**
+   * JSDoc style comment
+   */
+  ${colorExpression}
+`

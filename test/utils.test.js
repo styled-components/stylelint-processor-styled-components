@@ -368,15 +368,47 @@ describe('utils', () => {
       expect(fn(prevCSS2)).toBe(true)
 
       const prevCSS3 = `
-        display: /* stylelint-disable */
+      display: block;
+      /*
+        multiline comment with "*" and "/"
+      */
         `
-      expect(fn(prevCSS3)).toBe(false)
+      expect(fn(prevCSS3)).toBe(true)
 
       const prevCSS4 = `
+      display: block;
+      /*
+       * JSDoc style comment
+       */
+        `
+      expect(fn(prevCSS4)).toBe(true)
+
+      const prevCSS5 = `
+        display: /* stylelint-disable */
+        `
+      expect(fn(prevCSS5)).toBe(false)
+
+      const prevCSS6 = `
       display:
       /* stylelint-disable */
         `
-      expect(fn(prevCSS4)).toBe(false)
+      expect(fn(prevCSS6)).toBe(false)
+
+      const prevCSS7 = `
+      display:
+      /*
+        multiline comment with "*" and "/"
+      */
+        `
+      expect(fn(prevCSS7)).toBe(false)
+
+      const prevCSS8 = `
+      display:
+      /*
+       * JSDoc style comment
+       */
+        `
+      expect(fn(prevCSS8)).toBe(false)
     })
   })
 
