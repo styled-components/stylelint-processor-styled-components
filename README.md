@@ -46,7 +46,7 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 
 - [Setup](https://www.styled-components.com/docs/tooling#setup)
 - [Webpack](https://www.styled-components.com/docs/tooling#webpack)
-- [Interpolation tagging](https://www.styled-components.com/docs/tooling#interpolation-taggingp)
+- [Interpolation tagging](https://www.styled-components.com/docs/tooling#interpolation-tagging)
 - [Tags](https://www.styled-components.com/docs/tooling#tags)
 - [sc-custom](https://www.styled-components.com/docs/tooling#sc-custom)
 - [Syntax Notes](https://www.styled-components.com/docs/tooling#syntax-notes)
