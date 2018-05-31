@@ -4,6 +4,7 @@ const path = require('path')
 const processor = path.join(__dirname, '../lib/index.js')
 const rules = {
   'block-no-empty': true,
+  'property-no-unknown': true,
   indentation: 2
 }
 
@@ -17,6 +18,7 @@ describe('hard', () => {
     stylelint
       .lint({
         files: [fixture],
+        syntax: 'scss',
         config: {
           processors: [processor],
           rules
