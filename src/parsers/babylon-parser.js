@@ -14,6 +14,7 @@ module.exports = type => input =>
       'functionBind',
       'functionSent',
       'dynamicImport',
-      'optionalCatchBinding'
+      'optionalCatchBinding',
+      'optionalChaining'
     ]
   })
