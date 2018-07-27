@@ -1,3 +1,7 @@
+### 1.3.2
+* added support for optional chaining to our babylon parser
+* various minor development improvements that shouldn't affect the product
+
 ### 1.3.1
 * FIX: Interpolations following multiline comments no longer incorrectly error
 * README UPDATE: Recommend the recommended instead of standard syntax and no longer recommend the syntax config option for stylelint
