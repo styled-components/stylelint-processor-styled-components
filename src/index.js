@@ -38,10 +38,14 @@ module.exports = options => ({
       )
       return extractedCSS
     } catch (e) {
+      const name = e.name
       // incorrect interpolations will throw CssSyntaxError and they'll be handled by stylelint
       if (e.name === 'CssSyntaxError') {
         errorWasThrown[absolutePath] = true
         throw e
+      }
+      if (name === 'SyntaxError') {
+        return input
       }
       return ''
     }
