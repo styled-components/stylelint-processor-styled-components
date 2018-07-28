@@ -1,11 +1,11 @@
 const babylon = require('babylon')
 
-module.exports = input =>
+module.exports = type => input =>
   babylon.parse(input, {
     sourceType: 'module',
     plugins: [
       'jsx',
-      'flow',
+      type,
       'objectRestSpread',
       'decorators',
       'classProperties',
@@ -13,6 +13,8 @@ module.exports = input =>
       'asyncGenerators',
       'functionBind',
       'functionSent',
-      'dynamicImport'
+      'dynamicImport',
+      'optionalCatchBinding',
+      'optionalChaining'
     ]
   })

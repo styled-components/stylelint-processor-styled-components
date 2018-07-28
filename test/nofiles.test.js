@@ -20,7 +20,6 @@ describe('no files', () => {
       .lint({
         code,
         codeFilename,
-        syntax: 'scss',
         config: {
           processors: [processor],
           rules

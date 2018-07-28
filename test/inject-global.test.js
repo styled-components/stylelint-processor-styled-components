@@ -18,7 +18,6 @@ describe('inject-global', () => {
       stylelint
         .lint({
           files: [fixture],
-          syntax: 'scss',
           config: {
             processors: [processor],
             rules
@@ -69,7 +68,6 @@ describe('inject-global', () => {
       stylelint
         .lint({
           files: [fixture],
-          syntax: 'scss',
           config: {
             processors: [processor],
             rules: Object.assign({}, rules, { indentation: 'tab' })

@@ -4,6 +4,7 @@ const path = require('path')
 const processor = path.join(__dirname, '../lib/index.js')
 const rules = {
   'block-no-empty': true,
+  'property-no-unknown': true,
   indentation: 2
 }
 
@@ -132,6 +133,30 @@ describe('hard', () => {
 
     it('should have a warning in line 35', () => {
       expect(data.results[0].warnings[4].line).toEqual(35)
+    })
+  })
+
+  describe('js style comments', () => {
+    describe('valid', () => {
+      beforeAll(() => {
+        fixture = path.join(__dirname, './fixtures/hard/valid-js-comments.js')
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(1)
+      })
+
+      it('should use the right file', () => {
+        expect(data.results[0].source).toEqual(fixture)
+      })
+
+      it('should not have errored', () => {
+        expect(data.errored).toEqual(false)
+      })
+
+      it('should not have any warnings', () => {
+        expect(data.results[0].warnings).toEqual([])
+      })
     })
   })
 })

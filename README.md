@@ -16,14 +16,14 @@ You need:
 - `stylelint` (duh)
 - This processor, to extract styles from `styled-components`
 - The [`stylelint-config-styled-components`](https://github.com/styled-components/stylelint-config-styled-components) config to disable stylelint rules that clash with `styled-components`
-- Your favorite `stylelint` config! (for example [`stylelint-config-standard`](https://github.com/stylelint/stylelint-config-standard))
+- Your favorite `stylelint` config! (for example [`stylelint-config-recommended`](https://github.com/stylelint/stylelint-config-recommended))
 
 ```
 (npm install --save-dev
   stylelint
   stylelint-processor-styled-components
   stylelint-config-styled-components
-  stylelint-config-standard)
+  stylelint-config-recommended)
 ```
 
 Now use those in your `.stylelintrc` and run stylelint with your JavaScript files!
@@ -32,10 +32,9 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 {
   "processors": ["stylelint-processor-styled-components"],
   "extends": [
-    "stylelint-config-standard",
+    "stylelint-config-recommended",
     "stylelint-config-styled-components"
-  ],
-  "syntax": "scss"
+  ]
 }
 ```
 
@@ -47,7 +46,7 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 
 - [Setup](https://www.styled-components.com/docs/tooling#setup)
 - [Webpack](https://www.styled-components.com/docs/tooling#webpack)
-- [Interpolation tagging](https://www.styled-components.com/docs/tooling#interpolation-taggingp)
+- [Interpolation tagging](https://www.styled-components.com/docs/tooling#interpolation-tagging)
 - [Tags](https://www.styled-components.com/docs/tooling#tags)
 - [sc-custom](https://www.styled-components.com/docs/tooling#sc-custom)
 - [Syntax Notes](https://www.styled-components.com/docs/tooling#syntax-notes)

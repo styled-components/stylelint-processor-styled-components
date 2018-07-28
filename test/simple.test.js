@@ -25,7 +25,6 @@ describe('simple', () => {
     stylelint
       .lint({
         files: [fixture],
-        syntax: 'scss',
         config: {
           processors: [processor],
           rules

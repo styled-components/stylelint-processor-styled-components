@@ -4,6 +4,7 @@ const parse = require('./parsers/index')
 let inputId = 1
 const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
+const errorWasThrown = {}
 const DEFAULT_OPTIONS = {
   moduleName: 'styled-components'
 }
@@ -11,15 +12,15 @@ const DEFAULT_OPTIONS = {
 module.exports = options => ({
   // Get string for stylelint to lint
   code(input, filepath) {
-    try {
-      let absolutePath
-      if (filepath) {
-        absolutePath = path.resolve(process.cwd(), filepath)
-      } else {
-        absolutePath = `<input css ${inputId}>`
-        inputId += 1
-      }
+    let absolutePath
+    if (filepath) {
+      absolutePath = path.resolve(process.cwd(), filepath)
+    } else {
+      absolutePath = `<input css ${inputId}>`
+      inputId += 1
+    }
 
+    try {
       sourceMapsCorrections[absolutePath] = {}
       const { extractedCSS, interpolationLines, sourceMap } = parse(
         input,
@@ -40,6 +41,7 @@ module.exports = options => ({
       const name = e.name
       // incorrect interpolations will throw CssSyntaxError and they'll be handled by stylelint
       if (e.name === 'CssSyntaxError') {
+        errorWasThrown[absolutePath] = true
         throw e
       }
       if (name === 'SyntaxError') {
@@ -50,6 +52,13 @@ module.exports = options => ({
   },
   // Fix sourcemaps
   result(stylelintResult, filepath) {
+    if (errorWasThrown[filepath]) {
+      // We threw an error ourselves, in this case we have already put correct
+      // line/column numbers so no source maps are needed
+      // (and would actually break the line numbers)
+      delete errorWasThrown[filepath]
+      return stylelintResult
+    }
     const interpolationLines = interpolationLinesMap[filepath] || []
     const lineCorrection = sourceMapsCorrections[filepath]
     const warnings = stylelintResult.warnings
