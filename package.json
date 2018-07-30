@@ -67,6 +67,6 @@
   "dependencies": {
     "@babel/traverse": "^7.0.0-beta.40",
     "babylon": "^7.0.0-beta.40",
-    "postcss": "^6.0.14"
+    "postcss": "^7.0.2"
   }
 }
