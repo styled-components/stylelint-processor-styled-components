@@ -38,7 +38,7 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 }
 ```
 
-> **NOTE:** The processor works with Flow- and TypeScript-typed files too! (we'll assume TypeScript usage if you're files end in `.ts` or `.tsx`)
+> **NOTE:** The processor works with Flow- and TypeScript-typed files too! (we'll assume TypeScript usage if your files end in `.ts` or `.tsx`)
 
 ## [Documentation](https://www.styled-components.com/docs/tooling#stylelint)
 
