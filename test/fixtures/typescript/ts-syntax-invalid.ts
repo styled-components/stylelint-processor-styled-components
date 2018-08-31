@@ -26,3 +26,9 @@ export const Button2 = styled.button`
 
 color: blue;
 `
+
+// ⚠️ BAD INDENTATION ⚠️
+export const Button3 = styled.button<IAccordionContainerProps>`
+
+color: blue;
+`;
