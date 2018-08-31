@@ -27,8 +27,15 @@ export const Button2 = styled.button`
 color: blue;
 `
 
-// ⚠️ BAD INDENTATION ⚠️
+// ⚠️ BAD INDENTATION ⚠️ (Generic Type)
 export const Button3 = styled.button<IAccordionContainerProps>`
 
 color: blue;
 `;
+
+// ⚠️ BAD INDENTATION ⚠️ (Inline Generic Type)
+export const Button4 = styled.button<{ a: boolean; b: string }>`
+
+color: blue;
+`;
+
