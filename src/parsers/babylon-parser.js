@@ -1,4 +1,4 @@
-const babylon = require('babylon')
+const babylon = require('@babel/parser')
 
 module.exports = type => input =>
   babylon.parse(input, {
@@ -7,7 +7,7 @@ module.exports = type => input =>
       'jsx',
       type,
       'objectRestSpread',
-      'decorators',
+      ['decorators', { decoratorsBeforeExport: true }],
       'classProperties',
       'exportExtensions',
       'asyncGenerators',

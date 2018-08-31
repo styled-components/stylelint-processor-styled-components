@@ -47,8 +47,9 @@
     ]
   },
   "devDependencies": {
-    "babel-cli": "^6.16.0",
-    "babel-preset-env": "^1.6.1",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
@@ -65,8 +66,8 @@
     "stylelint": ">= 9"
   },
   "dependencies": {
-    "@babel/traverse": "^7.0.0-beta.40",
-    "babylon": "^7.0.0-beta.40",
+    "@babel/parser": "^7.0.0",
+    "@babel/traverse": "^7.0.0",
     "postcss": "^6.0.14"
   }
 }
