@@ -14,3 +14,18 @@ const Div = styled.div`
 const Button = styled.button`
   ${props => props.isHovering && interpolatedStyle}
 `
+
+// Multi-line interpolations
+const MultiLineDiv = styled.div`
+  color: ${
+
+
+    'red'
+  };
+
+  ${
+
+
+    'long values'
+  }
+`;
