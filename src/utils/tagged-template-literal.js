@@ -74,7 +74,7 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
       )
       switch (scTagInformation.command) {
         case 'selector':
-          substitute = 'div'
+          substitute = `.sc-selector${id}`
           break
 
         case 'block':
