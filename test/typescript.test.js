@@ -56,6 +56,16 @@ describe('Typescript files, both TS and TSX should parse and report any errors c
     })
   })
 
+  it('should report errors when parsing typescript files with SyntaxError', done => {
+    const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-parse-error.ts')
+    doLint(fixture, done).then(data => {
+      expect(data.results.length).toEqual(1)
+      expect(data.results[0].parseErrors.length).toEqual(1)
+      expect(data.results[0].parseErrors[0].rule).toEqual('parseError')
+      done()
+    })
+  })
+
   it('should report errors in TSX files(typescript + JSX)', done => {
     const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-jsx-invalid.tsx')
     doLint(fixture, done).then(data => {

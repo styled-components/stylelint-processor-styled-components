@@ -38,9 +38,11 @@ module.exports = options => ({
       )
       return extractedCSS
     } catch (e) {
-      // incorrect interpolations will throw CssSyntaxError and they'll be handled by stylelint
+      // Always save the error
+      errorWasThrown[absolutePath] = e
+      // Incorrect interpolations will throw CssSyntaxError and they'll be handled by stylelint
+      // so we can throw it out but not for others
       if (e.name === 'CssSyntaxError') {
-        errorWasThrown[absolutePath] = true
         throw e
       }
       return ''
@@ -48,12 +50,28 @@ module.exports = options => ({
   },
   // Fix sourcemaps
   result(stylelintResult, filepath) {
-    if (errorWasThrown[filepath]) {
-      // We threw an error ourselves, in this case we have already put correct
-      // line/column numbers so no source maps are needed
-      // (and would actually break the line numbers)
-      delete errorWasThrown[filepath]
-      return stylelintResult
+    const err = errorWasThrown[filepath]
+    if (err) {
+      if (err.name === 'CssSyntaxError') {
+        // We threw an error ourselves, in this case we have already put correct
+        // line/column numbers so no source maps are needed
+        // (and would actually break the line numbers)
+        return stylelintResult
+      } else {
+        // For other errors, wrap them into the result
+        return Object.assign({}, stylelintResult, {
+          errored: true,
+          parseErrors: [
+            {
+              line: err.loc && err.loc.line,
+              column: err.loc && err.loc.column,
+              rule: 'parseError',
+              severity: 'error',
+              text: `${err.message}`
+            }
+          ]
+        })
+      }
     }
     const interpolationLines = interpolationLinesMap[filepath] || []
     const lineCorrection = sourceMapsCorrections[filepath]
