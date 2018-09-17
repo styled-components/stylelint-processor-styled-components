@@ -10,7 +10,7 @@ export interface IAccordionContainerState {
     selected: string;
 }
 
-export const AccordionContainerDiv = styled.div<{ width?: string }>`
+export const AccordionContainerDiv = styled.div<{ width#: string }>`
   border: solid  ${(props: IAccordionContainerProps) => props.borderWidth}px;
   border-bottom-width: 0;
   width: auto;
