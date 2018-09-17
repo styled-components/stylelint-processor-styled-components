@@ -24,7 +24,8 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
     default: 'styled',
     css: 'css',
     keyframes: 'keyframes',
-    injectGlobal: 'injectGlobal'
+    injectGlobal: 'injectGlobal',
+    createGlobalStyle: 'createGlobalStyle'
   }
   let sourceMap = {}
   const interpolationLines = []
