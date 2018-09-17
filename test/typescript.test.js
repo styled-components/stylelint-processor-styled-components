@@ -59,7 +59,7 @@ describe('Typescript files, both TS and TSX should parse and report any errors c
     doLint(fixture, done).then(data => {
       expect(data.results.length).toEqual(1)
       expect(data.results[0].parseErrors.length).toEqual(1)
-      expect(data.results[0].parseErrors[0].name).toEqual('SyntaxError')
+      expect(data.results[0].parseErrors[0].rule).toEqual('parseError')
       done()
     })
   })

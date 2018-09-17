@@ -61,7 +61,15 @@ module.exports = options => ({
         // For other errors, wrap them into the result
         return Object.assign({}, stylelintResult, {
           errored: true,
-          parseErrors: [err]
+          parseErrors: [
+            {
+              line: err.loc && err.loc.line,
+              column: err.loc && err.loc.column,
+              rule: 'parseError',
+              severity: 'error',
+              text: `${err.message}`
+            }
+          ]
         })
       }
     }
