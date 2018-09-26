@@ -6,7 +6,8 @@ const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
 const errorWasThrown = {}
 const DEFAULT_OPTIONS = {
-  moduleName: 'styled-components'
+  moduleName: 'styled-components',
+  importName: 'default'
 }
 
 module.exports = options => ({
