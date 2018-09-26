@@ -48,7 +48,11 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
       if (hasAttrsCall(node)) {
         processedNode.tag = getAttrsObject(node)
       }
-      if (!helper && !isStyled(processedNode, importedNames.default) && !isExtendCall(node)) {
+      if (
+        !helper &&
+        !isStyled(processedNode, importedNames[options.importName]) &&
+        !isExtendCall(node)
+      ) {
         return
       }
       const content = getTTLContent(node, absolutePath)
