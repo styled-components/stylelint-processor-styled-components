@@ -25,3 +25,18 @@ const Bla = styled.div`
 
   ${someValue}
 `
+
+// Multi-line interpolations
+const MultiLineDiv = styled.div`
+  color: ${
+
+
+    'red'
+  };
+
+  ${
+
+
+    'long values'
+  }
+`;

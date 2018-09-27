@@ -4,7 +4,10 @@ const path = require('path')
 const processor = path.join(__dirname, '../lib/index.js')
 const rules = {
   'block-no-empty': true,
+  'comment-empty-line-before': 'always',
   'declaration-block-no-duplicate-properties': true,
+  'value-list-max-empty-lines': 0,
+  'max-empty-lines': 1,
   indentation: 2
 }
 
