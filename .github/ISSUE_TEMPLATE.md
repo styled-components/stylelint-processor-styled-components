@@ -30,7 +30,9 @@ Please keep it product-centric.
 <!-- BUG TEMPLATE -->
 ## Environment
 <!-- Please add your stylelint configurations to the `npmPackages` below, run this command inside your project and paste its contents here (it automatically copies to your clipboard) -->
-`npx envinfo --system --binaries --npmPackages styled-components,babel-plugin-styled-components,stylelint-processor-styled-components, --markdown --clipboard`
+`npx envinfo --system --binaries --npmPackages --npmPackages stylelint,styled-components,stylelint-processor-styled-components,stylelint-config-styled-components,stylelint-config-recommended --markdown --clipboard`
+
+<!-- Of course it'd also be helpful if you could provide us with your `.stylelintrc`. -->
 
 ## Reproduction
 
