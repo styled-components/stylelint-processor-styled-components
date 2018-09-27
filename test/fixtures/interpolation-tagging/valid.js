@@ -12,12 +12,16 @@ const Button2 = styled.button`
   ${/* sc-selector */ ':hover'} {
     background-color: blue;
   }
+  ${/* sc-selector */ ':active'} {
+    background-color: green;
+  }
 `;
 
 // Test declaration
 const Button3 = styled.button`
   color: red;
   ${/* sc-declaration */ 'dummy'}
+  ${/* sc-declaration */ 'dummy2'}
 `;
 
 // Test property

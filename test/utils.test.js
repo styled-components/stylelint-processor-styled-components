@@ -498,7 +498,7 @@ describe('utils', () => {
     })
     it('handles the API', () => {
       const selectorExpression = prepExpression('selector')
-      expect(fn(selectorExpression, 1, 'path/to/file')).toBe('div')
+      expect(fn(selectorExpression, 1, 'path/to/file')).toBe('.sc-selector1')
 
       const blockExpression = prepExpression('block')
       expect(fn(blockExpression, 1, 'path/to/file')).toBe('-styled-mixin1: dummyValue;')

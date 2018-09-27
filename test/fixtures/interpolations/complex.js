@@ -15,6 +15,17 @@ const Button = styled.button`
   ${props => props.isHovering && interpolatedStyle}
 `
 
+// #110
+const Bla = styled.div`
+  ${Button} {
+    ${something}: blue;
+  }
+
+  background: ${bla};
+
+  ${someValue}
+`
+
 // Multi-line interpolations
 const MultiLineDiv = styled.div`
   color: ${
