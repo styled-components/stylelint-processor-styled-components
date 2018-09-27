@@ -1,4 +1,5 @@
 const CssError = require('postcss/lib/css-syntax-error')
+const reverseString = require('./general').reverseString
 const nextNonWhitespaceChar = require('./general').nextNonWhitespaceChar
 const isLastDeclarationCompleted = require('./general').isLastDeclarationCompleted
 const extrapolateShortenedCommand = require('./general').extrapolateShortenedCommand
@@ -74,7 +75,7 @@ const parseInterpolationTag = (expression, id, absolutePath) => {
       )
       switch (scTagInformation.command) {
         case 'selector':
-          substitute = 'div'
+          substitute = `.sc-selector${id}`
           break
 
         case 'block':
@@ -120,14 +121,27 @@ const interleave = (quasis, expressions, absolutePath) => {
   for (let i = 0, l = expressions.length; i < l; i += 1) {
     const prevText = quasis[i].value.raw
     const nextText = quasis[i + 1].value.raw
+    const prevChar = nextNonWhitespaceChar(reverseString(prevText))
+    const nextChar = nextNonWhitespaceChar(nextText)
 
     css += prevText
     let substitute
     if (hasInterpolationTag(expressions[i])) {
       substitute = parseInterpolationTag(expressions[i], count, absolutePath)
       count += 1
-    } else if (isLastDeclarationCompleted(css)) {
       // No sc tag so we guess defaults
+    } else if (nextChar === '{') {
+      // Guess as selector, which shares format with `parseInterpolationTag`, but not `wrapSelector`
+      substitute = `.sc-selector${count}`
+      count += 1
+    } else if (prevChar === ':') {
+      // After a colon and not a pseudo-class, then guess as value
+      substitute = '$dummyValue'
+    } else if (nextChar === ':') {
+      // Before a colon, then guess as property
+      substitute = `-styled-mixin${count}`
+      count += 1
+    } else if (isLastDeclarationCompleted(css)) {
       /** This block assumes that if you put an interpolation in the position
        * of the start of a declaration that the interpolation will
        * contain a full declaration and not later in the template literal

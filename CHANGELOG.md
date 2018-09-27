@@ -1,3 +1,10 @@
+### 1.4.0
+* upgrade babylon parser to @babel/parser
+* able to show parse errors to users
+* support new option `importName`, which allows to import wrapper components object from other names
+* filter redundant warnings included by v1.2.0
+* more intelligent guessing for interpolations
+
 ### 1.3.2
 * added support for optional chaining to our babylon parser
 * various minor development improvements that shouldn't affect the product
