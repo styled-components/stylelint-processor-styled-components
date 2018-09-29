@@ -102,7 +102,7 @@ module.exports = options => ({
           // Replace "brace" with "backtick" in warnings, e.g.
           // "Unexpected empty line before closing backtick" (instead of "brace")
           text: warning.text.replace(/brace/, 'backtick'),
-          line: lineCorrection[warning.line]
+          line: lineCorrection[warning.line] || warning.line
         })
       )
 
