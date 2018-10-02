@@ -122,7 +122,7 @@ describe('options', () => {
         .lint({
           files: [fixture],
           config: {
-            // Set moduleName option to "emotion"
+            // Set importName option to "notDefault"
             processors: [[processor, { importName: 'notDefault' }]],
             rules
           }
