@@ -183,4 +183,52 @@ describe('options', () => {
       })
     })
   })
+
+  describe('parserPlugins', () => {
+    // NOTE beforeEach() runs _after_ the beforeAll() hooks of the describe() blocks, so `fixture`
+    // will have the right path
+    beforeEach(done => {
+      const plugins = [
+        'jsx',
+        'objectRestSpread',
+        ['decorators', { decoratorsBeforeExport: true }],
+        'classProperties',
+        'exportExtensions',
+        'asyncGenerators',
+        'functionBind',
+        'functionSent',
+        'dynamicImport',
+        'optionalCatchBinding',
+        'optionalChaining',
+        // Enable experimental feature
+        'exportDefaultFrom'
+      ]
+
+      stylelint
+        .lint({
+          code: "export Container from './Container';",
+          config: {
+            processors: [[processor, { parserPlugins: plugins }]],
+            rules
+          }
+        })
+        .then(result => {
+          data = result
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+          data = err
+          done()
+        })
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should have not errored', () => {
+      expect(data.results[0].errored).toEqual(undefined)
+    })
+  })
 })
