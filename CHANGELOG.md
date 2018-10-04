@@ -1,8 +1,12 @@
+### 1.5.0
+* fix line number is undefined if source is empty
+* support new option `parserPlugins`, which allows to specify custom babel plugins to parse
+
 ### 1.4.0
 * upgrade babylon parser to @babel/parser
 * able to show parse errors to users
 * support new option `importName`, which allows to import wrapper components object from other names
-* filter redundant warnings included by v1.2.0
+* filter redundant warnings introduced by v1.2.0
 * more intelligent guessing for interpolations
 
 ### 1.3.2
