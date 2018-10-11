@@ -1,20 +1,21 @@
-const babylon = require('babylon')
+const babylon = require('@babel/parser')
 
-module.exports = type => input =>
+module.exports = (type, plugins) => input =>
   babylon.parse(input, {
     sourceType: 'module',
-    plugins: [
-      'jsx',
-      type,
-      'objectRestSpread',
-      'decorators',
-      'classProperties',
-      'exportExtensions',
-      'asyncGenerators',
-      'functionBind',
-      'functionSent',
-      'dynamicImport',
-      'optionalCatchBinding',
-      'optionalChaining'
-    ]
+    plugins: [type].concat(
+      plugins || [
+        'jsx',
+        'objectRestSpread',
+        ['decorators', { decoratorsBeforeExport: true }],
+        'classProperties',
+        'exportExtensions',
+        'asyncGenerators',
+        'functionBind',
+        'functionSent',
+        'dynamicImport',
+        'optionalCatchBinding',
+        'optionalChaining'
+      ]
+    )
   })

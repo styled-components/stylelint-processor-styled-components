@@ -5,6 +5,7 @@ const processor = path.join(__dirname, '../lib/index.js')
 const rules = {
   'block-no-empty': true,
   'declaration-block-no-duplicate-properties': true,
+  'no-duplicate-selectors': true,
   indentation: 2
 }
 
