@@ -10,6 +10,7 @@ const isStylelintComment = require('../lib/utils/general').isStylelintComment
 const fixIndentation = require('../lib/utils/general').fixIndentation
 const extrapolateShortenedCommand = require('../lib/utils/general').extrapolateShortenedCommand
 const removeBaseIndentation = require('../lib/utils/general').removeBaseIndentation
+const isCausedBySubstitution = require('../lib/utils/result').isCausedBySubstitution
 
 const mockLoc = (startLine, endLine) => ({
   start: {
@@ -618,6 +619,25 @@ html {
       const inputCss = '\ndisplay: block;\ncolor: red;'
       const expectedOutput = inputCss
       expect(fn(inputCss)).toBe(expectedOutput)
+    })
+  })
+
+  describe('isCausedBySubstitution', () => {
+    const fn = isCausedBySubstitution
+    const interpolationLines = [{ start: 2, end: 4 }, { start: 5, end: 5 }]
+    it("returns true if real warning line is between some interpolation's start and end", () => {
+      expect(fn({ rule: 'any rule' }, 3, interpolationLines)).toEqual(true)
+    })
+    it("returns false if real warning line is beyond any interpolation's start and end", () => {
+      expect(fn({ rule: 'any rule' }, 1, interpolationLines)).toEqual(false)
+    })
+    it("checks warning rule if real warning line is at some interpolations' start", () => {
+      expect(fn({ rule: 'comment-empty-line-before' }, 2, interpolationLines)).toEqual(true)
+      expect(fn({ rule: 'another rule' }, 2, interpolationLines)).toEqual(false)
+    })
+    it("checks warning rule if real warning line is at some interpolations' end", () => {
+      expect(fn({ rule: 'comment-empty-line-before' }, 4, interpolationLines)).toEqual(true)
+      expect(fn({ rule: 'another rule' }, 4, interpolationLines)).toEqual(false)
     })
   })
 })

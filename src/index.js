@@ -1,5 +1,6 @@
 const path = require('path')
 const parse = require('./parsers/index')
+const isCausedBySubstitution = require('./utils/result').isCausedBySubstitution
 
 let inputId = 1
 const interpolationLinesMap = {}
@@ -8,21 +9,6 @@ const errorWasThrown = {}
 const DEFAULT_OPTIONS = {
   moduleName: 'styled-components',
   importName: 'default'
-}
-
-function isCausedBySubstitution(warning, line, interpolationLines) {
-  return interpolationLines.some(({ start, end }) => {
-    if (line > start && line < end) {
-      // Inner interpolation lines must be
-      return true
-    } else if (line === start) {
-      return ['value-list-max-empty-lines', 'comment-empty-line-before'].indexOf(warning.rule) >= 0
-    } else if (line === end) {
-      return ['comment-empty-line-before', 'indentation'].indexOf(warning.rule) >= 0
-    } else {
-      return false
-    }
-  })
 }
 
 module.exports = options => ({
