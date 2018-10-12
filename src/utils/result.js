@@ -11,3 +11,20 @@ exports.isCausedBySubstitution = (warning, line, interpolationLines) =>
       return false
     }
   })
+
+exports.getCorrectColumn = (taggedTemplateLocs, line, column) => {
+  let c = column
+
+  // Not consider multiple tagged literals exsit in the same line,
+  // so we only add column offset of the first one
+  taggedTemplateLocs.some(loc => {
+    if (line === loc.start.line) {
+      // Start column contains the back quote, so we need inscrese 1
+      c += loc.start.column + 1 - loc.wrappedOffset
+      return true
+    }
+    return false
+  })
+
+  return c
+}

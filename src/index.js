@@ -1,8 +1,10 @@
 const path = require('path')
 const parse = require('./parsers/index')
 const isCausedBySubstitution = require('./utils/result').isCausedBySubstitution
+const getCorrectColumn = require('./utils/result').getCorrectColumn
 
 let inputId = 1
+const taggedTemplateLocsMap = {}
 const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
 const errorWasThrown = {}
@@ -24,10 +26,14 @@ module.exports = options => ({
 
     try {
       sourceMapsCorrections[absolutePath] = {}
-      const { extractedCSS, interpolationLines, sourceMap } = parse(
+      const { extractedCSS, interpolationLines, taggedTemplateLocs, sourceMap } = parse(
         input,
         absolutePath,
         Object.assign({}, DEFAULT_OPTIONS, options)
+      )
+      // Save `loc` of template literals
+      taggedTemplateLocsMap[absolutePath] = taggedTemplateLocs.concat(
+        taggedTemplateLocsMap[absolutePath] || []
       )
       // Save dummy interpolation lines
       interpolationLinesMap[absolutePath] = interpolationLines.concat(
@@ -75,6 +81,7 @@ module.exports = options => ({
         })
       }
     }
+    const taggedTemplateLocs = taggedTemplateLocsMap[filepath] || []
     const interpolationLines = interpolationLinesMap[filepath] || []
     const lineCorrection = sourceMapsCorrections[filepath]
     const warnings = stylelintResult.warnings
@@ -88,7 +95,12 @@ module.exports = options => ({
           // Replace "brace" with "backtick" in warnings, e.g.
           // "Unexpected empty line before closing backtick" (instead of "brace")
           text: warning.text.replace(/brace/, 'backtick'),
-          line: lineCorrection[warning.line] || warning.line
+          line: lineCorrection[warning.line] || warning.line,
+          column: getCorrectColumn(
+            taggedTemplateLocs,
+            lineCorrection[warning.line] || warning.line,
+            warning.column
+          )
         })
       )
 
