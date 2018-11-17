@@ -52,6 +52,7 @@ module.exports = options => ({
         sourceMapsCorrections[absolutePath],
         sourceMap
       )
+      delete errorWasThrown[absolutePath]
       return extractedCSS
     } catch (e) {
       // Always save the error
