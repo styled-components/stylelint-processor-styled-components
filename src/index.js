@@ -2,6 +2,8 @@ const path = require('path')
 const parse = require('./parsers/index')
 
 let inputId = 1
+// Make sure that state for particular path will be cleaned before each run
+// module may be kept in memory when used with vscode-stylelint
 const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
 const errorWasThrown = {}
@@ -37,22 +39,16 @@ module.exports = options => ({
     }
 
     try {
-      sourceMapsCorrections[absolutePath] = {}
+      delete errorWasThrown[absolutePath]
       const { extractedCSS, interpolationLines, sourceMap } = parse(
         input,
         absolutePath,
         Object.assign({}, DEFAULT_OPTIONS, options)
       )
       // Save dummy interpolation lines
-      interpolationLinesMap[absolutePath] = interpolationLines.concat(
-        interpolationLinesMap[absolutePath] || []
-      )
-      // Save source location, merging existing corrections with current corrections
-      sourceMapsCorrections[absolutePath] = Object.assign(
-        sourceMapsCorrections[absolutePath],
-        sourceMap
-      )
-      delete errorWasThrown[absolutePath]
+      interpolationLinesMap[absolutePath] = interpolationLines
+      // Save source location
+      sourceMapsCorrections[absolutePath] = sourceMap
       return extractedCSS
     } catch (e) {
       // Always save the error
