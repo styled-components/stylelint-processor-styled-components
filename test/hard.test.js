@@ -4,8 +4,8 @@ const path = require('path')
 const processor = path.join(__dirname, '../lib/index.js')
 const rules = {
   'block-no-empty': true,
-  'property-no-unknown': true,
-  indentation: 2
+  indentation: 2,
+  'property-no-unknown': true
 }
 
 describe('hard', () => {
@@ -103,16 +103,17 @@ describe('hard', () => {
       expect(data.errored).toEqual(true)
     })
 
-    it('should have five warning', () => {
-      expect(data.results[0].warnings.length).toEqual(5)
+    it('should have six warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(6)
     })
 
-    it('should have four warnings about indentation', () => {
+    it('should have five warnings about indentation', () => {
       expect(data.results[0].warnings[0].rule).toEqual('indentation')
       expect(data.results[0].warnings[1].rule).toEqual('indentation')
       expect(data.results[0].warnings[2].rule).toEqual('indentation')
       expect(data.results[0].warnings[3].rule).toEqual('indentation')
       expect(data.results[0].warnings[4].rule).toEqual('indentation')
+      expect(data.results[0].warnings[5].rule).toEqual('property-no-unknown')
     })
 
     it('should have a warning in line 5', () => {
@@ -133,6 +134,11 @@ describe('hard', () => {
 
     it('should have a warning in line 35', () => {
       expect(data.results[0].warnings[4].line).toEqual(35)
+    })
+
+    it('should have a warning in line 42, column 31', () => {
+      expect(data.results[0].warnings[5].line).toEqual(42)
+      expect(data.results[0].warnings[5].column).toEqual(31)
     })
   })
 
