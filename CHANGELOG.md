@@ -1,3 +1,7 @@
+### 1.5.1
+* fix column number if it is at the first line of interpolation
+* clean module level variables before each running
+
 ### 1.5.0
 * fix line number is undefined if source is empty
 * support new option `parserPlugins`, which allows to specify custom babel plugins to parse
