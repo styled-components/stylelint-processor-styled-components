@@ -4,6 +4,9 @@ const isCausedBySubstitution = require('./utils/result').isCausedBySubstitution
 const getCorrectColumn = require('./utils/result').getCorrectColumn
 
 let inputId = 1
+
+// Make sure that state for particular path will be cleaned before each run
+// module may be kept in memory when used with vscode-stylelint
 const taggedTemplateLocsMap = {}
 const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
@@ -25,25 +28,20 @@ module.exports = options => ({
     }
 
     try {
-      sourceMapsCorrections[absolutePath] = {}
       const { extractedCSS, interpolationLines, taggedTemplateLocs, sourceMap } = parse(
         input,
         absolutePath,
         Object.assign({}, DEFAULT_OPTIONS, options)
       )
       // Save `loc` of template literals
-      taggedTemplateLocsMap[absolutePath] = taggedTemplateLocs.concat(
-        taggedTemplateLocsMap[absolutePath] || []
-      )
+      taggedTemplateLocsMap[absolutePath] = taggedTemplateLocs
       // Save dummy interpolation lines
-      interpolationLinesMap[absolutePath] = interpolationLines.concat(
-        interpolationLinesMap[absolutePath] || []
-      )
-      // Save source location, merging existing corrections with current corrections
-      sourceMapsCorrections[absolutePath] = Object.assign(
-        sourceMapsCorrections[absolutePath],
-        sourceMap
-      )
+      interpolationLinesMap[absolutePath] = interpolationLines
+      // Save source location
+      sourceMapsCorrections[absolutePath] = sourceMap
+      // Clean saved errors
+      delete errorWasThrown[absolutePath]
+
       return extractedCSS
     } catch (e) {
       // Always save the error
