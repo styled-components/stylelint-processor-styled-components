@@ -19,11 +19,7 @@ You need:
 - Your favorite `stylelint` config! (for example [`stylelint-config-recommended`](https://github.com/stylelint/stylelint-config-recommended))
 
 ```
-(npm install --save-dev
-  stylelint
-  stylelint-processor-styled-components
-  stylelint-config-styled-components
-  stylelint-config-recommended)
+npm install --save-dev stylelint stylelint-processor-styled-components stylelint-config-styled-components stylelint-config-recommended
 ```
 
 Now use those in your `.stylelintrc` and run stylelint with your JavaScript files!
