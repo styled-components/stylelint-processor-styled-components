@@ -37,3 +37,6 @@ const Button6 = styled.button`
     `}
   display: block; 
 `
+
+// ⚠️ UNKNOWN PROPERTY at 42:31 ⚠️
+const Button7 = styled.button`unknown: blue;`

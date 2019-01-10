@@ -1,28 +1,19 @@
 const path = require('path')
 const parse = require('./parsers/index')
+const isCausedBySubstitution = require('./utils/result').isCausedBySubstitution
+const getCorrectColumn = require('./utils/result').getCorrectColumn
 
 let inputId = 1
+
+// Make sure that state for particular path will be cleaned before each run
+// module may be kept in memory when used with vscode-stylelint
+const taggedTemplateLocsMap = {}
 const interpolationLinesMap = {}
 const sourceMapsCorrections = {}
 const errorWasThrown = {}
 const DEFAULT_OPTIONS = {
   moduleName: 'styled-components',
   importName: 'default'
-}
-
-function isCausedBySubstitution(warning, line, interpolationLines) {
-  return interpolationLines.some(({ start, end }) => {
-    if (line > start && line < end) {
-      // Inner interpolation lines must be
-      return true
-    } else if (line === start) {
-      return ['value-list-max-empty-lines', 'comment-empty-line-before'].indexOf(warning.rule) >= 0
-    } else if (line === end) {
-      return ['comment-empty-line-before', 'indentation'].indexOf(warning.rule) >= 0
-    } else {
-      return false
-    }
-  })
 }
 
 module.exports = options => ({
@@ -37,21 +28,20 @@ module.exports = options => ({
     }
 
     try {
-      sourceMapsCorrections[absolutePath] = {}
-      const { extractedCSS, interpolationLines, sourceMap } = parse(
+      const { extractedCSS, interpolationLines, taggedTemplateLocs, sourceMap } = parse(
         input,
         absolutePath,
         Object.assign({}, DEFAULT_OPTIONS, options)
       )
+      // Save `loc` of template literals
+      taggedTemplateLocsMap[absolutePath] = taggedTemplateLocs
       // Save dummy interpolation lines
-      interpolationLinesMap[absolutePath] = interpolationLines.concat(
-        interpolationLinesMap[absolutePath] || []
-      )
-      // Save source location, merging existing corrections with current corrections
-      sourceMapsCorrections[absolutePath] = Object.assign(
-        sourceMapsCorrections[absolutePath],
-        sourceMap
-      )
+      interpolationLinesMap[absolutePath] = interpolationLines
+      // Save source location
+      sourceMapsCorrections[absolutePath] = sourceMap
+      // Clean saved errors
+      delete errorWasThrown[absolutePath]
+
       return extractedCSS
     } catch (e) {
       // Always save the error
@@ -89,6 +79,7 @@ module.exports = options => ({
         })
       }
     }
+    const taggedTemplateLocs = taggedTemplateLocsMap[filepath] || []
     const interpolationLines = interpolationLinesMap[filepath] || []
     const lineCorrection = sourceMapsCorrections[filepath]
     const warnings = stylelintResult.warnings
@@ -102,7 +93,12 @@ module.exports = options => ({
           // Replace "brace" with "backtick" in warnings, e.g.
           // "Unexpected empty line before closing backtick" (instead of "brace")
           text: warning.text.replace(/brace/, 'backtick'),
-          line: lineCorrection[warning.line] || warning.line
+          line: lineCorrection[warning.line] || warning.line,
+          column: getCorrectColumn(
+            taggedTemplateLocs,
+            lineCorrection[warning.line] || warning.line,
+            warning.column
+          )
         })
       )
 

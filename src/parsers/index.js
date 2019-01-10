@@ -28,6 +28,7 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
     createGlobalStyle: 'createGlobalStyle'
   }
   let sourceMap = {}
+  const taggedTemplateLocs = []
   const interpolationLines = []
   traverse(ast, {
     noScope: true,
@@ -82,6 +83,11 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
         sourceMap,
         getSourceMap(extractedCSS.join('\n'), wrappedContent, processedNode.quasi.loc.start.line)
       )
+      // Save `loc` of template literals
+      taggedTemplateLocs.push({
+        wrappedOffset: wrappedContent.indexOf(fixedContent),
+        start: node.quasi.loc.start
+      })
       // Save dummy interpolation lines
       node.quasi.expressions.forEach((expression, i) => {
         interpolationLines.push({
@@ -100,6 +106,7 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
 
   return {
     extractedCSS: extractedCSS.join('\n'),
+    taggedTemplateLocs,
     interpolationLines,
     sourceMap
   }
