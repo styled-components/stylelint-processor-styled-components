@@ -69,6 +69,6 @@
   "dependencies": {
     "@babel/parser": "^7.0.0",
     "@babel/traverse": "^7.0.0",
-    "postcss": "^6.0.14"
+    "postcss": "^7.0.0"
   }
 }
