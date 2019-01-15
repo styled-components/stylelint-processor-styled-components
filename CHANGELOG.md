@@ -1,3 +1,6 @@
+### 1.5.2
+* upgrade postcss@7
+
 ### 1.5.1
 * fix column number if it is at the first line of interpolation
 * clean module level variables before each running
