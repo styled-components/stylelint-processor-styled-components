@@ -15,7 +15,8 @@ module.exports = (type, plugins) => input =>
         'functionSent',
         'dynamicImport',
         'optionalCatchBinding',
-        'optionalChaining'
+        'optionalChaining',
+        'nullishCoalescingOperator'
       ]
     )
   })
