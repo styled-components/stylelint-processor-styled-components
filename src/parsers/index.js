@@ -57,6 +57,8 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
         return
       }
       const content = getTTLContent(node, absolutePath)
+      if (!content) return
+
       const fixedContent = fixIndentation(content).text
       let wrappedContent
       switch (helper) {
