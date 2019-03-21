@@ -89,13 +89,13 @@ const Button8 = styled.button`
 // Simple interpolations in one-line css
 const display = 'block'
 const colorExpression = 'color: red;'
-const Button9 = styled.button`
+const Button91 = styled.button`
   display: ${display}; ${colorExpression}
 `
 
 // Complex interpolations in one-line css
 const backgroundExpression = 'background: blue;'
-const Button9 = styled.button`
+const Button92 = styled.button`
   display: ${display}; ${colorExpression} ${backgroundExpression}
 `
 // Interpolations in nested blocks
