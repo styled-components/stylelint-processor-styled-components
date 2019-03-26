@@ -13,7 +13,8 @@ const sourceMapsCorrections = {}
 const errorWasThrown = {}
 const DEFAULT_OPTIONS = {
   moduleName: 'styled-components',
-  importName: 'default'
+  importName: 'default',
+  strict: false
 }
 
 module.exports = options => ({

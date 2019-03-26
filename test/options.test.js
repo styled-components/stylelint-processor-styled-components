@@ -231,4 +231,57 @@ describe('options', () => {
       expect(data.results[0].errored).toEqual(undefined)
     })
   })
+
+  describe('strict', () => {
+    beforeEach(done => {
+      fixture = path.join(__dirname, './fixtures/options/strict.js')
+
+      stylelint
+        .lint({
+          files: [fixture],
+          config: {
+            processors: [
+              [
+                processor,
+                {
+                  moduleName: 'some-module',
+                  importName: 'foo',
+                  strict: true
+                }
+              ]
+            ],
+            rules
+          }
+        })
+        .then(result => {
+          data = result
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+          data = err
+          done()
+        })
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(data.results[0].source).toEqual(fixture)
+    })
+
+    it('should have errored', () => {
+      expect(data.results[0].errored).toEqual(true)
+    })
+
+    it('should have one warning (i.e. wrong lines of code)', () => {
+      expect(data.results[0].warnings.length).toEqual(1)
+    })
+
+    it('should have a block-no-empty as the first warning', () => {
+      expect(data.results[0].warnings[0].rule).toEqual('block-no-empty')
+    })
+  })
 })

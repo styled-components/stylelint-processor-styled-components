@@ -44,7 +44,9 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
         importedNames = parseImports(node)
         return
       }
-      const helper = isHelper(node, importedNames)
+      const helper = !options.strict
+        ? isHelper(node, importedNames)
+        : isHelper(node, [importedNames[options.importName]])
       const processedNode = Object.assign({}, node)
       if (hasAttrsCall(node)) {
         processedNode.tag = getAttrsObject(node)
