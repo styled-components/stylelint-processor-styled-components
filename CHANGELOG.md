@@ -1,3 +1,7 @@
+### 1.6.0
+* avoid `block-no-empty` error
+* support new option `strict`, which allows to only parse `importName`
+
 ### 1.5.2
 * upgrade postcss@7
 
