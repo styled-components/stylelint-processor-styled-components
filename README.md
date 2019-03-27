@@ -51,6 +51,20 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 - [sc-custom](https://www.styled-components.com/docs/tooling#sc-custom)
 - [Syntax Notes](https://www.styled-components.com/docs/tooling#syntax-notes)
 
+## F.A.Q.
+
+### Why does it throw `Unexpected token`? Even thought the file didn't import `styled-components`.
+
+You can custom babel plugins by `option.parserPlugins` now. An API example is [our test](https://github.com/styled-components/stylelint-processor-styled-components/blob/master/test/options.test.js#L211). But if someone can implement #231, that will be much better.
+
+### Why does it throw unexpected lint errors?
+
+The processor can not always parse interpolations with right things. But you can use [interpolation-tagging](https://www.styled-components.com/docs/tooling#interpolation-tagging) to help it. If you have ideas to make it more intelligent, feel free to send a PR or share your solution by an new issue.
+
+### I don't want specified tagged template literal to be parsed, i.e. `css`.
+
+You can set `option.strict`. More examples are in [#258](https://github.com/styled-components/stylelint-processor-styled-components/pull/258).
+
 ## License
 
 Licensed under the MIT License, Copyright © 2017 Maximilian Stoiber. See [LICENSE.md](./LICENSE.md) for more information!
