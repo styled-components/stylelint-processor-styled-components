@@ -2,15 +2,13 @@
   "name": "stylelint-processor-styled-components",
   "version": "1.6.0",
   "description": "A stylelint processor for styled-components",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --list-different --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
     "prettier": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
     "precommit": "lint-staged",
-    "test": "npm run build && jest test/*.test.js",
-    "build": "babel src --out-dir lib",
-    "prepublish": "npm run build"
+    "test": "jest test/*.test.js"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./test/jest-setup.js"
@@ -37,8 +35,6 @@
       "eslint",
       "eslint-plugin-import",
       "eslint-config-airbnb-base",
-      "babel-cli",
-      "babel-preset-latest",
       "husky",
       "jest",
       "lint-staged",
@@ -47,9 +43,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
@@ -64,7 +58,7 @@
   },
   "peerDependency": {
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint": ">= 9"
+    "stylelint": ">= 10"
   },
   "dependencies": {
     "@babel/parser": "^7.0.0",

@@ -1,17 +1,17 @@
-const interleave = require('../lib/utils/tagged-template-literal').interleave
-const hasInterpolationTag = require('../lib/utils/tagged-template-literal').hasInterpolationTag
-const parseInterpolationTag = require('../lib/utils/tagged-template-literal').parseInterpolationTag
-const extractScTagInformation = require('../lib/utils/tagged-template-literal')
+const interleave = require('../src/utils/tagged-template-literal').interleave
+const hasInterpolationTag = require('../src/utils/tagged-template-literal').hasInterpolationTag
+const parseInterpolationTag = require('../src/utils/tagged-template-literal').parseInterpolationTag
+const extractScTagInformation = require('../src/utils/tagged-template-literal')
   .extractScTagInformation
-const isLastDeclarationCompleted = require('../lib/utils/general').isLastDeclarationCompleted
-const nextNonWhitespaceChar = require('../lib/utils/general').nextNonWhitespaceChar
-const reverseString = require('../lib/utils/general').reverseString
-const isStylelintComment = require('../lib/utils/general').isStylelintComment
-const fixIndentation = require('../lib/utils/general').fixIndentation
-const extrapolateShortenedCommand = require('../lib/utils/general').extrapolateShortenedCommand
-const removeBaseIndentation = require('../lib/utils/general').removeBaseIndentation
-const isCausedBySubstitution = require('../lib/utils/result').isCausedBySubstitution
-const getCorrectColumn = require('../lib/utils/result').getCorrectColumn
+const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
+const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
+const reverseString = require('../src/utils/general').reverseString
+const isStylelintComment = require('../src/utils/general').isStylelintComment
+const fixIndentation = require('../src/utils/general').fixIndentation
+const extrapolateShortenedCommand = require('../src/utils/general').extrapolateShortenedCommand
+const removeBaseIndentation = require('../src/utils/general').removeBaseIndentation
+const isCausedBySubstitution = require('../src/utils/result').isCausedBySubstitution
+const getCorrectColumn = require('../src/utils/result').getCorrectColumn
 
 const mockLoc = (startLine, endLine) => ({
   start: {
