@@ -121,7 +121,7 @@ describe('simple', () => {
         []
       )
 
-      expect(warnings).toEqual(['indentation', 'rule-empty-line-before'])
+      expect(warnings).toEqual(['rule-empty-line-before', 'indentation'])
     })
   })
 
