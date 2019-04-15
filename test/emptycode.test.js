@@ -1,7 +1,7 @@
 const stylelint = require('stylelint')
 const path = require('path')
 
-const processor = path.join(__dirname, '../lib/index.js')
+const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'no-empty-source': true
 }

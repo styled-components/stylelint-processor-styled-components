@@ -1,7 +1,7 @@
 const stylelint = require('stylelint')
 const path = require('path')
 
-const processor = path.join(__dirname, '../lib/index.js')
+const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'block-no-empty': true,
   indentation: 2,
@@ -121,7 +121,7 @@ describe('simple', () => {
         []
       )
 
-      expect(warnings).toEqual(['indentation', 'rule-empty-line-before'])
+      expect(warnings).toEqual(['rule-empty-line-before', 'indentation'])
     })
   })
 

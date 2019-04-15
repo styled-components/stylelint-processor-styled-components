@@ -1,7 +1,7 @@
 const stylelint = require('stylelint')
 const path = require('path')
 
-const processor = path.join(__dirname, '../lib/index.js')
+const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   'block-no-empty': true,
   indentation: 2,
@@ -108,37 +108,37 @@ describe('hard', () => {
     })
 
     it('should have five warnings about indentation', () => {
-      expect(data.results[0].warnings[0].rule).toEqual('indentation')
+      expect(data.results[0].warnings[0].rule).toEqual('property-no-unknown')
       expect(data.results[0].warnings[1].rule).toEqual('indentation')
       expect(data.results[0].warnings[2].rule).toEqual('indentation')
       expect(data.results[0].warnings[3].rule).toEqual('indentation')
       expect(data.results[0].warnings[4].rule).toEqual('indentation')
-      expect(data.results[0].warnings[5].rule).toEqual('property-no-unknown')
+      expect(data.results[0].warnings[5].rule).toEqual('indentation')
     })
 
     it('should have a warning in line 5', () => {
-      expect(data.results[0].warnings[0].line).toEqual(5)
+      expect(data.results[0].warnings[1].line).toEqual(5)
     })
 
     it('should have a warning in line 15', () => {
-      expect(data.results[0].warnings[1].line).toEqual(15)
+      expect(data.results[0].warnings[2].line).toEqual(15)
     })
 
     it('should have a warning in line 22', () => {
-      expect(data.results[0].warnings[2].line).toEqual(22)
+      expect(data.results[0].warnings[3].line).toEqual(22)
     })
 
     it('should have a warning in line 28', () => {
-      expect(data.results[0].warnings[3].line).toEqual(28)
+      expect(data.results[0].warnings[4].line).toEqual(28)
     })
 
     it('should have a warning in line 35', () => {
-      expect(data.results[0].warnings[4].line).toEqual(35)
+      expect(data.results[0].warnings[5].line).toEqual(35)
     })
 
     it('should have a warning in line 42, column 31', () => {
-      expect(data.results[0].warnings[5].line).toEqual(42)
-      expect(data.results[0].warnings[5].column).toEqual(31)
+      expect(data.results[0].warnings[0].line).toEqual(42)
+      expect(data.results[0].warnings[0].column).toEqual(31)
     })
   })
 

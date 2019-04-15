@@ -5,7 +5,7 @@ const code = `import styled from 'styled-components';
 const StyledTable = styled(StyledTableBase)\`
 color: red;
 \``
-const processor = path.join(__dirname, '../lib/index.js')
+const processor = path.join(__dirname, '../src/index.js')
 const rules = {
   indentation: 2
 }
