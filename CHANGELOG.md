@@ -1,3 +1,6 @@
+### 1.7.0
+* upgrade stylelint to 10, and drop supports for Node < 8 as well
+
 ### 1.6.0
 * avoid `block-no-empty` error
 * support new option `strict`, which allows to only parse `importName`
