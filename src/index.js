@@ -1,4 +1,5 @@
 const path = require('path')
+const micromatch = require('micromatch')
 const parse = require('./parsers/index')
 const isCausedBySubstitution = require('./utils/result').isCausedBySubstitution
 const getCorrectColumn = require('./utils/result').getCorrectColumn
@@ -14,10 +15,11 @@ const errorWasThrown = {}
 const DEFAULT_OPTIONS = {
   moduleName: 'styled-components',
   importName: 'default',
-  strict: false
+  strict: false,
+  ignoreFiles: []
 }
 
-module.exports = options => ({
+const realProcessor = options => ({
   // Get string for stylelint to lint
   code(input, filepath) {
     let absolutePath
@@ -28,11 +30,15 @@ module.exports = options => ({
       inputId += 1
     }
 
+    const fileIsIgnored = micromatch(filepath, options.ignoreFiles).length
+
+    if (fileIsIgnored) return input
+
     try {
       const { extractedCSS, interpolationLines, taggedTemplateLocs, sourceMap } = parse(
         input,
         absolutePath,
-        Object.assign({}, DEFAULT_OPTIONS, options)
+        options
       )
       // Save `loc` of template literals
       taggedTemplateLocsMap[absolutePath] = taggedTemplateLocs
@@ -58,6 +64,10 @@ module.exports = options => ({
   // Fix sourcemaps
   result(stylelintResult, filepath) {
     const err = errorWasThrown[filepath]
+    const fileIsIgnored = micromatch(filepath, options.ignoreFiles).length
+
+    if (fileIsIgnored) return stylelintResult
+
     if (err) {
       if (err.name === 'CssSyntaxError') {
         // We threw an error ourselves, in this case we have already put correct
@@ -111,3 +121,5 @@ module.exports = options => ({
     return result
   }
 })
+
+module.exports = options => realProcessor(Object.assign({}, DEFAULT_OPTIONS, options))
