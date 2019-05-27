@@ -1,3 +1,6 @@
+### 1.8.0
+* support new option `ignoreFiles`, which allows to skip files to be linted
+
 ### 1.7.0
 * upgrade stylelint to 10, and drop supports for Node < 8 as well
 
