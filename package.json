@@ -63,6 +63,7 @@
   "dependencies": {
     "@babel/parser": "^7.0.0",
     "@babel/traverse": "^7.0.0",
+    "micromatch": "^4.0.2",
     "postcss": "^7.0.0"
   }
 }
