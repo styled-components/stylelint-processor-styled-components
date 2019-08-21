@@ -57,6 +57,8 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 
 You can custom babel plugins by `option.parserPlugins` now. An API example is [our test](https://github.com/styled-components/stylelint-processor-styled-components/blob/master/test/options.test.js#L211). But if someone can implement #231, that will be much better.
 
+An alternative cause of this and other syntax errors could be an outdated `@babel/parser` subdependency, especially when linting TypeScript files with newer TypeScript syntax. In order to update the `@babel/parser` subdependency, edit your yarn.lock or package-lock.json file and remove the outdates `"@babel/parser"` entry, and run `npm install` again.
+
 ### Why does it throw unexpected lint errors?
 
 The processor can not always parse interpolations with right things. But you can use [interpolation-tagging](https://www.styled-components.com/docs/tooling#interpolation-tagging) to help it. If you have ideas to make it more intelligent, feel free to send a PR or share your solution by an new issue.
