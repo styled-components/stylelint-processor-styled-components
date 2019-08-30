@@ -40,6 +40,55 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 
 > **NOTE:** The processor works with Flow- and TypeScript-typed files too! (we'll assume TypeScript usage if your files end in `.ts` or `.tsx`)
 
+And it also has some options. Their default values are,
+
+```json
+{
+  "processors": [["stylelint-processor-styled-components", {
+    "moduleName": "styled-components",
+    "importName": "default",
+    "strict": false,
+    "ignoreFiles": [],
+    "parserPlugins": [
+      "jsx",
+      "objectRestSpread",
+      ["decorators", { "decoratorsBeforeExport": true }],
+      "classProperties",
+      "exportExtensions",
+      "asyncGenerators",
+      "functionBind",
+      "functionSent",
+      "dynamicImport",
+      "optionalCatchBinding",
+      "optionalChaining"
+    ]
+  }]]
+}
+```
+
+Combining with `moduleName`, `importName` and `strict`, you can tell the processor what kinds of tagged template literals to lint.
+
+```
+import styled, { css, keyframes } from 'styled-components';
+
+// `importName` from `moduleName`
+styled(Component)``;
+styled('div')``;
+styled.div``;
+
+// any other imports from `moduleName` (if `strict` is true, they will not be linted)
+css``;
+keyframes``;
+
+// special extend calls, which have been deprecated in styled-components v4
+Component.extend``;
+
+```
+
+`ignoreFiles` is passed to [micromatch](https://github.com/micromatch/micromatch#api) as the second parameter, which means one or more glob patterns for matching.
+
+`parserPlugins` is used to make the processor's parser be able to parse new syntaxes. All available babel parser plugins and related options can be found in [Babel's website](https://babeljs.io/docs/en/babel-parser#plugins).
+
 ## [Documentation](https://www.styled-components.com/docs/tooling#stylelint)
 
 **Further documentation for this processor lives on [the styled-components website](https://www.styled-components.com/docs/tooling#stylelint)!**
