@@ -66,7 +66,7 @@ And it also has some options. Their default values are,
 }
 ```
 
-Combining with `moduleName`, `importName` and `strict`, you can tell the processor what kinds of tagged template literals to lint.
+- Combining with `moduleName`, `importName` and `strict`, you can tell the processor what kinds of tagged template literals to lint.
 
 ```
 import styled, { css, keyframes } from 'styled-components';
@@ -85,9 +85,9 @@ Component.extend``;
 
 ```
 
-`ignoreFiles` is passed to [micromatch](https://github.com/micromatch/micromatch#api) as the second parameter, which means one or more glob patterns for matching.
+- `ignoreFiles` is passed to [micromatch](https://github.com/micromatch/micromatch#api) as the second parameter, which means one or more glob patterns for matching.
 
-`parserPlugins` is used to make the processor's parser be able to parse new syntaxes. All available babel parser plugins and related options can be found in [Babel's website](https://babeljs.io/docs/en/babel-parser#plugins).
+- `parserPlugins` is used to make the processor's parser be able to parse new syntaxes. All available babel parser plugins and related options can be found in [Babel's website](https://babeljs.io/docs/en/babel-parser#plugins).
 
 ## [Documentation](https://www.styled-components.com/docs/tooling#stylelint)
 
@@ -104,13 +104,15 @@ Component.extend``;
 
 ### Why does it throw `Unexpected token`? Even thought the file didn't import `styled-components`.
 
-You can custom babel plugins by `option.parserPlugins` now. An API example is [our test](https://github.com/styled-components/stylelint-processor-styled-components/blob/master/test/options.test.js#L211). But if someone can implement #231, that will be much better.
+You can custom babel plugins by `option.parserPlugins` now. An API example is [our test](https://github.com/styled-components/stylelint-processor-styled-components/blob/master/test/options.test.js#L211). But if someone can implement [#231](https://github.com/styled-components/stylelint-processor-styled-components/issues/231), that will be much better.
 
 If your project includes `yarn.lock` or `package-lock.json`, an alternative cause can be that babel related dependencies, i.e. `@babel/parser` and `@babel/traverse`, are outdated, especially when linting files with new TypeScript syntaxes. You can upgrade them by removing their entries in the lockfile and reinstall dependencies.
 
 ### Why does it throw unexpected lint errors?
 
 The processor can not always parse interpolations with right things. But you can use [interpolation-tagging](https://www.styled-components.com/docs/tooling#interpolation-tagging) to help it. If you have ideas to make it more intelligent, feel free to send a PR or share your solution by an new issue.
+
+What's more, if set `syntax: css-in-js` in stylelint@10, it can extract styles from `styled-components` without this processor. Even though there are still lots of differences with this processor, we hope this processor's abilities can be migrated to stylelint totally in the future.
 
 ### I don't want specified tagged template literal to be parsed, i.e. `css`.
 
