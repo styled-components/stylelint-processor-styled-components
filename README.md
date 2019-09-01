@@ -71,7 +71,7 @@ And it also has some options. Their default values are,
 ```
 import styled, { css, keyframes } from 'styled-components';
 
-// `importName` from `moduleName`
+// `importName` from `moduleName`, which means where `styled` comes from
 styled(Component)``;
 styled('div')``;
 styled.div``;
