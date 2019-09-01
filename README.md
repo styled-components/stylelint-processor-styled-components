@@ -38,6 +38,45 @@ Now use those in your `.stylelintrc` and run stylelint with your JavaScript file
 }
 ```
 
+## Options
+
+### moduleName + importName
+
+By default this module only works for variables imported from the the module name styled-components such as `import default, { some, variables } from 'styled-components'`, but if you want to use our module with a different library with a similar API you can simply change the `moduleName` and `importName` options and stylelint-processor-styled-components will lint your css from that library (note that we only have official support for styled-components though, but we hope others can also have benefit from this module). You would also need this option if you for some reason imported styled-components from a different path like import styled from `'./node_modules/styled-components'` or something similar.
+
+```json
+{
+  "processors": [["stylelint-processor-styled-components", {
+      "importName": "other-library"
+  }]]
+}
+```
+
+### Strict
+
+Enables stricter parsing, in that only expressions using the specified importName from the moduleName will be parsed.
+
+```json
+{
+  "processors": [["stylelint-processor-styled-components", {
+      "strict": true
+  }]]
+}
+```
+
+
+### ignoreFiles
+
+Ignore certain files from being parsed by the preproccesor.
+
+```json
+{
+  "processors": [["stylelint-processor-styled-components", {
+      "ignoreFiles": ["**/*.css"]
+  }]]
+}
+```
+
 > **NOTE:** The processor works with Flow- and TypeScript-typed files too! (we'll assume TypeScript usage if your files end in `.ts` or `.tsx`)
 
 And it also has some options. Their default values are,
