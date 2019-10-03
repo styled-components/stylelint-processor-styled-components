@@ -130,7 +130,7 @@ const interleave = (quasis, expressions, absolutePath) => {
       substitute = parseInterpolationTag(expressions[i], count, absolutePath)
       count += 1
       // No sc tag so we guess defaults
-    } else if (nextChar === '{') {
+    } else if (nextChar === '{' || ['>', '&'].includes(prevChar)) {
       // Guess as selector, which shares format with `parseInterpolationTag`, but not `wrapSelector`
       substitute = `.sc-selector${count}`
       count += 1
