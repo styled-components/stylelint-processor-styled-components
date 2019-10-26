@@ -109,7 +109,7 @@ describe('options', () => {
       })
 
       it('should not have errored', () => {
-        expect(data.results[0].errored).toEqual(undefined)
+        expect(data.results[0].errored).toEqual(false)
       })
     })
   })
@@ -178,7 +178,7 @@ describe('options', () => {
       })
 
       it('should not have errored', () => {
-        expect(data.results[0].errored).toEqual(undefined)
+        expect(data.results[0].errored).toEqual(false)
       })
     })
   })
@@ -227,7 +227,7 @@ describe('options', () => {
     })
 
     it('should have not errored', () => {
-      expect(data.results[0].errored).toEqual(undefined)
+      expect(data.results[0].errored).toEqual(false)
     })
   })
 
