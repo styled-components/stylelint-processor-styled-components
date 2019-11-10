@@ -59,6 +59,7 @@ And it also has some options. Their default values are,
       "functionBind",
       "functionSent",
       "dynamicImport",
+      "nullishCoalescingOperator",
       "optionalCatchBinding",
       "optionalChaining"
     ]

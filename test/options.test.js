@@ -197,6 +197,7 @@ describe('options', () => {
         'functionBind',
         'functionSent',
         'dynamicImport',
+        'nullishCoalescingOperator',
         'optionalCatchBinding',
         'optionalChaining',
         // Enable experimental feature
