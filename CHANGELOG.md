@@ -1,3 +1,6 @@
+### 1.9.0
+* upgrade stylelint to 12
+
 ### 1.8.0
 * support new option `ignoreFiles`, which allows to skip files to be linted
 
