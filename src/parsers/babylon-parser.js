@@ -6,16 +6,11 @@ module.exports = (type, plugins) => input =>
     plugins: [type].concat(
       plugins || [
         'jsx',
-        'objectRestSpread',
         ['decorators', { decoratorsBeforeExport: true }],
         'classProperties',
         'exportExtensions',
-        'asyncGenerators',
         'functionBind',
-        'functionSent',
-        'dynamicImport',
-        'optionalCatchBinding',
-        'optionalChaining'
+        'functionSent'
       ]
     )
   })

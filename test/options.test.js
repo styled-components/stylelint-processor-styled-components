@@ -192,16 +192,11 @@ describe('options', () => {
     beforeEach(done => {
       const plugins = [
         'jsx',
-        'objectRestSpread',
         ['decorators', { decoratorsBeforeExport: true }],
         'classProperties',
         'exportExtensions',
-        'asyncGenerators',
         'functionBind',
         'functionSent',
-        'dynamicImport',
-        'optionalCatchBinding',
-        'optionalChaining',
         // Enable experimental feature
         'exportDefaultFrom'
       ]
