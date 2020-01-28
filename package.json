@@ -8,9 +8,10 @@
     "lint:prettier": "prettier --list-different --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
     "prettier": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
     "precommit": "lint-staged",
-    "test": "jest test/*.test.js"
+    "test": "jest"
   },
   "jest": {
+    "testMatch": ["<rootDir>/test/*.test.js"],
     "setupTestFrameworkScriptFile": "./test/jest-setup.js"
   },
   "repository": {
