@@ -72,7 +72,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should error at exactly the correct places', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
 
       expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('color-named')
@@ -102,7 +102,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should error at exactly the correct places', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
 
       expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('color-named')
@@ -132,7 +132,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should error at exactly the correct places', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
 
       expect(warnings[0].line).toBe(5)
       expect(warnings[0].rule).toBe('color-named')

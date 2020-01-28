@@ -1,17 +1,19 @@
-const interleave = require('../src/utils/tagged-template-literal').interleave
-const hasInterpolationTag = require('../src/utils/tagged-template-literal').hasInterpolationTag
-const parseInterpolationTag = require('../src/utils/tagged-template-literal').parseInterpolationTag
-const extractScTagInformation = require('../src/utils/tagged-template-literal')
-  .extractScTagInformation
-const isLastDeclarationCompleted = require('../src/utils/general').isLastDeclarationCompleted
-const nextNonWhitespaceChar = require('../src/utils/general').nextNonWhitespaceChar
-const reverseString = require('../src/utils/general').reverseString
-const isStylelintComment = require('../src/utils/general').isStylelintComment
-const fixIndentation = require('../src/utils/general').fixIndentation
-const extrapolateShortenedCommand = require('../src/utils/general').extrapolateShortenedCommand
-const removeBaseIndentation = require('../src/utils/general').removeBaseIndentation
-const isCausedBySubstitution = require('../src/utils/result').isCausedBySubstitution
-const getCorrectColumn = require('../src/utils/result').getCorrectColumn
+const {
+  interleave,
+  hasInterpolationTag,
+  parseInterpolationTag,
+  extractScTagInformation
+} = require('../src/utils/tagged-template-literal')
+const {
+  isLastDeclarationCompleted,
+  nextNonWhitespaceChar,
+  reverseString,
+  isStylelintComment,
+  fixIndentation,
+  extrapolateShortenedCommand,
+  removeBaseIndentation
+} = require('../src/utils/general')
+const { isCausedBySubstitution, getCorrectColumn } = require('../src/utils/result')
 
 const mockLoc = (startLine, endLine) => ({
   start: {
@@ -625,7 +627,10 @@ html {
 
   describe('isCausedBySubstitution', () => {
     const fn = isCausedBySubstitution
-    const interpolationLines = [{ start: 2, end: 4 }, { start: 5, end: 5 }]
+    const interpolationLines = [
+      { start: 2, end: 4 },
+      { start: 5, end: 5 }
+    ]
     it("returns true if real warning line is between some interpolation's start and end", () => {
       expect(fn({ rule: 'any rule' }, 3, interpolationLines)).toEqual(true)
     })

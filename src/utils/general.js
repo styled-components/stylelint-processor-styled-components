@@ -63,7 +63,11 @@ const nextNonWhitespaceChar = text => {
   }
 }
 
-const reverseString = str => str.split('').reverse().join('')
+const reverseString = str =>
+  str
+    .split('')
+    .reverse()
+    .join('')
 
 const isLastDeclarationCompleted = text => {
   // We disregard all comments in this assessment of declaration completion

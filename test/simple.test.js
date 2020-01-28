@@ -241,7 +241,7 @@ describe('simple', () => {
     })
 
     it('should have correct warnings', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
       expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('selector-type-no-unknown')
 

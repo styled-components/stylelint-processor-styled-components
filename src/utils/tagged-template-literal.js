@@ -1,8 +1,10 @@
 const CssError = require('postcss/lib/css-syntax-error')
-const reverseString = require('./general').reverseString
-const nextNonWhitespaceChar = require('./general').nextNonWhitespaceChar
-const isLastDeclarationCompleted = require('./general').isLastDeclarationCompleted
-const extrapolateShortenedCommand = require('./general').extrapolateShortenedCommand
+const {
+  reverseString,
+  nextNonWhitespaceChar,
+  isLastDeclarationCompleted,
+  extrapolateShortenedCommand
+} = require('./general')
 
 /**
  * Check if a node is a tagged template literal

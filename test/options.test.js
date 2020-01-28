@@ -37,6 +37,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -132,6 +133,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -216,6 +218,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -257,6 +260,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()

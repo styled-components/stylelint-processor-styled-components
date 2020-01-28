@@ -70,7 +70,7 @@ describe('inject-global', () => {
           files: [fixture],
           config: {
             processors: [processor],
-            rules: Object.assign({}, rules, { indentation: 'tab' })
+            rules: { ...rules, indentation: 'tab' }
           }
         })
         .then(result => {
