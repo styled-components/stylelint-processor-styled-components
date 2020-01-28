@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -37,7 +38,7 @@ describe('inject-global', () => {
 
     describe('valid fixtures', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/inject-global/valid-spaces.js')
+        fixture = slash(path.join(__dirname, './fixtures/inject-global/valid-spaces.js'))
       })
 
       it('should have one result', () => {
@@ -45,7 +46,7 @@ describe('inject-global', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should not have errored', () => {
@@ -87,7 +88,7 @@ describe('inject-global', () => {
 
     describe('valid fixtures', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/inject-global/valid-tabs.js')
+        fixture = slash(path.join(__dirname, './fixtures/inject-global/valid-tabs.js'))
       })
 
       it('should have one result', () => {
@@ -95,7 +96,7 @@ describe('inject-global', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should not have errored', () => {

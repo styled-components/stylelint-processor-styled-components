@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -37,7 +38,7 @@ describe('hard', () => {
   describe('extra indentation', () => {
     describe('valid', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/hard/indentation.js')
+        fixture = slash(path.join(__dirname, './fixtures/hard/indentation.js'))
       })
 
       it('should have one result', () => {
@@ -45,7 +46,7 @@ describe('hard', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should not have errored', () => {
@@ -59,7 +60,7 @@ describe('hard', () => {
 
     describe('invalid', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/hard/invalid-indentation.js')
+        fixture = slash(path.join(__dirname, './fixtures/hard/invalid-indentation.js'))
       })
 
       it('should have one result', () => {
@@ -67,7 +68,7 @@ describe('hard', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should have errored', () => {
@@ -88,7 +89,7 @@ describe('hard', () => {
 
   describe('source maps', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/hard/source-maps.js')
+      fixture = slash(path.join(__dirname, './fixtures/hard/source-maps.js'))
     })
 
     it('should have one result', () => {
@@ -96,7 +97,7 @@ describe('hard', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
@@ -145,7 +146,7 @@ describe('hard', () => {
   describe('js style comments', () => {
     describe('valid', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/hard/valid-js-comments.js')
+        fixture = slash(path.join(__dirname, './fixtures/hard/valid-js-comments.js'))
       })
 
       it('should have one result', () => {
@@ -153,7 +154,7 @@ describe('hard', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should not have errored', () => {

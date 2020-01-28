@@ -4,6 +4,7 @@
 
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -45,7 +46,7 @@ describe('real world failures', () => {
 
   describe('Circle', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/real-world/Circle.js')
+      fixture = slash(path.join(__dirname, './fixtures/real-world/Circle.js'))
     })
 
     it('should have one result', () => {
@@ -53,7 +54,7 @@ describe('real world failures', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {
@@ -67,7 +68,7 @@ describe('real world failures', () => {
 
   describe('Line Numbers Report Correctly', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/real-world/LineNumbersReportedAccurate.js')
+      fixture = slash(path.join(__dirname, './fixtures/real-world/LineNumbersReportedAccurate.js'))
     })
 
     it('should have one result', () => {
@@ -75,7 +76,7 @@ describe('real world failures', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {

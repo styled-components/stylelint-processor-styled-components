@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -44,7 +45,7 @@ describe('simple', () => {
 
   describe('valid fixtures', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/valid.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/valid.js'))
     })
 
     it('should have one result', () => {
@@ -52,7 +53,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {
@@ -66,7 +67,7 @@ describe('simple', () => {
 
   describe('invalid fixtures', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/invalid.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/invalid.js'))
     })
 
     it('should have one result', () => {
@@ -74,7 +75,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
@@ -96,7 +97,7 @@ describe('simple', () => {
 
   describe('helpers', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/helpers.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/helpers.js'))
     })
 
     it('should have one result', () => {
@@ -104,7 +105,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
@@ -127,7 +128,7 @@ describe('simple', () => {
 
   describe('import names', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/imports.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/imports.js'))
     })
 
     it('should have one result', () => {
@@ -135,7 +136,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored, even with a different name', () => {
@@ -155,7 +156,7 @@ describe('simple', () => {
 
   describe('nesting', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/nesting.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/nesting.js'))
     })
 
     it('should have one result', () => {
@@ -163,7 +164,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {
@@ -177,7 +178,7 @@ describe('simple', () => {
 
   describe('global variables', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/global.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/global.js'))
     })
 
     it('should have one result', () => {
@@ -185,7 +186,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
@@ -199,7 +200,7 @@ describe('simple', () => {
 
   describe('other library', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/other-library.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/other-library.js'))
     })
 
     it('should have one result', () => {
@@ -207,7 +208,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
@@ -221,7 +222,7 @@ describe('simple', () => {
 
   describe('identify styled', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/simple/identify-styled.js')
+      fixture = slash(path.join(__dirname, './fixtures/simple/identify-styled.js'))
     })
 
     it('should have one result', () => {
@@ -229,7 +230,7 @@ describe('simple', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {

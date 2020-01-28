@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -33,7 +34,7 @@ describe('interpolation-tagging', () => {
 
   describe('valid', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/garbage-css/invalid-css.js')
+      fixture = slash(path.join(__dirname, './fixtures/garbage-css/invalid-css.js'))
     })
 
     it('should have one result', () => {
@@ -41,7 +42,7 @@ describe('interpolation-tagging', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {

@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -36,7 +37,7 @@ describe('interpolations', () => {
 
   describe('valid', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/interpolations/valid.js')
+      fixture = slash(path.join(__dirname, './fixtures/interpolations/valid.js'))
     })
 
     it('should have one result', () => {
@@ -44,7 +45,7 @@ describe('interpolations', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {
@@ -58,7 +59,7 @@ describe('interpolations', () => {
 
   describe('invalid interpolations', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/interpolations/invalid.js')
+      fixture = slash(path.join(__dirname, './fixtures/interpolations/invalid.js'))
     })
 
     it('should have one result', () => {
@@ -66,7 +67,7 @@ describe('interpolations', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
@@ -88,7 +89,7 @@ describe('interpolations', () => {
 
   describe('complex interpolations', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/interpolations/complex.js')
+      fixture = slash(path.join(__dirname, './fixtures/interpolations/complex.js'))
     })
 
     it('should have one result', () => {
@@ -96,7 +97,7 @@ describe('interpolations', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {
