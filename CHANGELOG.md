@@ -1,3 +1,7 @@
+### 1.10.0
+* upgrade @babel/core to ^7.8.3 to support new ECMAScript 2020 features by default, see #290
+* upgrade stylelint to 13 and other dependencies/devDependencies
+
 ### 1.9.0
 * upgrade stylelint to 12
 
