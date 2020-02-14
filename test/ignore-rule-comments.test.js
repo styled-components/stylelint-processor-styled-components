@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -31,7 +32,7 @@ describe('ignore rule comments', () => {
 
   describe('disable-whole-file', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/ignore-rule-comments/disable-whole-file.js')
+      fixture = slash(path.join(__dirname, './fixtures/ignore-rule-comments/disable-whole-file.js'))
     })
 
     it('should have one result', () => {
@@ -39,7 +40,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toBe(fixture)
+      expect(slash(data.results[0].source)).toBe(fixture)
     })
 
     it('should not have errored', () => {
@@ -53,9 +54,8 @@ describe('ignore rule comments', () => {
 
   describe('alternating-disable-enable', () => {
     beforeAll(() => {
-      fixture = path.join(
-        __dirname,
-        './fixtures/ignore-rule-comments/alternating-disable-enable.js'
+      fixture = slash(
+        path.join(__dirname, './fixtures/ignore-rule-comments/alternating-disable-enable.js')
       )
     })
 
@@ -64,7 +64,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toBe(fixture)
+      expect(slash(data.results[0].source)).toBe(fixture)
     })
 
     it('should have exactly 2 warnings', () => {
@@ -72,7 +72,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should error at exactly the correct places', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
 
       expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('color-named')
@@ -86,7 +86,9 @@ describe('ignore rule comments', () => {
 
   describe('use-single-line-comments', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/ignore-rule-comments/use-single-line-comments.js')
+      fixture = slash(
+        path.join(__dirname, './fixtures/ignore-rule-comments/use-single-line-comments.js')
+      )
     })
 
     it('should have one result', () => {
@@ -94,7 +96,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toBe(fixture)
+      expect(slash(data.results[0].source)).toBe(fixture)
     })
 
     it('should have exactly 2 warnings', () => {
@@ -102,7 +104,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should error at exactly the correct places', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
 
       expect(warnings[0].line).toBe(4)
       expect(warnings[0].rule).toBe('color-named')
@@ -116,7 +118,9 @@ describe('ignore rule comments', () => {
 
   describe('use-single-line-disables', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/ignore-rule-comments/use-single-line-disables.js')
+      fixture = slash(
+        path.join(__dirname, './fixtures/ignore-rule-comments/use-single-line-disables.js')
+      )
     })
 
     it('should have one result', () => {
@@ -124,7 +128,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toBe(fixture)
+      expect(slash(data.results[0].source)).toBe(fixture)
     })
 
     it('should have exactly 2 warnings', () => {
@@ -132,7 +136,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should error at exactly the correct places', () => {
-      const warnings = data.results[0].warnings
+      const { warnings } = data.results[0]
 
       expect(warnings[0].line).toBe(5)
       expect(warnings[0].rule).toBe('color-named')
@@ -169,7 +173,9 @@ describe('ignore rule comments', () => {
 
   describe('mix-in-css-disables', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/ignore-rule-comments/mix-in-css-disables.js')
+      fixture = slash(
+        path.join(__dirname, './fixtures/ignore-rule-comments/mix-in-css-disables.js')
+      )
     })
 
     it('should have one result', () => {
@@ -177,7 +183,7 @@ describe('ignore rule comments', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toBe(fixture)
+      expect(slash(data.results[0].source)).toBe(fixture)
     })
 
     it('should not have errored', () => {

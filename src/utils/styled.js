@@ -1,5 +1,5 @@
 const path = require('path')
-const isTaggedTemplateLiteral = require('./tagged-template-literal').isTaggedTemplateLiteral
+const { isTaggedTemplateLiteral } = require('./tagged-template-literal')
 
 /**
  * Check if something is a styled-components import declaration

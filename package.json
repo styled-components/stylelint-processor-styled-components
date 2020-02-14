@@ -5,13 +5,28 @@
   "main": "src/index.js",
   "scripts": {
     "lint:eslint": "eslint .",
-    "lint:prettier": "prettier --list-different --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
-    "prettier": "prettier --write --print-width 100 --tab-width 2 --no-semi --single-quote '{src/**/*.{js,jsx},test/*.{js,jsx}}'",
-    "precommit": "lint-staged",
-    "test": "jest test/*.test.js"
+    "lint:prettier": "prettier --list-different \"./**/*.js\"",
+    "prettier": "prettier --write \"./**/*.js\"",
+    "test": "jest"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./test/jest-setup.js"
+    "testMatch": [
+      "<rootDir>/test/*.test.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/jest-setup.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "npm run lint:eslint --fix",
+      "npm run lint:prettier --write"
+    ]
   },
   "repository": {
     "type": "git",
@@ -43,27 +58,30 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.8.3",
     "babel-core": "^7.0.0-bridge.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.7.0",
-    "husky": "^0.14.3",
-    "jest": "^23.5.0",
-    "lint-staged": "^4.0.1",
-    "lodash": "^4.15.0",
-    "prettier": "^1.4.4",
-    "stylelint": "^12.0.0",
-    "typescript": "~2.6.1"
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.1",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.3",
+    "lodash": "^4.17.15",
+    "prettier": "^1.19.1",
+    "slash": "^3.0.0",
+    "stylelint": "^13.0.0",
+    "typescript": "~3.7.5"
   },
   "peerDependency": {
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint": ">= 10"
   },
   "dependencies": {
-    "@babel/parser": "^7.0.0",
-    "@babel/traverse": "^7.0.0",
+    "@babel/parser": "^7.8.3",
+    "@babel/traverse": "^7.8.3",
     "micromatch": "^4.0.2",
-    "postcss": "^7.0.0"
+    "postcss": "^7.0.26"
   }
 }

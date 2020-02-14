@@ -1,21 +1,27 @@
+const traverse = require('@babel/traverse').default
+
 const estreeParse = require('./babylon-parser')
 
-const traverse = require('@babel/traverse').default
-const isStyled = require('../utils/styled').isStyled
-const isHelper = require('../utils/styled').isHelper
-const isStyledImport = require('../utils/styled').isStyledImport
-const hasAttrsCall = require('../utils/styled').hasAttrsCall
-const getAttrsObject = require('../utils/styled').getAttrsObject
-const isExtendCall = require('../utils/styled').isExtendCall
-const wrapSelector = require('../utils/general').wrapSelector
-const wrapKeyframes = require('../utils/general').wrapKeyframes
-const fixIndentation = require('../utils/general').fixIndentation
-const removeBaseIndentation = require('../utils/general').removeBaseIndentation
-const isStylelintComment = require('../utils/general').isStylelintComment
+const {
+  isStyled,
+  isHelper,
+  isStyledImport,
+  hasAttrsCall,
+  getAttrsObject,
+  isExtendCall
+} = require('../utils/styled')
+const {
+  wrapSelector,
+  wrapKeyframes,
+  fixIndentation,
+  removeBaseIndentation,
+  isStylelintComment
+} = require('../utils/general')
 
-const getTTLContent = require('../utils/tagged-template-literal.js').getTaggedTemplateLiteralContent
-const parseImports = require('../utils/parse').parseImports
-const getSourceMap = require('../utils/parse').getSourceMap
+const {
+  getTaggedTemplateLiteralContent: getTTLContent
+} = require('../utils/tagged-template-literal.js')
+const { parseImports, getSourceMap } = require('../utils/parse')
 
 const processStyledComponentsFile = (ast, absolutePath, options) => {
   const extractedCSS = []
@@ -47,7 +53,7 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
       const helper = !options.strict
         ? isHelper(node, importedNames)
         : isHelper(node, [importedNames[options.importName]])
-      const processedNode = Object.assign({}, node)
+      const processedNode = { ...node }
       if (hasAttrsCall(node)) {
         processedNode.tag = getAttrsObject(node)
       }
@@ -79,9 +85,10 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
           // Wrap it in a dummy selector as this is what Styled Components would do
           wrappedContent = wrapSelector(fixedContent)
       }
-      const stylelintCommentsAdded = ignoreRuleComments.length > 0
-        ? `${ignoreRuleComments.join('\n')}\n${wrappedContent}`
-        : wrappedContent
+      const stylelintCommentsAdded =
+        ignoreRuleComments.length > 0
+          ? `${ignoreRuleComments.join('\n')}\n${wrappedContent}`
+          : wrappedContent
       extractedCSS.push(stylelintCommentsAdded)
       sourceMap = Object.assign(
         sourceMap,
@@ -117,9 +124,8 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
 }
 
 module.exports = (input, absolutePath, options) => {
-  const typedParser = absolutePath.endsWith('.ts') || absolutePath.endsWith('.tsx')
-    ? 'typescript'
-    : 'flow'
+  const typedParser =
+    absolutePath.endsWith('.ts') || absolutePath.endsWith('.tsx') ? 'typescript' : 'flow'
   const ast = estreeParse(typedParser, options.parserPlugins)(input)
   return processStyledComponentsFile(ast, absolutePath, options)
 }

@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -34,7 +35,7 @@ describe('interpolation-tagging', () => {
 
   describe('valid', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/interpolation-tagging/valid.js')
+      fixture = slash(path.join(__dirname, './fixtures/interpolation-tagging/valid.js'))
     })
 
     it('should have one result', () => {
@@ -42,7 +43,7 @@ describe('interpolation-tagging', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should not have errored', () => {
@@ -56,7 +57,7 @@ describe('interpolation-tagging', () => {
 
   describe('invalid tag', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/interpolation-tagging/invalid-tag.js')
+      fixture = slash(path.join(__dirname, './fixtures/interpolation-tagging/invalid-tag.js'))
     })
 
     it('should return error', () => {
@@ -78,7 +79,7 @@ describe('interpolation-tagging', () => {
 
   describe('invalid custom tag', () => {
     beforeAll(() => {
-      fixture = path.join(__dirname, './fixtures/interpolation-tagging/invalid-custom.js')
+      fixture = slash(path.join(__dirname, './fixtures/interpolation-tagging/invalid-custom.js'))
     })
 
     it('should return error', () => {

@@ -3,7 +3,7 @@
  */
 
 const parseImports = (node, currentNames) => {
-  const names = Object.assign({}, currentNames)
+  const names = { ...currentNames }
   const imports = node.specifiers.filter(
     specifier => specifier.type === 'ImportDefaultSpecifier' || specifier.type === 'ImportSpecifier'
   )

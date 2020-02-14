@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -32,7 +33,7 @@ const doLint = (fixture, done) =>
 
 describe('Typescript files, both TS and TSX should parse and report any errors correctly', () => {
   it('should parse styled components code in TS files and report correctly the errors encountered', done => {
-    const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-invalid.ts')
+    const fixture = slash(path.join(__dirname, './fixtures/typescript/ts-syntax-invalid.ts'))
     doLint(fixture, done).then(data => {
       expect(data.results.length).toEqual(1)
       expect(data.results[0].warnings.length).toEqual(7)
@@ -48,7 +49,7 @@ describe('Typescript files, both TS and TSX should parse and report any errors c
   })
 
   it('should not report errors when there are NOT any in a typescript files', done => {
-    const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-valid.ts')
+    const fixture = slash(path.join(__dirname, './fixtures/typescript/ts-syntax-valid.ts'))
     doLint(fixture, done).then(data => {
       expect(data.results.length).toEqual(1)
       expect(data.results[0].warnings.length).toEqual(0)
@@ -57,7 +58,7 @@ describe('Typescript files, both TS and TSX should parse and report any errors c
   })
 
   it('should report errors when parsing typescript files with SyntaxError', done => {
-    const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-parse-error.ts')
+    const fixture = slash(path.join(__dirname, './fixtures/typescript/ts-syntax-parse-error.ts'))
     doLint(fixture, done).then(data => {
       expect(data.results.length).toEqual(1)
       expect(data.results[0].parseErrors.length).toEqual(1)
@@ -67,7 +68,7 @@ describe('Typescript files, both TS and TSX should parse and report any errors c
   })
 
   it('should report errors in TSX files(typescript + JSX)', done => {
-    const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-jsx-invalid.tsx')
+    const fixture = slash(path.join(__dirname, './fixtures/typescript/ts-syntax-jsx-invalid.tsx'))
     doLint(fixture, done).then(data => {
       expect(data.results.length).toEqual(1)
       expect(data.results[0].warnings.length).toEqual(1)
@@ -77,7 +78,9 @@ describe('Typescript files, both TS and TSX should parse and report any errors c
   })
 
   it('should ignore errors raised by Stylelint in files without styled components(no-empty-source)', done => {
-    const fixture = path.join(__dirname, './fixtures/typescript/ts-syntax-no-styled-components.tsx')
+    const fixture = slash(
+      path.join(__dirname, './fixtures/typescript/ts-syntax-no-styled-components.tsx')
+    )
     doLint(fixture, done).then(data => {
       expect(data.results.length).toEqual(1)
       expect(data.results[0].warnings.length).toEqual(0)

@@ -51,16 +51,11 @@ And it also has some options. Their default values are,
     "ignoreFiles": [],
     "parserPlugins": [
       "jsx",
-      "objectRestSpread",
       ["decorators", { "decoratorsBeforeExport": true }],
       "classProperties",
       "exportExtensions",
-      "asyncGenerators",
       "functionBind",
-      "functionSent",
-      "dynamicImport",
-      "optionalCatchBinding",
-      "optionalChaining"
+      "functionSent"
     ]
   }]]
 }

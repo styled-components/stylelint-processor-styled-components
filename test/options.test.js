@@ -1,5 +1,6 @@
 const stylelint = require('stylelint')
 const path = require('path')
+const slash = require('slash')
 
 const processor = path.join(__dirname, '../src/index.js')
 const rules = {
@@ -37,6 +38,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -45,7 +47,7 @@ describe('options', () => {
 
     describe('moduleName', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/options/module-name.js')
+        fixture = slash(path.join(__dirname, './fixtures/options/module-name.js'))
       })
 
       it('should have one result', () => {
@@ -53,7 +55,7 @@ describe('options', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should have errored', () => {
@@ -71,7 +73,7 @@ describe('options', () => {
 
     describe('relative moduleName', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/options/relative-module-name.js')
+        fixture = slash(path.join(__dirname, './fixtures/options/relative-module-name.js'))
       })
 
       it('should have one result', () => {
@@ -79,7 +81,7 @@ describe('options', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should have errored', () => {
@@ -97,7 +99,7 @@ describe('options', () => {
 
     describe('invalid moduleName', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/options/invalid-module-name.js')
+        fixture = slash(path.join(__dirname, './fixtures/options/invalid-module-name.js'))
       })
 
       it('should have one result', () => {
@@ -105,7 +107,7 @@ describe('options', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should not have errored', () => {
@@ -132,6 +134,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -140,7 +143,7 @@ describe('options', () => {
 
     describe('importName', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/options/import-name.js')
+        fixture = slash(path.join(__dirname, './fixtures/options/import-name.js'))
       })
 
       it('should have one result', () => {
@@ -148,7 +151,7 @@ describe('options', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should have errored', () => {
@@ -166,7 +169,7 @@ describe('options', () => {
 
     describe('invalid importName', () => {
       beforeAll(() => {
-        fixture = path.join(__dirname, './fixtures/options/invalid-import-name.js')
+        fixture = slash(path.join(__dirname, './fixtures/options/invalid-import-name.js'))
       })
 
       it('should have one result', () => {
@@ -174,7 +177,7 @@ describe('options', () => {
       })
 
       it('should use the right file', () => {
-        expect(data.results[0].source).toEqual(fixture)
+        expect(slash(data.results[0].source)).toEqual(fixture)
       })
 
       it('should not have errored', () => {
@@ -189,16 +192,11 @@ describe('options', () => {
     beforeEach(done => {
       const plugins = [
         'jsx',
-        'objectRestSpread',
         ['decorators', { decoratorsBeforeExport: true }],
         'classProperties',
         'exportExtensions',
-        'asyncGenerators',
         'functionBind',
         'functionSent',
-        'dynamicImport',
-        'optionalCatchBinding',
-        'optionalChaining',
         // Enable experimental feature
         'exportDefaultFrom'
       ]
@@ -216,6 +214,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -233,7 +232,7 @@ describe('options', () => {
 
   describe('strict', () => {
     beforeEach(done => {
-      fixture = path.join(__dirname, './fixtures/options/strict.js')
+      fixture = slash(path.join(__dirname, './fixtures/options/strict.js'))
 
       stylelint
         .lint({
@@ -257,6 +256,7 @@ describe('options', () => {
           done()
         })
         .catch(err => {
+          // eslint-disable-next-line no-console
           console.log(err)
           data = err
           done()
@@ -268,7 +268,7 @@ describe('options', () => {
     })
 
     it('should use the right file', () => {
-      expect(data.results[0].source).toEqual(fixture)
+      expect(slash(data.results[0].source)).toEqual(fixture)
     })
 
     it('should have errored', () => {
