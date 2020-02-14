@@ -259,4 +259,26 @@ describe('simple', () => {
       expect(warnings[4].rule).toBe('selector-type-no-unknown')
     })
   })
+
+  describe('parse successfully', () => {
+    beforeAll(() => {
+      fixture = slash(path.join(__dirname, './fixtures/simple/parse.js'))
+    })
+
+    it('should have one result', () => {
+      expect(data.results.length).toEqual(1)
+    })
+
+    it('should use the right file', () => {
+      expect(slash(data.results[0].source)).toEqual(fixture)
+    })
+
+    it('should not have errored', () => {
+      expect(data.errored).toEqual(false)
+    })
+
+    it('should not have any warnings', () => {
+      expect(data.results[0].warnings.length).toEqual(0)
+    })
+  })
 })
