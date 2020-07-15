@@ -6,8 +6,8 @@ const {
   isStyled,
   isHelper,
   isStyledImport,
-  hasAttrsCall,
-  getAttrsObject,
+  hasMethodsCall,
+  getMethodsObject,
   isExtendCall
 } = require('../utils/styled')
 const {
@@ -54,8 +54,8 @@ const processStyledComponentsFile = (ast, absolutePath, options) => {
         ? isHelper(node, importedNames)
         : isHelper(node, [importedNames[options.importName]])
       const processedNode = { ...node }
-      if (hasAttrsCall(node)) {
-        processedNode.tag = getAttrsObject(node)
+      while (hasMethodsCall(processedNode)) {
+        processedNode.tag = getMethodsObject(processedNode)
       }
       if (
         !helper &&
