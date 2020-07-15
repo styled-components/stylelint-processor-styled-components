@@ -18,7 +18,7 @@ const Image1 = styled.img.attrs({ src: 'url' })`
   }
 `;
 
-const Image2 = styled(Image1).attrs({ src: 'newUrl' })`
+const Image2 = styled(Image1).withConfig({ shouldForwardProp: prop => prop }).attrs({ src: 'url' })`
   bad-selector {
     color: red;
   }

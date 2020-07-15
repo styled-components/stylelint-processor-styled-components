@@ -37,16 +37,16 @@ const isStyledCall = (node, styledVariableName) =>
 /**
  * Check if it has a .attrs postfix which we in that case handle specially
  */
-const hasAttrsCall = node =>
+const hasMethodsCall = node =>
   // Check that it's a function call
   node.tag &&
   node.tag.callee &&
   // Check that the last member of the call is attrs
   node.tag.callee.property &&
-  node.tag.callee.property.name === 'attrs'
+  (node.tag.callee.property.name === 'attrs' || node.tag.callee.property.name === 'withConfig')
 
-// We don't need the checks here as they were checked in hasAttrsCall
-const getAttrsObject = node => node.tag.callee.object
+// We don't need the checks here as they were checked in hasMethodsCall
+const getMethodsObject = node => node.tag.callee.object
 
 /**
  * Check if something is a styled component call
@@ -85,6 +85,6 @@ exports.isStyledShorthand = isStyledShorthand
 exports.isStyledCall = isStyledCall
 exports.isStyled = isStyled
 exports.isHelper = isHelper
-exports.hasAttrsCall = hasAttrsCall
-exports.getAttrsObject = getAttrsObject
+exports.hasMethodsCall = hasMethodsCall
+exports.getMethodsObject = getMethodsObject
 exports.isExtendCall = isExtendCall
