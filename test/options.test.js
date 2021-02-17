@@ -18,6 +18,7 @@ const rules = {
 
 describe('options', () => {
   let fixture
+  let fixtures
   let data
 
   describe('moduleName', () => {
@@ -112,6 +113,94 @@ describe('options', () => {
 
       it('should not have errored', () => {
         expect(data.results[0].errored).toEqual(false)
+      })
+    })
+  })
+
+  describe('moduleName array', () => {
+    beforeEach(done => {
+      stylelint
+        .lint({
+          files: fixtures,
+          config: {
+            // Set moduleName option to "emotion"
+            processors: [[processor, { moduleName: ['emotion', 'some-module'] }]],
+            rules
+          }
+        })
+        .then(result => {
+          data = result
+          done()
+        })
+        .catch(err => {
+          // eslint-disable-next-line no-console
+          console.log(err)
+          data = err
+          done()
+        })
+    })
+
+    describe('moduleName', () => {
+      beforeAll(() => {
+        fixtures = [
+          slash(path.join(__dirname, './fixtures/options/module-name.js')),
+          slash(path.join(__dirname, './fixtures/options/module-name-two.js'))
+        ]
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(2)
+      })
+
+      it('should use the right file', () => {
+        expect([slash(data.results[0].source), slash(data.results[1].source)]).toEqual(fixtures)
+      })
+
+      it('should have errored', () => {
+        expect([data.results[0].errored, data.results[1].errored]).toEqual([true, true])
+      })
+
+      it('should have one warning (i.e. wrong lines of code)', () => {
+        expect([data.results[0].warnings.length, data.results[1].warnings.length]).toEqual([1, 1])
+      })
+
+      it('should have a block-no-empty as the first warning', () => {
+        expect([data.results[0].warnings[0].rule, data.results[1].warnings[0].rule]).toEqual([
+          'block-no-empty',
+          'block-no-empty'
+        ])
+      })
+    })
+
+    describe('relative moduleName', () => {
+      beforeAll(() => {
+        fixtures = [
+          slash(path.join(__dirname, './fixtures/options/relative-module-name.js')),
+          slash(path.join(__dirname, './fixtures/options/relative-module-name-two.js'))
+        ]
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(2)
+      })
+
+      it('should use the right file', () => {
+        expect([slash(data.results[0].source), slash(data.results[1].source)]).toEqual(fixtures)
+      })
+
+      it('should have errored', () => {
+        expect([data.results[0].errored, data.results[1].errored]).toEqual([true, true])
+      })
+
+      it('should have one warning (i.e. wrong lines of code)', () => {
+        expect([data.results[0].warnings.length, data.results[1].warnings.length]).toEqual([1, 1])
+      })
+
+      it('should have a block-no-empty as the first warning', () => {
+        expect([data.results[0].warnings[0].rule, data.results[1].warnings[0].rule]).toEqual([
+          'block-no-empty',
+          'block-no-empty'
+        ])
       })
     })
   })
