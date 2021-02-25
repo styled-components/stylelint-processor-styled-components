@@ -632,7 +632,9 @@ html {
       { start: 5, end: 5 }
     ]
     it("returns true if real warning line is between some interpolation's start and end", () => {
-      expect(fn({ rule: 'any rule' }, 3, interpolationLines)).toEqual(true)
+      expect(fn({ rule: 'value-list-max-empty-lines' }, 3, interpolationLines)).toEqual(true)
+      expect(fn({ rule: 'comment-empty-line-before' }, 3, interpolationLines)).toEqual(true)
+      expect(fn({ rule: 'indentation' }, 3, interpolationLines)).toEqual(true)
     })
     it("returns false if real warning line is beyond any interpolation's start and end", () => {
       expect(fn({ rule: 'any rule' }, 1, interpolationLines)).toEqual(false)

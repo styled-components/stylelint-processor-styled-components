@@ -166,4 +166,54 @@ describe('hard', () => {
       })
     })
   })
+
+  describe('invalid properties', () => {
+    describe('valid', () => {
+      beforeAll(() => {
+        fixture = slash(path.join(__dirname, './fixtures/hard/invalid-properties.js'))
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(1)
+      })
+
+      it('should use the right file', () => {
+        expect(slash(data.results[0].source)).toEqual(fixture)
+      })
+
+      it('should have errored', () => {
+        expect(data.errored).toEqual(true)
+      })
+
+      it('should not have any warnings', () => {
+        console.log(data)
+        expect(data.results[0].warnings.length).toEqual(2)
+      })
+    })
+  })
+
+  describe('invalid substitution properties', () => {
+    describe('valid', () => {
+      beforeAll(() => {
+        fixture = slash(path.join(__dirname, './fixtures/hard/invalid-substitution-properties.js'))
+      })
+
+      it('should have one result', () => {
+        expect(data.results.length).toEqual(1)
+      })
+
+      it('should use the right file', () => {
+        expect(slash(data.results[0].source)).toEqual(fixture)
+      })
+
+      it('should have errored', () => {
+        expect(data.errored).toEqual(true)
+      })
+
+      it('should not have any warnings', () => {
+        console.log(data)
+        expect(data.results[0].warnings.length).toEqual(2)
+      })
+    })
+  })
 })
