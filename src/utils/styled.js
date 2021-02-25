@@ -5,7 +5,8 @@ const { isTaggedTemplateLiteral } = require('./tagged-template-literal')
  * Check if something is a styled-components import declaration
  */
 const isStyledImport = (node, moduleName) =>
-  node.type === 'ImportDeclaration' && path.basename(node.source.value) === moduleName
+  node.type === 'ImportDeclaration' &&
+  (Array.isArray(moduleName) ? moduleName : [moduleName]).includes(path.basename(node.source.value))
 
 /**
  * Check if something is a styled shorthand call
