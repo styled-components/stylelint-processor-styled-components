@@ -10,7 +10,8 @@ module.exports = (type, plugins) => input =>
         'classProperties',
         'exportExtensions',
         'functionBind',
-        'functionSent'
+        'functionSent',
+        'importMeta'
       ]
     )
   })
