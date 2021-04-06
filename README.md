@@ -13,7 +13,7 @@ Lint your [styled components](https://github.com/styled-components/styled-compon
 
 You need:
 
-- `stylelint` (duh)
+- `stylelint`
 - This processor, to extract styles from `styled-components`
 - The [`stylelint-config-styled-components`](https://github.com/styled-components/stylelint-config-styled-components) config to disable stylelint rules that clash with `styled-components`
 - Your favorite `stylelint` config! (for example [`stylelint-config-recommended`](https://github.com/stylelint/stylelint-config-recommended))
